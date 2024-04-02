@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: "spring-labs"
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+my:
+  name: jinho_dev
+  age: 34
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+my:
+  name: jinho_test
+  age: 30
