@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.common;
+package sw.sustainable.springlabs.fpay.infrastructure.common;
 
 import com.google.gson.Gson;
 

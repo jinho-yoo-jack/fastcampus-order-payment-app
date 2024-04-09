@@ -1,16 +1,23 @@
-package sw.sustainable.springlabs.config;
+package sw.sustainable.springlabs.fpay.infrastructure.config;
 
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import sw.sustainable.springlabs.common.BaseUtils;
+import sw.sustainable.springlabs.fpay.infrastructure.common.BaseUtils;
 
-//@Configuration
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "my")
+@Slf4j
 public class AppConfig implements BaseUtils {
     private String name;
     private int age;
+
+    @PostConstruct
+    public void init() {
+        log.info("AppConfig name ::: {}", name);
+        log.info("AppConfig age ::: {}", age);
+    }
 
     public String getName() {
         return name;
