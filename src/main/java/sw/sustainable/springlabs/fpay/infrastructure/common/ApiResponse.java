@@ -1,9 +1,11 @@
 package sw.sustainable.springlabs.fpay.infrastructure.common;
 
 import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 public class ApiResponse<T> {
 
     private final LocalDateTime timestamp = LocalDateTime.now();

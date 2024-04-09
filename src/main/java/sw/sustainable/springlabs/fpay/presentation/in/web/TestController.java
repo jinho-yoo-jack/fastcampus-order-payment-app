@@ -11,4 +11,9 @@ public class TestController {
     public String test(){
         return "ResponseBodyAdvice testing";
     }
+
+    @GetMapping("/v2")
+    public boolean test2() {
+        return false;
+    }
 }
