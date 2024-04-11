@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository;
+package sw.sustainable.springlabs.fpay.infrastructure.persistence.repository;
 
 
 import org.springframework.data.repository.Repository;
