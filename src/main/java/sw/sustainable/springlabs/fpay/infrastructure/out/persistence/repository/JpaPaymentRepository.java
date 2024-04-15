@@ -1,14 +1,23 @@
-package sw.sustainable.springlabs.fpay.infrastructure.persistence.repository;
+package sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository;
 
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import sw.sustainable.springlabs.fpay.domain.DomainPaymentRepository;
 import sw.sustainable.springlabs.fpay.domain.Payment;
+import sw.sustainable.springlabs.fpay.domain.model.PaymentInfo;
 
+@Component
 public class JpaPaymentRepository implements DomainPaymentRepository {
     private PaymentRepository paymentRepository;
 
     @Override
-    public Payment findById(Long id) {
+    public PaymentInfo findByOrderId(Long id) {
+        return null;
+    }
+
+    @Override
+    public Payment of(PaymentInfo paymentInfo) {
         return null;
     }
 

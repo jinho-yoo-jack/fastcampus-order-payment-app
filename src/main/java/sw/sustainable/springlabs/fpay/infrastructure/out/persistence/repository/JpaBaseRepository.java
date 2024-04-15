@@ -1,0 +1,12 @@
+package sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository;
+
+
+import org.springframework.data.repository.*;
+
+import java.util.Optional;
+
+@NoRepositoryBean
+public interface JpaBaseRepository<T, ID> extends Repository<T, ID> {
+    Optional<T> findById(ID id);
+    <S extends T> S save(S entity);
+}

@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.presentation.in.web;
+package sw.sustainable.springlabs.fpay.infrastructure.in.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
