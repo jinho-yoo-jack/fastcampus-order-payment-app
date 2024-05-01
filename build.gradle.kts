@@ -35,6 +35,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-actuator")
     testImplementation("com.google.code.gson:gson")
+    testAnnotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.projectlombok:lombok")
 }
 
 tasks.withType<Test> {

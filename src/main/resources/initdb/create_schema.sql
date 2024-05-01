@@ -1,13 +1,14 @@
 -- create-user
-CREATE DATABASE IF NOT EXISTS `service_labs`;
-CREATE USER IF NOT EXISTS `fastcamp`@`localhost` identified by 'testlabs';
-CREATE USER IF NOT EXISTS `fastcamp`@`%` identified by 'testlabs';
-GRANT all privileges on `service_labs`.* TO `fastcamp`@`localhost`;
-GRANT all privileges on `service_labs`.* TO `fastcamp`@`%`;
+CREATE DATABASE IF NOT EXISTS `fastcamp_labs`;
+USE fastcamp_labs;
+CREATE USER IF NOT EXISTS `fastcamp`@`localhost` IDENTIFIED BY 'testlabs';
+CREATE USER `fastcamp`@`%` IDENTIFIED BY 'testlabs';
+GRANT all privileges ON `fastcamp_labs`.* TO `fastcamp`@`localhost`;
+GRANT all privileges ON `fastcamp_labs`.* TO `fastcamp`@`%`;
 
 -- schema.sql
 -- Order
-CREATE TABLE IF NOT EXISTS `order`
+CREATE TABLE `order`
 (
     `id`            BINARY(16) default (uuid_to_bin(uuid())) NOT NULL COMMENT '주문번호',
     `order_no`      BINARY(16)                               NOT NULL COMMENT '전체 주문번호',
@@ -27,21 +28,23 @@ CREATE TABLE IF NOT EXISTS `order`
     UNIQUE KEY (id, order_no)
 );
 
--- Card Payment;
--- {
---   "res_cd":"0000",
---   "res_msg":"정상처리",
---   "order_no":"TEST1234567890",
---   "trace_no":"T0000AJNlL0FfALC",
---   "card_name":"BC카드",
---   "card_no":"9200200000005295",
---   "amount":"1004"
--- } */
-
-CREATE TABLE IF NOT EXISTS `card_payment`
+CREATE TABLE `payment`
 (
-    `id`            BINARY(16) default (uuid_to_bin(uuid())) NOT NULL COMMENT '결제번호(ID)',
-    `trace_no`      VARCHAR(255)                             NOT NULL COMMENT '주문자명',
-    `card_name`     VARCHAR(255)                             NOT NULL COMMENT '주문자 휴대전화번호',
-    `card_no`       VARCHAR(255)                             NOT NULL COMMENT '주문상태',
-)
+    `payment_id`    VARCHAR(255)           NOT NULL COMMENT '결제번호(ID)',
+    `method`        VARCHAR(255)           NOT NULL COMMENT '결제수단',
+    `status`        VARCHAR(255)           NOT NULL COMMENT '결제상태',
+    `order_id`      BINARY(16)             NOT NULL COMMENT '주문번호(FK)',
+    PRIMARY KEY (payment_id),
+    UNIQUE KEY (payment_id, order_id)
+);
+
+CREATE TABLE `card_payment`
+(
+    `payment_id`         VARCHAR(255)           NOT NULL COMMENT '결제번호(PK and FK)',
+    `card_type`          VARCHAR(255)           NOT NULL COMMENT '결제번호(ID)',
+    `amount`             INT                    NOT NULL COMMENT '최종 결제 금액',
+    `issuer_code`        VARCHAR(255)           NOT NULL COMMENT '카드 발급사 코드',
+    `acquirer_code`      VARCHAR(255)           NOT NULL COMMENT '카드 매입사 코드',
+    `acquirer_status`    VARCHAR(255)           NOT NULL COMMENT '카드 결제의 상태',
+    PRIMARY KEY (payment_id)
+);
