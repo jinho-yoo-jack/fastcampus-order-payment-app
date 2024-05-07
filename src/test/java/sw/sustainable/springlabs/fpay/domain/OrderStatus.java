@@ -1,7 +1,11 @@
 package sw.sustainable.springlabs.fpay.domain;
 
 public enum OrderStatus {
-    FULLFILL, // 결제 완료
-    CANCEL,   // 결제 취소
-    SETTLE;   // 정산
+    ORDER_COMPLETED,
+    ORDER_CANCELLED,
+    PAYMENT_FULLFILL,
+    SHIPPING_PREPARE,
+    SHIPPING,
+    SHIPPING_COMPLETED,
+    PURCHASE_DECISION;
 }
