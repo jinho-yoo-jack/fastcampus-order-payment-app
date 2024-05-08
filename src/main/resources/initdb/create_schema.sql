@@ -8,13 +8,13 @@ GRANT all privileges ON `fastcamp_labs`.* TO `fastcamp`@`%`;
 
 -- schema.sql
 -- Order
-CREATE TABLE `order`
+CREATE TABLE `purchase_order`
 (
     `order_id`      BINARY(16) default (uuid_to_bin(uuid())) NOT NULL COMMENT '주문번호',
     `name`          VARCHAR(255)                             NOT NULL COMMENT '주문자명',
     `phone_number`  VARCHAR(255)                             NOT NULL COMMENT '주문자 휴대전화번호',
     `order_state`   VARCHAR(255)                             NOT NULL COMMENT '주문상태',
-    `payment_id`    BINARY(16)                               NOT NULL COMMENT '결제정보',
+    `payment_id`    BINARY(16)                               NULL COMMENT '결제정보',
     `total_price`   INT                                      NOT NULL COMMENT '상품 가격 * 주문 수량',
     `created_at`    DATETIME   DEFAULT NOW()                 NOT NULL,
     `updated_at`    DATETIME   DEFAULT NOW()                 NOT NUll,
@@ -34,7 +34,7 @@ CREATE TABLE `order_items`
     `created_at`    DATETIME   DEFAULT NOW()                 NOT NULL,
     `updated_at`    DATETIME   DEFAULT NOW()                 NOT NUll,
     PRIMARY KEY (order_id, item_idx),
-    UNIQUE KEY (order_id, product_id)
+    UNIQUE KEY (order_id, item_idx, product_id)
 );
 
 CREATE TABLE `payment`

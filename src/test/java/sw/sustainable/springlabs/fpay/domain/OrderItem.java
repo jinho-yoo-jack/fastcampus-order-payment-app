@@ -1,30 +1,37 @@
 package sw.sustainable.springlabs.fpay.domain;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import java.util.UUID;
 
-@Embeddable
-@RequiredArgsConstructor
-@Access(AccessType.FIELD)
+@Entity
+@Table(name="order_items")
+@AllArgsConstructor
+@Builder
 public class OrderItem {
-    @Column(name= "order_id")
-    private final UUID orderId;
-    @Column(name= "product_id")
-    private final UUID productId;
-    @Column(name= "item_idx")
-    private final int itemIdx;
-    @Column(name= "product_name")
-    private final String productName;
-    @Column(name= "product_price")
-    private final int price;
-    @Column(name= "product_szie")
-    private final String size;
-    private final int amount;
+    @Id
+    private UUID order_id;
+
+    @Column(name = "item_idx")
+    private int itemIdx;
+
+    @Column(name = "product_id", nullable = true)
+    private UUID productId;
+
+    @Column(name = "product_name")
+    private String productName;
+
+    @Column(name = "product_price")
+    private int price;
+
+    @Column(name = "product_size")
+    private String size;
+
+    private int amount;
+
+    protected OrderItem() {}
 
     public int calculateAmount() {
         return price * amount;
