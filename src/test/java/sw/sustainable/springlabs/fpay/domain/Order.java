@@ -9,6 +9,7 @@ import java.util.*;
 @Table(name = "purchase_order")
 @SecondaryTable(name = "order_items", pkJoinColumns = @PrimaryKeyJoinColumn(name = "order_id"))
 @AllArgsConstructor
+@Getter
 @Builder
 public class Order {
     @Id
@@ -27,10 +28,10 @@ public class Order {
     private int totalPrice;
 
     @Column(name = "Order_state")
-    private String status;
+    @Convert(converter = OrderStatusConverter.class)
+    private OrderStatus status;
 
-    //    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "order_items",
         joinColumns = @JoinColumn(name = "order_id"))
     @AttributeOverrides({
@@ -53,12 +54,16 @@ public class Order {
         this.orderId = orderId;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.status = "ORDER_COMPLETED";
+        this.status = OrderStatus.ORDER_COMPLETED;
         this.items = items;
     }
 
     public static UUID generateOrderId() {
         return UUID.randomUUID();
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return this.items;
     }
 
     public boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
@@ -76,6 +81,6 @@ public class Order {
     }
 
     public boolean isChangeableShippingAddress() {
-        return !(status.equals(OrderStatus.SHIPPING.name()));
+        return !(status.equals(OrderStatus.SHIPPING));
     }
 }

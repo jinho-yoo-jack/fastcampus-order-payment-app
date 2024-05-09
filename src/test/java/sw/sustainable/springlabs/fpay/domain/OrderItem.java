@@ -1,13 +1,16 @@
 package sw.sustainable.springlabs.fpay.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.UUID;
 
 @Embeddable
 @AllArgsConstructor
+@Getter
 @Builder
 public class OrderItem {
     private int itemIdx;
@@ -22,7 +25,8 @@ public class OrderItem {
 
     private int amount;
 
-    private String state;
+    @Convert(converter = OrderStatusConverter.class)
+    private OrderStatus state;
 
     protected OrderItem() {}
 
