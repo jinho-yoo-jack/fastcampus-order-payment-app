@@ -1,0 +1,17 @@
+package sw.sustainable.springlabs.fpay.presentation.in.web.request;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+@Getter
+@RequiredArgsConstructor
+public class Orderer {
+    @NotNull
+    @NotBlank
+    private final String name;
+
+    @NotNull
+    @NotBlank
+    private final String phoneNumber;
+}
