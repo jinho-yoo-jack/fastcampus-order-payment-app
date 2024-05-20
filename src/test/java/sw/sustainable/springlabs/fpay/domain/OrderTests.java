@@ -1,13 +1,13 @@
 package sw.sustainable.springlabs.fpay.domain;
 
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import sw.sustainable.springlabs.fpay.domain.model.Order;
+import sw.sustainable.springlabs.fpay.domain.model.OrderItem;
+import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
 import sw.sustainable.springlabs.fpay.infrastructure.persistence.repository.OrderRepository;
 
 import java.util.*;
@@ -22,7 +22,7 @@ public class OrderTests {
     @Test
     public void newOrderTest() {
         try {
-            UUID newOrderId = Order.generateOrderId();
+            UUID newOrderId = sw.sustainable.springlabs.fpay.domain.model.Order.generateOrderId();
             OrderItem orderItem = OrderItem.builder()
                     .productId(UUID.randomUUID())
                     .productName("속이 편한 우유 300ml")
@@ -32,9 +32,9 @@ public class OrderTests {
                     .state(OrderStatus.ORDER_COMPLETED)
                     .build();
 
-            Order order = new Order(newOrderId, "유진호", "010-1234-1234", List.of(orderItem));
+            sw.sustainable.springlabs.fpay.domain.model.Order order = new sw.sustainable.springlabs.fpay.domain.model.Order(newOrderId, "유진호", "010-1234-1234", List.of(orderItem));
             orderRepository.save(order);
-            Order newOrder = orderRepository.findById(newOrderId).get();
+            sw.sustainable.springlabs.fpay.domain.model.Order newOrder = orderRepository.findById(newOrderId).get();
             OrderItem item = newOrder.getItems().get(0);
             log.info("Result -> {}", item);
             UUID actualOrderId = newOrder.getOrderId();

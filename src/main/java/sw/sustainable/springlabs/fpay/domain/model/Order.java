@@ -84,6 +84,11 @@ public class Order {
             .reduce(0, Integer::sum);
     }
 
+    public Order update(OrderStatus status){
+        this.status = status;
+        return this;
+    }
+
     public boolean isChangeableShippingAddress() {
         return !(status.equals(OrderStatus.SHIPPING));
     }

@@ -8,5 +8,5 @@ import sw.sustainable.springlabs.fpay.domain.model.Order;
 import java.util.UUID;
 
 @Repository
-public interface JpaOrderRepository extends CrudRepository<Order, UUID> {
+public interface JpaOrderRepository extends JpaBaseRepository<Order, UUID> {
 }

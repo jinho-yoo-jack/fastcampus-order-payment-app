@@ -1,14 +1,13 @@
 package sw.sustainable.springlabs;
 
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import sw.sustainable.springlabs.fpay.domain.Order;
-import sw.sustainable.springlabs.fpay.domain.OrderItem;
-import sw.sustainable.springlabs.fpay.domain.OrderStatus;
+import sw.sustainable.springlabs.fpay.domain.model.Order;
+import sw.sustainable.springlabs.fpay.domain.model.OrderItem;
+import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
 import sw.sustainable.springlabs.fpay.infrastructure.persistence.repository.OrderRepository;
 
 import java.util.List;

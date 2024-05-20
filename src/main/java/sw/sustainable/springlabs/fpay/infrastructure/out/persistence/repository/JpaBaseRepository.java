@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface JpaBaseRepository<T, ID> extends Repository<T, ID> {
     Optional<T> findById(ID id);
     <S extends T> void save(S entity);
+    boolean deleteById(ID id);
 }

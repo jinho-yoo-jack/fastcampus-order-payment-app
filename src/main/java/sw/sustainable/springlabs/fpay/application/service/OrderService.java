@@ -1,5 +1,6 @@
 package sw.sustainable.springlabs.fpay.application.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
@@ -10,8 +11,11 @@ import sw.sustainable.springlabs.fpay.presentation.in.web.request.PurchaseOrder;
 public class OrderService implements CreateNewOrderUseCase {
     private OrderRepository orderRepository;
 
+    @Transactional
     @Override
     public Order create(PurchaseOrder newOrder) {
-        return null;
+        Order receivedOrder = newOrder.toEntity();
+        orderRepository.save(receivedOrder);
+        return receivedOrder;
     }
 }
