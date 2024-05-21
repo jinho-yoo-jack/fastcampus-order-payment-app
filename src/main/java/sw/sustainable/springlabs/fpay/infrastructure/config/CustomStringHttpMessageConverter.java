@@ -5,6 +5,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.*;
 import org.springframework.http.converter.*;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 import sw.sustainable.springlabs.fpay.infrastructure.common.ApiResponse;
@@ -30,6 +31,11 @@ public class CustomStringHttpMessageConverter extends AbstractHttpMessageConvert
     @Override
     protected boolean supports(Class<?> clazz) {
         return true;
+    }
+
+    @Override
+    public boolean canRead(Class<?> clazz, @Nullable MediaType mediaType) {
+        return clazz.equals(ApiResponse.class) && this.canRead(mediaType);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.presentation.in.web.request;
+package sw.sustainable.springlabs.fpay.presentation.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

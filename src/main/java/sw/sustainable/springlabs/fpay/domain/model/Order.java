@@ -66,10 +66,6 @@ public class Order {
         return UUID.randomUUID();
     }
 
-    public List<OrderItem> getOrderItems() {
-        return this.items;
-    }
-
     public boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
         return items != null && !items.isEmpty();
     }

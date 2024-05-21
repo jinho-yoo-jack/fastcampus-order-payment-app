@@ -17,6 +17,13 @@ spring:
         globally_quoted_identifiers: false
         format_sql: true     # 쿼리 로그 포맷 (정렬)
         show_sql: true       # 쿼리 로그 출력
+  datasource:
+    url: jdbc:mysql://localhost:13306/fastcamp_labs?serverTimezone=UTC&characterEncoding=UTF-8
+    username: fastcamp
+    password: testlabs
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
 my:
   name: jinho_dev
   age: 34

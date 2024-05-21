@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
-import sw.sustainable.springlabs.fpay.presentation.in.web.request.PurchaseOrder;
+import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrder;
 
 @RestController
 @RequestMapping("/order")

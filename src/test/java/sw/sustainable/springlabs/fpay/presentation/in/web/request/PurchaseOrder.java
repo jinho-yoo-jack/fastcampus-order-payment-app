@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
 import sw.sustainable.springlabs.fpay.domain.model.OrderItem;
 import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
+import sw.sustainable.springlabs.fpay.presentation.request.Orderer;
+import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrderItem;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +22,7 @@ public class PurchaseOrder {
     private final Orderer orderer;
 
     @Size(min = 1)
-    private final List<PurchaseOrderItem> newlyOrderedItem;
+    private final List<sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrderItem> newlyOrderedItem;
 
     private List<OrderItem> convert2OrderItems() {
         return newlyOrderedItem.stream()

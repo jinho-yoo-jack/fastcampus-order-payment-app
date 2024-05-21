@@ -29,10 +29,7 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
 
-        return ApiResponse.builder()
-                .path(request.getURI().getPath())
-                .data(body)
-                .build();
+        return new ApiResponse<>("None", request.getURI().getPath(), body);
 
     }
 }

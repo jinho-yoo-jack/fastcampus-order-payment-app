@@ -1,7 +1,5 @@
-package sw.sustainable.springlabs.fpay.presentation.in.web.request;
+package sw.sustainable.springlabs.fpay.presentation.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +13,7 @@ import java.util.UUID;
 @Data
 @RequiredArgsConstructor
 public class PurchaseOrder {
-    @NotNull
-    @NotBlank
+
     private final Orderer orderer;
 
     @Size(min = 1)
