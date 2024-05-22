@@ -1,6 +1,7 @@
 package sw.sustainable.springlabs.fpay.infrastructure.common;
 
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
@@ -8,18 +9,16 @@ import java.time.LocalDateTime;
 public class ApiResponse<T> {
 
     private LocalDateTime timestamp = LocalDateTime.now();
+    private HttpStatus status;
     private String message;
     private String path;
     private T data;
 
-    public ApiResponse(String message, String path, T body) {
-        this.message = message;
+    public ApiResponse(String path, T data) {
+        this.message = "SUCCESS";
+        this.status = HttpStatus.OK;
         this.path = path;
-        this.data = body;
-    }
-
-    public static <T> ApiResponse<T> success(String path, T data) {
-        return new ApiResponse<>("SUCCESS", path, data);
+        this.data = data;
     }
 
 }

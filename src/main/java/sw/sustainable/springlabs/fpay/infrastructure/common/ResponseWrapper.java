@@ -9,6 +9,7 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
 @Slf4j
@@ -28,8 +29,10 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
-
-        return new ApiResponse<>("None", request.getURI().getPath(), body);
+        if (!(body instanceof ResponseEntityExceptionHandler)) {
+            return new ApiResponse<>(request.getURI().getPath(), body);
+        }
+        return body;
 
     }
 }
