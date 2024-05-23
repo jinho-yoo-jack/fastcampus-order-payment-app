@@ -1,6 +1,11 @@
 spring:
   application:
     name: "spring-labs"
+error-trace:
+  stacktrace: true
+my:
+  name: jinho_test
+  age: 30
 
 ---
 spring:
@@ -48,6 +53,3 @@ spring:
     password: testlabs
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-my:
-  name: jinho_test
-  age: 30
