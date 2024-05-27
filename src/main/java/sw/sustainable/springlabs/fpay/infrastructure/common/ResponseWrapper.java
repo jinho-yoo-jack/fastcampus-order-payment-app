@@ -27,10 +27,9 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
-        if(body instanceof ErrorResponse){
 
+        if (body instanceof ErrorResponse)
             return new ApiResponse<>("ERROR", body);
-        }
         return new ApiResponse<>("SUCCESS", body);
     }
 }

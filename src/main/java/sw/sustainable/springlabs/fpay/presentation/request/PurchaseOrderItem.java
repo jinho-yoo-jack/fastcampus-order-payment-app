@@ -11,30 +11,18 @@ import java.util.UUID;
 @Data
 @RequiredArgsConstructor
 public class PurchaseOrderItem {
-    @NotNull
-    @NotBlank
     @Min(1)
     private final int itemIdx;
 
-    @NotNull
-    @NotBlank
     private final UUID productId;
 
-    @NotNull
     @NotBlank
     private final String productName;
 
-    @NotNull
-    @NotBlank
     private final int price;    // 가격
 
-    @NotNull
-    @NotBlank
     @Min(1)
     private final int quantity; // 수량
 
-    @NotNull
-    @NotBlank
     private final int amounts;  // price * quantity
-
 }

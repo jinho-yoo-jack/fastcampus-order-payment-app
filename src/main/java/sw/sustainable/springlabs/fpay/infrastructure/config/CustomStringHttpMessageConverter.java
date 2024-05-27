@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Component
-//@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CustomStringHttpMessageConverter extends AbstractHttpMessageConverter<ApiResponse<Object>> {
     private final ObjectMapper objectMapper;
 
