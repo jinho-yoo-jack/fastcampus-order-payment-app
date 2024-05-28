@@ -1,18 +1,11 @@
 package sw.sustainable.springlabs.fpay.presentation.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import sw.sustainable.springlabs.fpay.domain.model.Order;
-import sw.sustainable.springlabs.fpay.domain.model.OrderItem;
-import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
+import jakarta.validation.constraints.*;
+import lombok.*;
+import sw.sustainable.springlabs.fpay.domain.model.*;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
