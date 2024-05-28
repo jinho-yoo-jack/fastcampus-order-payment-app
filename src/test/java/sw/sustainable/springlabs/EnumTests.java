@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
 import sw.sustainable.springlabs.fpay.domain.model.OrderItem;
 import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
-import sw.sustainable.springlabs.fpay.infrastructure.persistence.repository.OrderRepository;
+import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 
 import java.util.List;
 import java.util.UUID;

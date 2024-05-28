@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
 import sw.sustainable.springlabs.fpay.domain.model.OrderItem;
 import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
-import sw.sustainable.springlabs.fpay.infrastructure.persistence.repository.OrderRepository;
+import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 
 import java.util.*;
 
@@ -34,7 +34,7 @@ public class OrderTests {
 
             sw.sustainable.springlabs.fpay.domain.model.Order order = new sw.sustainable.springlabs.fpay.domain.model.Order(newOrderId, "유진호", "010-1234-1234", List.of(orderItem));
             orderRepository.save(order);
-            sw.sustainable.springlabs.fpay.domain.model.Order newOrder = orderRepository.findById(newOrderId).get();
+            sw.sustainable.springlabs.fpay.domain.model.Order newOrder = orderRepository.findById(newOrderId);
             OrderItem item = newOrder.getItems().get(0);
             log.info("Result -> {}", item);
             UUID actualOrderId = newOrder.getOrderId();
@@ -50,7 +50,7 @@ public class OrderTests {
     @Test
     public void orderCancelTest(){
         UUID canceledOrderId = UUID.fromString("0b5abb17-caeb-4983-8e6d-8c4dad490bd2");
-        Optional<Order> order = orderRepository.findById(canceledOrderId);
-        order.ifPresent(value -> orderRepository.delete(value));
+        Optional<Order> order = Optional.ofNullable(orderRepository.findById(canceledOrderId));
+//        order.ifPresent(value -> orderRepository.delete(value));
     }
 }

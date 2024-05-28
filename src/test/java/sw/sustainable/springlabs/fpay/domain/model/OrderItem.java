@@ -25,6 +25,8 @@ public class OrderItem {
 
     private int amount;
 
+    private int quantity;
+
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus state;
 

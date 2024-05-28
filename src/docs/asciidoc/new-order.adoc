@@ -1,0 +1,17 @@
+= FastCamp Order&Payment API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels:2
+:sectlinks:
+
+
+=== 요청
+include::{snippets}/new-order/http-request.adoc[]
+include::{snippets}/new-order/request-fields.adoc[]
+
+=== 응답
+include::{snippets}/new-order/http-response.adoc[]
+
+//include::{snippets}/post-create/response-fields.adoc[]

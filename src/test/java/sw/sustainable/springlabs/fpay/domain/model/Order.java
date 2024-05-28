@@ -1,9 +1,13 @@
 package sw.sustainable.springlabs.fpay.domain.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "purchase_order")
@@ -62,10 +66,6 @@ public class Order {
         return UUID.randomUUID();
     }
 
-    public List<OrderItem> getOrderItems() {
-        return this.items;
-    }
-
     public boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
         return items != null && !items.isEmpty();
     }
@@ -78,6 +78,11 @@ public class Order {
         this.totalPrice = items.stream()
             .map(OrderItem::calculateAmount)
             .reduce(0, Integer::sum);
+    }
+
+    public Order update(OrderStatus status){
+        this.status = status;
+        return this;
     }
 
     public boolean isChangeableShippingAddress() {

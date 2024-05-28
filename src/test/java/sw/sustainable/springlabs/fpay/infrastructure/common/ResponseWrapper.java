@@ -1,20 +1,22 @@
 package sw.sustainable.springlabs.fpay.infrastructure.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
+@Slf4j
 public class ResponseWrapper implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return MappingJackson2HttpMessageConverter.class.isAssignableFrom(converterType);
-//        return true;
+        log.info("return Type -> {}", returnType);
+        log.info("converter Type -> {}", converterType);
+        return true;
     }
 
     @Override
@@ -25,10 +27,8 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
 
-        return ApiResponse.builder()
-                .path(request.getURI().getPath())
-                .data(body)
-                .build();
-
+        if (body instanceof ErrorResponse)
+            return new ApiResponse<>("ERROR", body);
+        return new ApiResponse<>("SUCCESS", body);
     }
 }

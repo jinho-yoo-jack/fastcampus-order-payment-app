@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
-import sw.sustainable.springlabs.fpay.infrastructure.persistence.repository.OrderRepository;
+import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 import sw.sustainable.springlabs.fpay.presentation.request.Orderer;
 import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrder;
 import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrderItem;
