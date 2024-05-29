@@ -3,8 +3,7 @@ package sw.sustainable.springlabs.fpay.application.service;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
@@ -18,8 +17,9 @@ import java.util.UUID;
 
 @Slf4j
 @ActiveProfiles("test")
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@SpringBootTest
+//@DataJpaTest
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class OrderServiceTests implements CreateNewOrderUseCase {
 
     @Autowired

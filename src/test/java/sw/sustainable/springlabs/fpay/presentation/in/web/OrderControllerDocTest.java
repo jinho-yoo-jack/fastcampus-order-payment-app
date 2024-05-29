@@ -21,7 +21,7 @@ import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrderItem;
 import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -59,20 +59,19 @@ public class OrderControllerDocTest {
                                         .attributes((key("constraint").value("주문자명을 입력 해주세요."))),
                                 PayloadDocumentation.fieldWithPath("orderer.phoneNumber").description("주문자 휴대전화 번호")
                                         .attributes((key("constraint").value("주문자명을 입력 해주세요."))),
-                                PayloadDocumentation.fieldWithPath("newlyOrderedItem.itemIdx").description("")
+                                PayloadDocumentation.fieldWithPath("newlyOrderedItem[].itemIdx").description("")
                                         .attributes((key("constraint").value("상세 주문 번호"))),
-                                PayloadDocumentation.fieldWithPath("newlyOrderedItem.productId").description("")
+                                PayloadDocumentation.fieldWithPath("newlyOrderedItem[].productId").description("")
                                         .attributes((key("constraint").value("상품 ID"))),
-                                PayloadDocumentation.fieldWithPath("newlyOrderedItem.productName").description("")
+                                PayloadDocumentation.fieldWithPath("newlyOrderedItem[].productName").description("")
                                         .attributes((key("constraint").value("상품명"))),
-                                PayloadDocumentation.fieldWithPath("newlyOrderedItem.price").description("")
+                                PayloadDocumentation.fieldWithPath("newlyOrderedItem[].price").description("")
                                         .attributes((key("constraint").value("상품 단일 가격"))),
-                                PayloadDocumentation.fieldWithPath("newlyOrderedItem.quantity").description("")
+                                PayloadDocumentation.fieldWithPath("newlyOrderedItem[].quantity").description("")
                                         .attributes((key("constraint").value("주문 수량"))),
-                                PayloadDocumentation.fieldWithPath("newlyOrderedItem.amounts").description("")
+                                PayloadDocumentation.fieldWithPath("newlyOrderedItem[].amounts").description("")
                                         .attributes((key("constraint").value("주문 상품 총 가격(상품 단일 가격 * 주문 수량)")))
-                        ))
-                );
+                        )));
     }
 
 }

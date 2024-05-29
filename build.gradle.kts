@@ -1,19 +1,26 @@
+group = "sw.sustainable"
+version = "0.0.1-SNAPSHOT"
+
 plugins {
     java
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
     id("org.asciidoctor.jvm.convert") version "3.3.2" // #2
+    id("com.epages.restdocs-api-spec") version "0.17.1"
+    id("org.hidetake.swagger.generator") version "2.18.2"
 }
 
-group = "sw.sustainable"
-version = "0.0.1-SNAPSHOT"
 
 // Ascii Doc Snippet Directory
-val snippetsDir by extra { file("build/generated-snippets") } // #3
 // Settings Configurations
 // https://velog.io/@glencode/Kotlin-Gradle%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-Spring-REST-Docs-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0
-var asciidoctorExt = configurations.create("asciidoctor") {
-    extendsFrom(configurations["testImplementation"])
+//var asciidoctorExt = configurations.create("asciidoctor") {
+//    extendsFrom(configurations["testImplementation"])
+//}
+
+val asciidoctorExt: Configuration by configurations.creating
+dependencies {
+    asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
 }
 
 java {
@@ -49,7 +56,19 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok")
     testImplementation("org.projectlombok:lombok")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc") // #1
+    testImplementation("org.springframework.restdocs:spring-restdocs-asciidoctor")
     asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
+
+    //Open API 3.1
+    testImplementation("com.epages:restdocs-api-spec-mockmvc:0.17.1")
+}
+
+openapi3 {
+    this.setServer("https://localhost:8080") // list로 넣을 수 있어 각종 환경의 URL들을 넣을 수 있음!
+    title = "My API"
+    description = "My API description"
+    version = "0.1.0"
+    format = "yaml" // or json
 }
 
 tasks.withType<Test> {
@@ -58,6 +77,8 @@ tasks.withType<Test> {
 
 // Ascii Doc Create Tasks
 tasks {
+    val snippetsDir by extra { file("build/generated-snippets") } // #3
+
     // Test 결과를 snippet Directory에 출력
     test {
         outputs.dir(snippetsDir)
@@ -96,4 +117,11 @@ tasks {
         // Ascii Doc 파일 생성이 성공해야만, Build 진행
         dependsOn(asciidoctor)
     }
+}
+
+tasks.register<Copy>("copyOasToSwagger") {
+    delete("src/main/resources/static/swagger-ui/openapi3.yaml") // 기존 yaml 파일 삭제
+    from("$buildDir/api-spec/openapi3.yaml") // 복제할 yaml 파일 타겟팅
+    into("src/main/resources/static/swagger-ui/.") // 타겟 디렉토리로 파일 복제
+    dependsOn("openapi3") // openapi3 task가 먼저 실행되도록 설정
 }
