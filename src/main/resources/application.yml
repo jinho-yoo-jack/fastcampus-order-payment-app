@@ -1,6 +1,12 @@
 spring:
   application:
     name: "spring-labs"
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+
 error-trace:
   stacktrace: true
 my:
@@ -27,8 +33,9 @@ spring:
     username: fastcamp
     password: testlabs
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-
+retrofit:
+  baseUrl: "https://api.tosspayments.com/"
+  privateKey: "test_sk_0RnYX2w532257LzwRYBK3NeyqApQ"
 my:
   name: jinho_dev
   age: 34
