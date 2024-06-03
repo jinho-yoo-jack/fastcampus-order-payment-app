@@ -44,4 +44,9 @@ public class ApiClientConfig {
                 .client(client)
                 .build();
     }
+
+    @Bean
+    public PaymentAPIs createApiClient(Retrofit retrofit) {
+        return retrofit.create(PaymentAPIs.class);
+    }
 }
