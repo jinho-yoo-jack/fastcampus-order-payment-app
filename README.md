@@ -5,9 +5,12 @@ Jedi Spring Boot 연구소
 지속 성장 가능한 소프트웨어 설계과 구현에 대한 지식과 기술 습득하기
 
 ## 환경구성
+![Overal_Architecture](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/e40f3347-48be-4140-8798-0a20c1512264)
 1. JDK 21
 2. Spring Boot 3.2.4
-3. MySQL 8.0 based Docker
+4. MySQL 8.0 based Docker
+5. Kafka Cluster based Docker
+
 
 ## 개발 방법론
 1. TDD
