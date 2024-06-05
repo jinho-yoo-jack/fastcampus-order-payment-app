@@ -39,6 +39,11 @@ public class CustomStringHttpMessageConverter extends AbstractHttpMessageConvert
     }
 
     @Override
+    public boolean canWrite(Class<?> clazz, @Nullable MediaType mediaType) {
+        return clazz.equals(ApiResponse.class) && this.canWrite(mediaType);
+    }
+
+    @Override
     protected ApiResponse<Object> readInternal(Class<? extends ApiResponse<Object>> clazz, HttpInputMessage inputMessage)
             throws IOException, HttpMessageNotReadableException {
         throw new UnsupportedOperationException("This converter can only support writing operation.");

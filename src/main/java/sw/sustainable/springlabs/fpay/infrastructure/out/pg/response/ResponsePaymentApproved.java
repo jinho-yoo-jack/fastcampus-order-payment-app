@@ -1,29 +1,26 @@
 package sw.sustainable.springlabs.fpay.infrastructure.out.pg.response;
 
 
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.payment.method.Card;
 
 import java.time.LocalDateTime;
 
 @Data
-@RequiredArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ResponsePaymentApproved {
-    private final String orderId;
-    private final String orderName;
-    private final Card card;
-    private final String paymentKey;
-    private final String lastTransactionKey;
-    @NotNull
-    private final String status; // 결제 상태
-    private final String method; // 결제 수단
-    private final int totalAmount;    // 총 결제 금액
-    private final int balanceAmount;  // 취소 가능한 금액
-    private final int suppliedAmount; // 공급 가액
-    private final int vat;
-    private final LocalDateTime requestedAt;
-    private final LocalDateTime approvedAt;
-
+    private String orderId;
+    private String orderName;
+    private Card card;
+    private String paymentKey;
+    private String lastTransactionKey;
+    private String status; // 결제 상태
+    private String method; // 결제 수단
+    private int totalAmount;    // 총 결제 금액
+    private int balanceAmount;  // 취소 가능한 금액
+    private int suppliedAmount; // 공급 가액
+    private int vat;
+    private String requestedAt;
+    private String approvedAt;
 }

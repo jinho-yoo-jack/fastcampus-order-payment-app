@@ -39,7 +39,7 @@
           orderId: urlParams.get("orderId"),
           amount: urlParams.get("amount"),
         };
-
+        console.log("call confirm")
         const response = await fetch("/confirm", {
           method: "POST",
           headers: {
@@ -47,7 +47,7 @@
           },
           body: JSON.stringify(requestData),
         });
-
+        debugger
         const json = await response.json();
 
         if (!response.ok) {

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import retrofit2.Response;
 import sw.sustainable.springlabs.fpay.application.port.in.PaymentFullfillUseCase;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
 import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
@@ -36,14 +37,17 @@ public class PaymentService implements PaymentFullfillUseCase {
         return "fail";
     }
 
-    private boolean paymentApproved(String status){
+    private boolean paymentApproved(String status) {
         return "DONE".equalsIgnoreCase(status);
     }
 
     private ResponsePaymentApproved requestPaymentApproved(PaymentApproved paymentInfo) throws IOException {
-        return paymentAPIs.paymentFullfill(paymentInfo)
-                .orElseThrow(NullPointerException::new)
-                .execute().body();
+        Response<ResponsePaymentApproved> response = paymentAPIs.paymentFullfill(paymentInfo)
+                .execute();
+        if (response.isSuccessful()) {
+            return response.body();
+        }
+        return null;
     }
 
 }

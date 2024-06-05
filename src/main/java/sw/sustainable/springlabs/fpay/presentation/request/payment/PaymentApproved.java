@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 public class PaymentApproved {
-    private final String paymentType;
+    private final String paymentKey;
     private final String orderId;
     private final int amount;
 }
