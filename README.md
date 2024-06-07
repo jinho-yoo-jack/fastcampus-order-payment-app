@@ -27,6 +27,7 @@ PG사 TEST API 연동(+결제위젯)
 ### 결제 기능 개발 - TDD 기반 카드 결제 취소 기능
 ![스크린샷 2024-06-07 오후 4 20 26](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/90796985-832b-4afc-a948-266161a92b79)
 ### 결제 기능 개발 - TDD 기반 카드 결제 정산 기능
+![스크린샷 2024-06-07 오후 4 30 57](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/263c998c-9cdd-42c5-a825-8c01ad5ea69a)
    - DDD 설계(TODO://곶감)
    - 전체 구성도(TODO://곶감)
    - 시스템 배포
