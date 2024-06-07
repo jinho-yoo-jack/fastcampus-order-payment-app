@@ -20,13 +20,12 @@ Jedi Spring Boot 연구소
 1. Hexagonal architecture
 2. Multi Module
 
-## 프로젝트 목록
-1. 4-7월: 이커머스 기반의 결제/빌링 시스템
-   - 요구사항
-     1. PG사 TEST API 연동(화면 제외)
-     2. 결제 기능 개발 - TDD 기반 카드 결제 승인 기능
-     3. 결제 기능 개발 - TDD 기반 카드 결제 취소 기능
-     4. 결제 기능 개발 - TDD 기반 카드 결제 정산 기능
+## 이커머스 주문/결제 시스템
+PG사 TEST API 연동(+결제위젯)
+### 결제 기능 개발 - TDD 기반 카드 결제 승인 기능
+![스크린샷 2024-06-07 오후 3 23 11](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/95cfcff2-274a-458e-a849-994205355ce6)
+### 결제 기능 개발 - TDD 기반 카드 결제 취소 기능
+### 결제 기능 개발 - TDD 기반 카드 결제 정산 기능
    - DDD 설계(TODO://곶감)
    - 전체 구성도(TODO://곶감)
    - 시스템 배포
