@@ -18,7 +18,7 @@ Jedi Spring Boot 연구소
 
 ## 아키텍처
 ### Hexagonal architecture
-![헥사고날_아키텍처](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/bfe3c469-c50f-4bd0-8e64-a5b862b74e49)
+![헥사고날_아키텍처_최종](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/b3662d81-b3d2-4ef1-9a5f-fba7c765ecde)
 
 
 ## 이커머스 주문/결제 시스템
