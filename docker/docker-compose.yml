@@ -4,8 +4,8 @@ services:
     ports:
       - 13306:3306
     volumes:
-      - /Users/jinho/IdeaProjects/spring-labs/src/main/resources/initdb:/docker-entrypoint-initdb.d
-#      - /Users/black/IdeaProjects/jedi-spring-labs/src/main/resources/initdb:/docker-entrypoint-initdb.d
+#      - /Users/jinho/IdeaProjects/spring-labs/src/main/resources/initdb:/docker-entrypoint-initdb.d
+      - /Users/black/IdeaProjects/jedi-spring-labs/src/main/resources/initdb:/docker-entrypoint-initdb.d
     command:
       - '--character-set-server=utf8mb4'
       - '--collation-server=utf8mb4_unicode_ci'
@@ -13,3 +13,30 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: testbed
       MYSQL_DATABASE: service-labs
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+    ports:
+      - "22181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "19092:19092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:19092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:19092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
