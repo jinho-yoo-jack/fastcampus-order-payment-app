@@ -17,8 +17,9 @@ Jedi Spring Boot 연구소
 2. DDD
 
 ## 아키텍처
-1. Hexagonal architecture
-2. Multi Module
+### Hexagonal architecture
+![헥사고날_아키텍처](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/bfe3c469-c50f-4bd0-8e64-a5b862b74e49)
+
 
 ## 이커머스 주문/결제 시스템
 PG사 TEST API 연동(+결제위젯)
