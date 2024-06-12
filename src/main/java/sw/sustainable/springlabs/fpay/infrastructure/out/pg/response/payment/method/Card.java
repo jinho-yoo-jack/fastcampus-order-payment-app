@@ -1,4 +1,7 @@
 package sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.payment.method;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /*
   "card": {
     "issuerCode": "71",
@@ -16,6 +19,7 @@ package sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.payment.me
     "amount": 1000
   },
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Card {
     private String issuerCode;
     private String acquirerCode;
