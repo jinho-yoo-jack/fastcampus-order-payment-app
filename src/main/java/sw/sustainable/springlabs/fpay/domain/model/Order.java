@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "purchase_order")
@@ -37,15 +35,15 @@ public class Order {
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "order_items",
-        joinColumns = @JoinColumn(name = "order_id"))
+            joinColumns = @JoinColumn(name = "order_id"))
     @AttributeOverrides({
-        @AttributeOverride(name = "orderId", column = @Column(name = "order_id")),
-        @AttributeOverride(name = "itemIdx", column = @Column(name = "item_idx")),
-        @AttributeOverride(name = "productId", column = @Column(name = "product_id")),
-        @AttributeOverride(name = "productName", column = @Column(name = "product_name")),
-        @AttributeOverride(name = "price", column = @Column(name = "product_price")),
-        @AttributeOverride(name = "size", column = @Column(name = "product_size")),
-        @AttributeOverride(name = "state", column = @Column(name = "order_state")),
+            @AttributeOverride(name = "orderId", column = @Column(name = "order_id")),
+            @AttributeOverride(name = "itemIdx", column = @Column(name = "item_idx")),
+            @AttributeOverride(name = "productId", column = @Column(name = "product_id")),
+            @AttributeOverride(name = "productName", column = @Column(name = "product_name")),
+            @AttributeOverride(name = "price", column = @Column(name = "product_price")),
+            @AttributeOverride(name = "size", column = @Column(name = "product_size")),
+            @AttributeOverride(name = "state", column = @Column(name = "order_state")),
     })
     private List<OrderItem> items = new ArrayList<>();
 
@@ -70,22 +68,22 @@ public class Order {
         return items != null && !items.isEmpty();
     }
 
-    public List<OrderItem> getOrderedItems() {
-        return items;
+    public boolean isPossibleToCancel(){
+        return this.status.equals(OrderStatus.PURCHASE_DECISION);
     }
 
-    private void calculateTotalAmount(List<OrderItem> items) {
-        this.totalPrice = items.stream()
-            .map(OrderItem::calculateAmount)
-            .reduce(0, Integer::sum);
-    }
-
-    public Order update(OrderStatus status){
+    public Order update(OrderStatus status) {
         this.status = status;
         return this;
     }
 
     public boolean isChangeableShippingAddress() {
         return !(status.equals(OrderStatus.SHIPPING));
+    }
+
+    private void calculateTotalAmount(List<OrderItem> items) {
+        this.totalPrice = items.stream()
+                .map(OrderItem::calculateAmount)
+                .reduce(0, Integer::sum);
     }
 }

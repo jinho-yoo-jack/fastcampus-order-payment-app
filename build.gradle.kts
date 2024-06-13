@@ -14,10 +14,6 @@ plugins {
 // Ascii Doc Snippet Directory
 // Settings Configurations
 // https://velog.io/@glencode/Kotlin-Gradle%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-Spring-REST-Docs-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0
-//var asciidoctorExt = configurations.create("asciidoctor") {
-//    extendsFrom(configurations["testImplementation"])
-//}
-
 val asciidoctorExt: Configuration by configurations.creating
 dependencies {
     asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
@@ -106,15 +102,6 @@ tasks {
                 into("src/main/resources/static/docs")
             }
         }
-    }
-
-    register("copyDocument", Copy::class) {
-        dependsOn(asciidoctor)
-        doFirst {
-            delete(file("src/main/resources/static/docs"))
-        }
-        from(file("build/docs/asciidoc"))
-        into(files("src/main/resources/static/docs"))
     }
 
     build {

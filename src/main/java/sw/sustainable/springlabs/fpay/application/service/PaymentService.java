@@ -43,11 +43,12 @@ public class PaymentService implements PaymentFullfillUseCase {
 
     private ResponsePaymentApproved requestPaymentApproved(PaymentApproved paymentInfo) throws IOException {
         Response<ResponsePaymentApproved> response = paymentAPIs.paymentFullfill(paymentInfo)
+                .orElseThrow(NullPointerException::new)
                 .execute();
         if (response.isSuccessful()) {
             return response.body();
         }
-        return null;
+        throw new IOException(response.message());
     }
 
 }
