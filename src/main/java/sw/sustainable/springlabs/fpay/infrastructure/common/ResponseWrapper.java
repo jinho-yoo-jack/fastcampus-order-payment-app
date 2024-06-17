@@ -15,8 +15,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class ResponseWrapper implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        log.info("return Type -> {}", returnType);
-        log.info("converter Type -> {}", converterType);
+        log.info("execute AOP - supports");
+        log.info("execute AOP - returnType :: {}", returnType);
+        log.info("execute AOP - converterType :: {}", converterType);
         return true;
     }
 
@@ -28,6 +29,7 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
 
+        log.info("execute AOP - beforeBodyWrite");
         if (body instanceof ErrorResponse)
             return new ApiResponse<>("ERROR", body);
         return new ApiResponse<>("SUCCESS", body);

@@ -25,7 +25,8 @@ public class OrderController {
 
     @GetMapping
     public String test() throws Exception {
-        throw new Exception("ERROR");
+        return "test";
+//        throw new Exception("ERROR");
     }
 
     @GetMapping("info")

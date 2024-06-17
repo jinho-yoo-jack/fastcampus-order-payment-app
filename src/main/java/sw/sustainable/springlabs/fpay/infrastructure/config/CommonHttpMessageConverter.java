@@ -1,6 +1,7 @@
 package sw.sustainable.springlabs.fpay.infrastructure.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.*;
@@ -15,11 +16,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Component
+@Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class CustomStringHttpMessageConverter extends AbstractHttpMessageConverter<ApiResponse<Object>> {
+public class CommonHttpMessageConverter extends AbstractHttpMessageConverter<ApiResponse<Object>> {
     private final ObjectMapper objectMapper;
 
-    public CustomStringHttpMessageConverter(ObjectMapper objectMapper) {
+    public CommonHttpMessageConverter(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
@@ -40,7 +42,10 @@ public class CustomStringHttpMessageConverter extends AbstractHttpMessageConvert
 
     @Override
     public boolean canWrite(Class<?> clazz, @Nullable MediaType mediaType) {
-        return clazz.equals(ApiResponse.class) && this.canWrite(mediaType);
+        log.info("execute AbstractHttpMessageConverter - canWrite");
+        log.info("execute AbstractHttpMessageConverter - be can :: {}", clazz.equals(ApiResponse.class) && this.canWrite(mediaType));
+//        return clazz.equals(ApiResponse.class) && this.canWrite(mediaType);
+        return true;
     }
 
     @Override
@@ -52,6 +57,7 @@ public class CustomStringHttpMessageConverter extends AbstractHttpMessageConvert
     @Override
     protected void writeInternal(ApiResponse<Object> resultMessage, HttpOutputMessage outputMessage)
             throws IOException, HttpMessageNotWritableException {
+        log.info("execute AbstractHttpMessageConverter - writeInternal");
         String responseMessage = this.objectMapper.writeValueAsString(resultMessage);
         StreamUtils.copy(responseMessage.getBytes(StandardCharsets.UTF_8), outputMessage.getBody());
     }
