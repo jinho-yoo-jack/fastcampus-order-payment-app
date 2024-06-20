@@ -1,0 +1,81 @@
+openapi: 3.0.1
+info:
+  title: My API
+  description: My API description
+  version: 0.1.0
+servers:
+- url: https://localhost:8080
+tags: []
+paths:
+  /order/new:
+    post:
+      tags:
+      - order
+      operationId: new-order
+      requestBody:
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/order-new-972061452'
+            examples:
+              new-order:
+                value: "{\"orderer\":{\"name\":\"유진호\",\"phoneNumber\":\"010-1234-1234\"\
+                  },\"newlyOrderedItem\":[{\"itemIdx\":1,\"productId\":\"fb59b433-b6ef-4408-94b7-382b933d6533\"\
+                  ,\"productName\":\"농심 짜파게티 4봉\",\"price\":4500,\"quantity\":1,\"\
+                  amounts\":4500}]}"
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-new486549215'
+              examples:
+                new-order:
+                  value: "{\"status\":\"SUCCESS\",\"body\":{\"orderId\":\"e8609b3b-ddca-4f45-b465-072173f06dbd\"\
+                    ,\"orderer\":{\"name\":\"유진호\",\"phoneNumber\":\"010-1234-1234\"\
+                    },\"paymentId\":\"58d3af84-e18a-4946-9564-a275901c690a\",\"totalPrice\"\
+                    :0,\"status\":\"ORDER_COMPLETED\",\"items\":[{\"itemIdx\":1,\"\
+                    productId\":\"fb59b433-b6ef-4408-94b7-382b933d6533\",\"productName\"\
+                    :\"농심 짜파게티 4봉\",\"price\":4500,\"size\":\"FREE\",\"amount\":0,\"\
+                    quantity\":0,\"state\":\"ORDER_COMPLETED\"}]},\"timestamp\":\"\
+                    2024-06-20T15:48:30.364953\"}"
+components:
+  schemas:
+    order-new-972061452:
+      type: object
+      properties:
+        newlyOrderedItem:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                type: number
+                description: ""
+              amounts:
+                type: number
+                description: ""
+              productId:
+                type: string
+                description: ""
+              price:
+                type: number
+                description: ""
+              itemIdx:
+                type: number
+                description: ""
+              productName:
+                type: string
+                description: ""
+        orderer:
+          type: object
+          properties:
+            phoneNumber:
+              type: string
+              description: 주문자 휴대전화 번호
+            name:
+              type: string
+              description: 주문자명
+    order-new486549215:
+      type: object

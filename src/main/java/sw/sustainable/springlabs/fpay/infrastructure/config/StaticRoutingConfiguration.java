@@ -8,9 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class StaticRoutingConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/doc/**").addResourceLocations("classpath:/static/docs/");
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/static/swagger-ui/");
-        registry.addResourceHandler("/payment/**").addResourceLocations("classpath:/static/toss-payment/");
-        registry.addResourceHandler("/success").addResourceLocations("classpath:/static/toss-payment/");
+        registry.addResourceHandler("/payment/**").addResourceLocations("classpath:/templates/");
     }
 }

@@ -6,7 +6,7 @@
             rel="icon"
             href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"
     />
-    <link rel="stylesheet" type="text/css" href="/static/toss-payment/style.css"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>토스페이먼츠 샘플 프로젝트</title>
@@ -110,7 +110,7 @@ http://localhost:8080/payment/checkout.html?orderId=0f568795-0678-41f0-a385-11d6
         paymentWidget.requestPayment({
             orderId: orderId, // 주문ID
             orderName: orderedProductsName, // 주문된 상품명
-            successUrl: window.location.origin + "/success.html",
+            successUrl: window.location.origin + "/success",
             failUrl: window.location.origin + "/fail",
             customerEmail: "fastcamp-y@gmail.com",
             customerName: ordererName,

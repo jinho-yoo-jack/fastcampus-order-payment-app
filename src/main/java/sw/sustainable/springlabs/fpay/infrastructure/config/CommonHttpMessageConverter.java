@@ -43,9 +43,8 @@ public class CommonHttpMessageConverter extends AbstractHttpMessageConverter<Api
     @Override
     public boolean canWrite(Class<?> clazz, @Nullable MediaType mediaType) {
         log.info("execute AbstractHttpMessageConverter - canWrite");
-        log.info("execute AbstractHttpMessageConverter - be can :: {}", clazz.equals(ApiResponse.class) && this.canWrite(mediaType));
-//        return clazz.equals(ApiResponse.class) && this.canWrite(mediaType);
-        return true;
+        log.info("execute AbstractHttpMessageConverter - be can :: {}", (clazz.equals(ApiResponse.class) || clazz.isPrimitive()) && this.canWrite(mediaType));
+        return (clazz.equals(ApiResponse.class) || clazz.isPrimitive()) && this.canWrite(mediaType);
     }
 
     @Override

@@ -27,6 +27,8 @@ public class PaymentService implements PaymentFullfillUseCase {
     @Transactional
     public String paymentApproved(PaymentApproved paymentInfo) throws IOException {
         ResponsePaymentApproved response = requestPaymentApproved(paymentInfo);
+        log.info("Payment approved: {}", response);
+        log.info("Payment approved: {}", response.getCard());
         String status = response.getStatus();
 
         if (paymentApproved(status)) {
@@ -43,7 +45,6 @@ public class PaymentService implements PaymentFullfillUseCase {
 
     private ResponsePaymentApproved requestPaymentApproved(PaymentApproved paymentInfo) throws IOException {
         Response<ResponsePaymentApproved> response = paymentAPIs.paymentFullfill(paymentInfo)
-                .orElseThrow(NullPointerException::new)
                 .execute();
         if (response.isSuccessful()) {
             return response.body();

@@ -1,11 +1,14 @@
 package sw.sustainable.springlabs.fpay.infrastructure.out.pg.response;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.payment.method.Card;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -21,6 +24,6 @@ public class ResponsePaymentApproved {
     private int balanceAmount;  // 취소 가능한 금액
     private int suppliedAmount; // 공급 가액
     private int vat;
-    private String requestedAt;
+    private String requestedAt; // 2024-06-18T15:13:15+09:00
     private String approvedAt;
 }

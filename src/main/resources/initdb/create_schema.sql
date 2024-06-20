@@ -47,11 +47,11 @@ CREATE TABLE `payment`
 
 CREATE TABLE `card_payment`
 (
-    `payment_id`      VARCHAR(255) NOT NULL COMMENT '결제번호(PK and FK)',
+    `payment_id`      VARCHAR(255) NOT NULL COMMENT '결제번호(paymentKey)',
     `card_number`     VARCHAR(255) NOT NULL COMMENT '카드번호',
     `approve_no`      VARCHAR(10)  NOT NULL COMMENT '카드 승인 번호',
     `amount`          INT          NOT NULL COMMENT '최종 결제 금액(즉시 할인 금액 포함)',
-    `acquire_status`   VARCHAR(255) NOT NULL COMMENT '카드결제 매입 상태',
+    `acquire_status`  VARCHAR(255) NOT NULL COMMENT '카드결제 매입 상태',
     `cancel_amount`   INT          NOT NULL COMMENT '취소 가능한 금액',
     `canceled_amount` INT          NOT NULL COMMENT '취소된 총 금액',
     `issuer_code`     VARCHAR(255) NOT NULL COMMENT '카드 발급사 코드',
