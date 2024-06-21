@@ -1,8 +1,9 @@
-# Spring Boot Labs
-Jedi Spring Boot 연구소
+# FastCampus 9개 프로젝트 중 2번째 프로젝트
+Kafka를 활용한 대량의 트랜잭션을 처리하는 이커머스 주문 및 결제 시스템 개발
 
 ## 목표
-지속 성장 가능한 소프트웨어 설계과 구현에 대한 지식과 기술 습득하기
+**첫 번째**, DDD 기반의 헥사고날 아키텍처로 Applicaiton 설계 및 개발<br />
+**두 번**째, Kafka로 대용량 트랜잭션(주문 및 결제)을 실시간 처리 기능 설계 및 개발<br />
 
 ## 환경구성
 ![Overal_Architecture](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/e40f3347-48be-4140-8798-0a20c1512264)
@@ -33,7 +34,7 @@ PG사 TEST API 연동(+결제위젯)
 ![스크린샷 2024-06-07 오후 4 20 26](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/90796985-832b-4afc-a948-266161a92b79)
 ### 결제 기능 개발 - TDD 기반 카드 결제 정산 기능
 ![스크린샷 2024-06-07 오후 4 30 57](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/263c998c-9cdd-42c5-a825-8c01ad5ea69a)
-   - DDD 설계(TODO://곶감)
-   - 전체 구성도(TODO://곶감)
-   - 시스템 배포
+- DDD 설계(TODO://곶감)
+- 전체 구성도(TODO://곶감)
+- 시스템 배포
      - Docker 기반 컨테이너화

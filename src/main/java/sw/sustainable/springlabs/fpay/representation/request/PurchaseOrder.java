@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.presentation.request;
+package sw.sustainable.springlabs.fpay.representation.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

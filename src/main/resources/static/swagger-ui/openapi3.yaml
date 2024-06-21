@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: My API
-  description: My API description
+  title: FastEcommerce - Order/Payment
+  description: Order/Payment API
   version: 0.1.0
 servers:
 - url: https://localhost:8080
@@ -20,7 +20,7 @@ paths:
             examples:
               new-order:
                 value: "{\"orderer\":{\"name\":\"유진호\",\"phoneNumber\":\"010-1234-1234\"\
-                  },\"newlyOrderedItem\":[{\"itemIdx\":1,\"productId\":\"fb59b433-b6ef-4408-94b7-382b933d6533\"\
+                  },\"newlyOrderedItem\":[{\"itemIdx\":1,\"productId\":\"eb2a5f23-f851-4b58-9ea1-a36d606b1f75\"\
                   ,\"productName\":\"농심 짜파게티 4봉\",\"price\":4500,\"quantity\":1,\"\
                   amounts\":4500}]}"
       responses:
@@ -32,14 +32,14 @@ paths:
                 $ref: '#/components/schemas/order-new486549215'
               examples:
                 new-order:
-                  value: "{\"status\":\"SUCCESS\",\"body\":{\"orderId\":\"e8609b3b-ddca-4f45-b465-072173f06dbd\"\
+                  value: "{\"status\":\"SUCCESS\",\"body\":{\"orderId\":\"43696578-df4b-49b6-a526-6ba3b5b4df3f\"\
                     ,\"orderer\":{\"name\":\"유진호\",\"phoneNumber\":\"010-1234-1234\"\
-                    },\"paymentId\":\"58d3af84-e18a-4946-9564-a275901c690a\",\"totalPrice\"\
+                    },\"paymentId\":\"c538f7b9-f310-43ea-9e6e-f832e947a889\",\"totalPrice\"\
                     :0,\"status\":\"ORDER_COMPLETED\",\"items\":[{\"itemIdx\":1,\"\
-                    productId\":\"fb59b433-b6ef-4408-94b7-382b933d6533\",\"productName\"\
+                    productId\":\"eb2a5f23-f851-4b58-9ea1-a36d606b1f75\",\"productName\"\
                     :\"농심 짜파게티 4봉\",\"price\":4500,\"size\":\"FREE\",\"amount\":0,\"\
                     quantity\":0,\"state\":\"ORDER_COMPLETED\"}]},\"timestamp\":\"\
-                    2024-06-20T15:48:30.364953\"}"
+                    2024-06-21T11:23:25.975175\"}"
 components:
   schemas:
     order-new-972061452:

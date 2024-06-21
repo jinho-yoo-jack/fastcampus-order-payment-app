@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
-import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrder;
+import sw.sustainable.springlabs.fpay.representation.request.PurchaseOrder;
 
 @Service
 @RequiredArgsConstructor

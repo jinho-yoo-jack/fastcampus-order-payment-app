@@ -1,11 +1,11 @@
-package sw.sustainable.springlabs.fpay.presentation.in.web;
+package sw.sustainable.springlabs.fpay.representation.in.web;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
-import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrder;
-import sw.sustainable.springlabs.fpay.presentation.response.NewPurchaseOrder;
+import sw.sustainable.springlabs.fpay.representation.request.PurchaseOrder;
+import sw.sustainable.springlabs.fpay.representation.response.NewPurchaseOrder;
 
 import java.util.HashMap;
 import java.util.Map;

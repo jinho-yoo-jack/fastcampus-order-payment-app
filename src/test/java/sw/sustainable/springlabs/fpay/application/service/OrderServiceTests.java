@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
-import sw.sustainable.springlabs.fpay.presentation.request.Orderer;
-import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrder;
-import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrderItem;
+import sw.sustainable.springlabs.fpay.representation.request.Orderer;
+import sw.sustainable.springlabs.fpay.representation.request.PurchaseOrder;
+import sw.sustainable.springlabs.fpay.representation.request.PurchaseOrderItem;
 
 import java.util.List;
 import java.util.UUID;

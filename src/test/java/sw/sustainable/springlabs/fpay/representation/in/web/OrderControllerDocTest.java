@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.presentation.in.web;
+package sw.sustainable.springlabs.fpay.representation.in.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -14,9 +14,9 @@ import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
-import sw.sustainable.springlabs.fpay.presentation.request.Orderer;
-import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrder;
-import sw.sustainable.springlabs.fpay.presentation.request.PurchaseOrderItem;
+import sw.sustainable.springlabs.fpay.representation.request.Orderer;
+import sw.sustainable.springlabs.fpay.representation.request.PurchaseOrder;
+import sw.sustainable.springlabs.fpay.representation.request.PurchaseOrderItem;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,12 +35,6 @@ public class OrderControllerDocTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private OrderRepository orderRepository;
-
-    @Autowired
-    private CreateNewOrderUseCase createNewOrderUseCase;
 
     @Test
     public void newOrderTest() throws Exception {

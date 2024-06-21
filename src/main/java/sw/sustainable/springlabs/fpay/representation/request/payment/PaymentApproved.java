@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.presentation.request.payment;
+package sw.sustainable.springlabs.fpay.representation.request.payment;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

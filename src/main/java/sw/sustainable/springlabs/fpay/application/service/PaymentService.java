@@ -11,10 +11,9 @@ import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.PaymentAPIs;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.ResponsePaymentApproved;
-import sw.sustainable.springlabs.fpay.presentation.request.payment.PaymentApproved;
+import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentApproved;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
