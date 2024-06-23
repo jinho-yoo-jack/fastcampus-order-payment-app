@@ -19,13 +19,11 @@ public class PaymentController {
                                   @RequestParam(value = "paymentKey") String paymentKey,
                                   @RequestParam(value = "amount") String amount
     ) {
-        log.info("Request Params => paymentType ::: {}", paymentType);
         return "success";
     }
 
     @GetMapping("/fail")
     public String paymentFail(@RequestParam(value = "message") String message) {
-        log.info("Request Params => paymentType ::: {}", message);
         return "fail";
     }
 

@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.representation.request;
+package sw.sustainable.springlabs.fpay.representation.request.order;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

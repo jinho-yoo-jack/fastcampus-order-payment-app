@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
-import sw.sustainable.springlabs.fpay.representation.request.PurchaseOrder;
+import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder;
 import sw.sustainable.springlabs.fpay.representation.response.NewPurchaseOrder;
 
 import java.util.HashMap;

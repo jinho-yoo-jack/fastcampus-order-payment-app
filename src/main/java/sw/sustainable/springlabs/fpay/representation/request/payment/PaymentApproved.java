@@ -1,12 +1,14 @@
 package sw.sustainable.springlabs.fpay.representation.request.payment;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @RequiredArgsConstructor
 public class PaymentApproved {
+//    private String paymentType;
     private final String paymentKey;
     private final String orderId;
-    private final int amount;
+    private final String amount;
 }

@@ -2,7 +2,7 @@ package sw.sustainable.springlabs.fpay.representation.response;
 
 import lombok.Getter;
 import sw.sustainable.springlabs.fpay.domain.model.*;
-import sw.sustainable.springlabs.fpay.representation.request.Orderer;
+import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
 
 import java.util.*;
 

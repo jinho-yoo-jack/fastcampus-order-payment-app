@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import sw.sustainable.springlabs.fpay.domain.model.*;
+import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
+import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem;
 
 import java.util.*;
 
@@ -19,7 +21,7 @@ public class PurchaseOrder {
 
     @Size(min = 1)
     @Valid
-    private List<PurchaseOrderItem> newlyOrderedItem;
+    private List<sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem> newlyOrderedItem;
 
     private List<OrderItem> convert2OrderItems() {
         return newlyOrderedItem.stream()
