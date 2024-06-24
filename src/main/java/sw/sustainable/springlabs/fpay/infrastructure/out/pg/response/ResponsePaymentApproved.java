@@ -1,14 +1,9 @@
 package sw.sustainable.springlabs.fpay.infrastructure.out.pg.response;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.payment.method.Card;
-
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

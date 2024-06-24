@@ -1,17 +1,17 @@
 package sw.sustainable.springlabs.fpay.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "purchase_order")
-@SecondaryTable(name = "order_items", pkJoinColumns = @PrimaryKeyJoinColumn(name = "order_id"))
 @AllArgsConstructor
 @Getter
 @Builder
@@ -20,14 +20,17 @@ public class Order {
     @Column(name = "order_id", columnDefinition = "BINARY(16)")
     private UUID orderId;
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "payment_id")
     private UUID paymentId;
 
+    @NotBlank
     @Column(name = "total_price")
     private int totalPrice;
 
@@ -35,25 +38,15 @@ public class Order {
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus status;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "order_items",
-        joinColumns = @JoinColumn(name = "order_id"))
-    @AttributeOverrides({
-        @AttributeOverride(name = "orderId", column = @Column(name = "order_id")),
-        @AttributeOverride(name = "itemIdx", column = @Column(name = "item_idx")),
-        @AttributeOverride(name = "productId", column = @Column(name = "product_id")),
-        @AttributeOverride(name = "productName", column = @Column(name = "product_name")),
-        @AttributeOverride(name = "price", column = @Column(name = "product_price")),
-        @AttributeOverride(name = "size", column = @Column(name = "product_size")),
-        @AttributeOverride(name = "state", column = @Column(name = "order_state")),
-    })
+    @OneToMany
+    @JoinColumn()
     private List<OrderItem> items = new ArrayList<>();
 
     protected Order() {
     }
 
     public Order(UUID orderId, String name, String phoneNumber, List<OrderItem> items) throws Exception {
-        if (!verifyHaveAtLeastOneItem(items)) throw new Exception("Noting Items");
+        if (verifyHaveAtLeastOneItem(items)) throw new Exception("Noting Items");
         calculateTotalAmount(items);
         this.orderId = orderId;
         this.name = name;
@@ -66,26 +59,36 @@ public class Order {
         return UUID.randomUUID();
     }
 
-    public boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
-        return items != null && !items.isEmpty();
+    public void save(OrderRepository orderRepository) throws Exception {
+        if (verifyHaveAtLeastOneItem(items))
+            throw new Exception("Noting Items");
+        orderRepository.save(this);
     }
 
-    public List<OrderItem> getOrderedItems() {
-        return items;
-    }
-
-    private void calculateTotalAmount(List<OrderItem> items) {
-        this.totalPrice = items.stream()
-            .map(OrderItem::calculateAmount)
-            .reduce(0, Integer::sum);
-    }
-
-    public Order update(OrderStatus status){
+    public Order update(OrderStatus status) {
         this.status = status;
         return this;
     }
 
+    private void calculateTotalAmount(List<OrderItem> items) {
+        this.totalPrice = items.stream()
+                .map(OrderItem::calculateAmount)
+                .reduce(0, Integer::sum);
+    }
+
+    public boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
+        return items == null || items.isEmpty();
+    }
+
     public boolean isChangeableShippingAddress() {
         return !(status.equals(OrderStatus.SHIPPING));
+    }
+
+    public boolean isPossibleToCancel() {
+        return this.status.equals(OrderStatus.PURCHASE_DECISION);
+    }
+
+    public List<OrderItem> getOrderedItems() {
+        return this.items;
     }
 }

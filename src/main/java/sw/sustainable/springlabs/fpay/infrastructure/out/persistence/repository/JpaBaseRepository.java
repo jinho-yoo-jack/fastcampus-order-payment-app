@@ -8,6 +8,6 @@ import java.util.Optional;
 @NoRepositoryBean
 public interface JpaBaseRepository<T, ID> extends Repository<T, ID> {
     Optional<T> findById(ID id);
-    <S extends T> void save(S entity);
+    <S extends T> T save(S entity);
     boolean deleteById(ID id);
 }

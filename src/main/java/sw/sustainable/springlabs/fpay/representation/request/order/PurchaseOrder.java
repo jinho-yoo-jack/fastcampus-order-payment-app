@@ -28,31 +28,31 @@ public class PurchaseOrder {
     @Valid
     private List<PurchaseOrderItem> newlyOrderedItem;
 
-    private List<OrderItem> convert2OrderItems() {
+    public List<OrderItem> convert2OrderItems(UUID orderId) {
         return newlyOrderedItem.stream()
-            .map(this::convert2OrderItem)
-            .toList();
+                .map(i -> convert2OrderItem(i, orderId))
+                .toList();
     }
 
-    private OrderItem convert2OrderItem(PurchaseOrderItem item) {
+    private OrderItem convert2OrderItem(PurchaseOrderItem item, UUID orderId) {
         return OrderItem.builder()
-            .itemIdx(item.getItemIdx())
-            .productId(item.getProductId())
-            .productName(item.getProductName())
-            .price(item.getPrice())
-            .size("FREE")
-            .state(OrderStatus.ORDER_COMPLETED)
-            .build();
+                .orderId(orderId)
+                .itemIdx(item.getItemIdx())
+                .productId(item.getProductId())
+                .productName(item.getProductName())
+                .price(item.getPrice())
+                .size("FREE")
+                .state(OrderStatus.ORDER_COMPLETED)
+                .build();
     }
 
     public Order toEntity() {
         return Order.builder()
-            .orderId(Order.generateOrderId())
-            .items(convert2OrderItems())
-            .name(orderer.getName())
-            .phoneNumber(orderer.getPhoneNumber())
-            .status(OrderStatus.ORDER_COMPLETED)
-            .paymentId(UUID.randomUUID())
-            .build();
+//            .items(convert2OrderItems())
+                .name(orderer.getName())
+                .phoneNumber(orderer.getPhoneNumber())
+                .status(OrderStatus.ORDER_COMPLETED)
+                .paymentId(UUID.randomUUID())
+                .build();
     }
 }

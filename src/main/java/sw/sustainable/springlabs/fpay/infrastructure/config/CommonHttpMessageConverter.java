@@ -35,19 +35,6 @@ public class CommonHttpMessageConverter extends AbstractHttpMessageConverter<Api
         return clazz.equals(ApiResponse.class) || clazz.isPrimitive() || clazz.equals(String.class);
     }
 
-//    @Override
-//    public boolean canRead(Class<?> clazz, @Nullable MediaType mediaType) {
-//        log.info("execute CommonHttpMessageConverter - canRead");
-//        return clazz.equals(ApiResponse.class) && this.canRead(mediaType);
-//    }
-//
-//    @Override
-//    public boolean canWrite(Class<?> clazz, @Nullable MediaType mediaType) {
-//        log.info("execute CommonHttpMessageConverter - canWrite");
-//        log.info("execute CommonHttpMessageConverter - be can :: {}", (clazz.equals(ApiResponse.class) || clazz.isPrimitive()) && this.canWrite(mediaType));
-//        return (clazz.equals(ApiResponse.class) || clazz.isPrimitive()) && this.canWrite(mediaType);
-//    }
-
     @Override
     protected ApiResponse<Object> readInternal(Class<? extends ApiResponse<Object>> clazz, HttpInputMessage inputMessage)
             throws IOException, HttpMessageNotReadableException {

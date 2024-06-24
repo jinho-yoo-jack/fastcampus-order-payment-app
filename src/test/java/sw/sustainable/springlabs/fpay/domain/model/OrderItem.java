@@ -8,11 +8,12 @@ import lombok.Getter;
 
 import java.util.UUID;
 
-@Embeddable
-@AllArgsConstructor
 @Getter
 @Builder
+@AllArgsConstructor
 public class OrderItem {
+    private UUID orderId;
+
     private int itemIdx;
 
     private UUID productId;
@@ -30,7 +31,8 @@ public class OrderItem {
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus state;
 
-    protected OrderItem() {}
+    protected OrderItem() {
+    }
 
     public int calculateAmount() {
         return price * amount;

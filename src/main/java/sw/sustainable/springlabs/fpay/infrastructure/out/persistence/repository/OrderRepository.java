@@ -3,8 +3,10 @@ package sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import sw.sustainable.springlabs.fpay.domain.model.Order;
+import sw.sustainable.springlabs.fpay.domain.model.OrderItem;
 import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -12,6 +14,8 @@ import java.util.UUID;
 public class OrderRepository implements sw.sustainable.springlabs.fpay.domain.repository.OrderRepository {
 
     private final JpaOrderRepository jpaOrderRepository;
+
+    private final JpaOrderItemsRepository jpaOrderItemsRepository;
 
     @Override
     public Order findById(UUID id) {
@@ -22,8 +26,12 @@ public class OrderRepository implements sw.sustainable.springlabs.fpay.domain.re
 
     @Override
     public Order save(Order newOrder) {
-        jpaOrderRepository.save(newOrder);
-        return newOrder;
+        return jpaOrderRepository.save(newOrder);
+    }
+
+    @Override
+    public void saveOrderItems(List<OrderItem> orderItems) {
+        orderItems.forEach(jpaOrderItemsRepository::save);
     }
 
     @Override

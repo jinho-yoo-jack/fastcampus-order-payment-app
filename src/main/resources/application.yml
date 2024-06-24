@@ -40,6 +40,15 @@ my:
   name: jinho_dev
   age: 34
 
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: TRACE
+
+
 ---
 spring:
   config:
