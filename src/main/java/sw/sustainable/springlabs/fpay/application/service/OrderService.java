@@ -20,8 +20,7 @@ public class OrderService implements CreateNewOrderUseCase {
     @Override
     public Order create(PurchaseOrder newOrder) {
         Order receivedOrder = newOrder.toEntity();
-        Order o = orderRepository.save(receivedOrder);
-        orderRepository.saveOrderItems(newOrder.convert2OrderItems(o.getOrderId()));
-        return receivedOrder;
+        orderRepository.save(receivedOrder);
+        return orderRepository.findById(receivedOrder.getOrderId());
     }
 }

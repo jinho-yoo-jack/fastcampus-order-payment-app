@@ -15,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OrderItem {
     @Id
-    @Setter
     @Column(name="order_id")
     private UUID orderId;
 

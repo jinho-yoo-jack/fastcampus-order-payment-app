@@ -2,8 +2,10 @@ package sw.sustainable.springlabs.fpay.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.domain.Persistable;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -11,9 +13,8 @@ import java.util.*;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Order {
+public class Order implements Persistable<UUID> {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_id", columnDefinition = "BINARY(16)")
     private UUID orderId;
 
@@ -32,9 +33,12 @@ public class Order {
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus status;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "order_id")
     private List<OrderItem> items = new ArrayList<>();
+
+    @Transient
+    private boolean isNew = true;
 
     protected Order() {
     }
@@ -80,4 +84,19 @@ public class Order {
         return this.status.equals(OrderStatus.PURCHASE_DECISION);
     }
 
+    @Override
+    public UUID getId() {
+        return this.orderId;
+    }
+
+    @PrePersist
+    @PostLoad
+    public void makeNotNewId(){
+        this.isNew = false;
+    }
+
+    @Override
+    public boolean isNew() {
+        return true;
+    }
 }

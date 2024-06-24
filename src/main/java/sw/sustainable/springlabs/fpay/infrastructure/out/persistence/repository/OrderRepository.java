@@ -30,11 +30,6 @@ public class OrderRepository implements sw.sustainable.springlabs.fpay.domain.re
     }
 
     @Override
-    public void saveOrderItems(List<OrderItem> orderItems) {
-        orderItems.forEach(jpaOrderItemsRepository::save);
-    }
-
-    @Override
     public boolean removeAll(UUID id) {
         return jpaOrderRepository.deleteById(id);
     }
