@@ -6,8 +6,7 @@ import sw.sustainable.springlabs.fpay.domain.payment.Payment;
 
 import java.util.UUID;
 
-public interface PaymentRepository {
-    Payment findById(String paymentKey);
-    Payment save(Payment paymentInfo);
-    Payment update(Payment paymentInfo);
+public interface PaymentRepository<T> {
+    T findById(String paymentKey);
+    T save(T paymentInfo);
 }
