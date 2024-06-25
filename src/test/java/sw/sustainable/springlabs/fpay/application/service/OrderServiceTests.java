@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import sw.sustainable.springlabs.fpay.application.port.in.CreateNewOrderUseCase;
-import sw.sustainable.springlabs.fpay.domain.model.Order;
+import sw.sustainable.springlabs.fpay.domain.order.Order;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder;

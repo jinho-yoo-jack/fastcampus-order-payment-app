@@ -3,17 +3,18 @@ package sw.sustainable.springlabs.fpay.domain.model;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import lombok.extern.slf4j.Slf4j;
+import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
 
 @Converter(autoApply = true)
 @Slf4j
-public class OrderStatusConverter implements AttributeConverter<OrderStatus, String> {
+public class OrderStatusConverter implements AttributeConverter<sw.sustainable.springlabs.fpay.domain.order.OrderStatus, String> {
     @Override
-    public String convertToDatabaseColumn(OrderStatus orderStatus) {
+    public String convertToDatabaseColumn(sw.sustainable.springlabs.fpay.domain.order.OrderStatus orderStatus) {
         return orderStatus.name();
     }
 
     @Override
-    public OrderStatus convertToEntityAttribute(String s) {
+    public sw.sustainable.springlabs.fpay.domain.order.OrderStatus convertToEntityAttribute(String s) {
         return OrderStatus.valueOf(s);
     }
 }

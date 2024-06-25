@@ -1,36 +1,23 @@
-package sw.sustainable.springlabs.fpay.domain.model;
+package sw.sustainable.springlabs.fpay.domain.order;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
-@Entity
-@Table(name = "order_items")
+@Embeddable
+@AllArgsConstructor
 @Getter
 @Builder
-@AllArgsConstructor
 public class OrderItem {
-    @Id
-    @Column(name="order_id")
-    private UUID orderId;
-
-    @Column(name="item_idx")
     private int itemIdx;
 
-    @Column(name="product_id")
     private UUID productId;
 
-    @Column(name="product_name")
     private String productName;
 
-    @Column(name="product_price")
     private int price;
 
-    @Column(name="product_size")
     private String size;
 
     private int amount;
@@ -38,7 +25,6 @@ public class OrderItem {
     private int quantity;
 
     @Convert(converter = OrderStatusConverter.class)
-    @Column(name="order_state")
     private OrderStatus state;
 
     protected OrderItem() {

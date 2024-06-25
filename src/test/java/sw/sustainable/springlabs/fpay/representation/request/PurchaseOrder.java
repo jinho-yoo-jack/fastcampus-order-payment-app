@@ -3,7 +3,7 @@ package sw.sustainable.springlabs.fpay.representation.request;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import sw.sustainable.springlabs.fpay.domain.model.*;
+import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
 import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem;
 
@@ -23,26 +23,26 @@ public class PurchaseOrder {
     @Valid
     private List<sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem> newlyOrderedItem;
 
-    private List<OrderItem> convert2OrderItems() {
+    private List<sw.sustainable.springlabs.fpay.domain.order.OrderItem> convert2OrderItems() {
         return newlyOrderedItem.stream()
             .map(this::convert2OrderItem)
             .toList();
     }
 
-    private OrderItem convert2OrderItem(PurchaseOrderItem item) {
-        return OrderItem.builder()
+    private sw.sustainable.springlabs.fpay.domain.order.OrderItem convert2OrderItem(PurchaseOrderItem item) {
+        return sw.sustainable.springlabs.fpay.domain.order.OrderItem.builder()
             .itemIdx(item.getItemIdx())
             .productId(item.getProductId())
             .productName(item.getProductName())
             .price(item.getPrice())
             .size("FREE")
-            .state(OrderStatus.ORDER_COMPLETED)
+            .state(sw.sustainable.springlabs.fpay.domain.order.OrderStatus.ORDER_COMPLETED)
             .build();
     }
 
-    public Order toEntity() {
-        return Order.builder()
-            .orderId(Order.generateOrderId())
+    public sw.sustainable.springlabs.fpay.domain.order.Order toEntity() {
+        return sw.sustainable.springlabs.fpay.domain.order.Order.builder()
+            .orderId(sw.sustainable.springlabs.fpay.domain.order.Order.generateOrderId())
             .items(convert2OrderItems())
             .name(orderer.getName())
             .phoneNumber(orderer.getPhoneNumber())

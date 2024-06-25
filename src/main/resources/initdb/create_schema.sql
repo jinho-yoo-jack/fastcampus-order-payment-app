@@ -47,7 +47,7 @@ CREATE TABLE `payment`
 
 CREATE TABLE `card_payment`
 (
-    `payment_id`      VARCHAR(255) NOT NULL COMMENT '결제번호(paymentKey)',
+    `payment_key`     VARCHAR(255) NOT NULL COMMENT '결제번호(paymentKey)',
     `card_number`     VARCHAR(255) NOT NULL COMMENT '카드번호',
     `approve_no`      VARCHAR(10)  NOT NULL COMMENT '카드 승인 번호',
     `amount`          INT          NOT NULL COMMENT '최종 결제 금액(즉시 할인 금액 포함)',
@@ -57,5 +57,6 @@ CREATE TABLE `card_payment`
     `issuer_code`     VARCHAR(255) NOT NULL COMMENT '카드 발급사 코드',
     `acquirer_code`   VARCHAR(255) NOT NULL COMMENT '카드 매입사 코드',
     `acquirer_status` VARCHAR(255) NOT NULL COMMENT '카드 결제의 상태',
-    PRIMARY KEY (payment_id)
+    PRIMARY KEY (payment_key),
+    UNIQUE KEY (payment_key, card_number, approve_no)
 );

@@ -1,10 +1,11 @@
 package sw.sustainable.springlabs.fpay.domain.model;
 
 import jakarta.persistence.Convert;
-import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
+import sw.sustainable.springlabs.fpay.domain.order.OrderStatusConverter;
 
 import java.util.UUID;
 

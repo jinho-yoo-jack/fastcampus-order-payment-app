@@ -1,20 +1,20 @@
-package sw.sustainable.springlabs.fpay.domain.model;
+package sw.sustainable.springlabs.fpay.domain.order;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.domain.Persistable;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "purchase_order")
+@SecondaryTable(name = "order_items", pkJoinColumns = @PrimaryKeyJoinColumn(name = "order_id"))
 @AllArgsConstructor
 @Getter
 @Builder
-public class Order implements Persistable<UUID> {
+public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_id", columnDefinition = "BINARY(16)")
     private UUID orderId;
 
@@ -33,12 +33,19 @@ public class Order implements Persistable<UUID> {
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus status;
 
-    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "order_id")
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "order_items",
+            joinColumns = @JoinColumn(name = "order_id"))
+    @AttributeOverrides({
+            @AttributeOverride(name = "orderId", column = @Column(name = "order_id")),
+            @AttributeOverride(name = "itemIdx", column = @Column(name = "item_idx")),
+            @AttributeOverride(name = "productId", column = @Column(name = "product_id")),
+            @AttributeOverride(name = "productName", column = @Column(name = "product_name")),
+            @AttributeOverride(name = "price", column = @Column(name = "product_price")),
+            @AttributeOverride(name = "size", column = @Column(name = "product_size")),
+            @AttributeOverride(name = "state", column = @Column(name = "order_state")),
+    })
     private List<OrderItem> items = new ArrayList<>();
-
-    @Transient
-    private boolean isNew = true;
 
     protected Order() {
     }
@@ -84,19 +91,4 @@ public class Order implements Persistable<UUID> {
         return this.status.equals(OrderStatus.PURCHASE_DECISION);
     }
 
-    @Override
-    public UUID getId() {
-        return this.orderId;
-    }
-
-    @PrePersist
-    @PostLoad
-    public void makeNotNewId(){
-        this.isNew = false;
-    }
-
-    @Override
-    public boolean isNew() {
-        return true;
-    }
 }

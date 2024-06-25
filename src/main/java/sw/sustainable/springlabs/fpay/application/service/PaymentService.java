@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import retrofit2.Response;
 import sw.sustainable.springlabs.fpay.application.port.in.PaymentFullfillUseCase;
-import sw.sustainable.springlabs.fpay.domain.model.Order;
-import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
+import sw.sustainable.springlabs.fpay.domain.order.Order;
+import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.PaymentAPIs;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.ResponsePaymentApproved;
@@ -24,10 +24,9 @@ public class PaymentService implements PaymentFullfillUseCase {
     private final OrderRepository orderRepository;
 
     @Transactional
+    @Override
     public String paymentApproved(PaymentApproved paymentInfo) throws IOException {
         ResponsePaymentApproved response = requestPaymentApproved(paymentInfo);
-        log.info("Payment approved: {}", response);
-        log.info("Payment approved: {}", response.getCard());
         String status = response.getStatus();
 
         if (paymentApproved(status)) {

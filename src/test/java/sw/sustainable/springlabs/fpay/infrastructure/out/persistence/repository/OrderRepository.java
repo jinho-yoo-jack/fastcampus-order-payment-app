@@ -2,8 +2,9 @@ package sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import sw.sustainable.springlabs.fpay.domain.model.Order;
-import sw.sustainable.springlabs.fpay.domain.model.OrderStatus;
+import sw.sustainable.springlabs.fpay.domain.order.Order;
+import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
+import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.order.JpaOrderRepository;
 
 import java.util.UUID;
 
