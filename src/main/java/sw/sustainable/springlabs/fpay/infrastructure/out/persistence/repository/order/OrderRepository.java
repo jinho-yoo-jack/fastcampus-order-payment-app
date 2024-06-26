@@ -3,8 +3,8 @@ package sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
-import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Repository
@@ -17,7 +17,7 @@ public class OrderRepository implements sw.sustainable.springlabs.fpay.domain.re
     public Order findById(UUID id) {
         return jpaOrderRepository
                 .findById(id)
-                .orElse(null);
+                .orElseThrow(() -> new NoSuchElementException("OrderId not found"));
     }
 
     @Override
@@ -30,8 +30,4 @@ public class OrderRepository implements sw.sustainable.springlabs.fpay.domain.re
         return jpaOrderRepository.deleteById(id);
     }
 
-    @Override
-    public Order updateOrderStatus(Order order, OrderStatus orderStatus) {
-        return order.update(orderStatus);
-    }
 }

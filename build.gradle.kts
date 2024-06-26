@@ -39,7 +39,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.10.0")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0")
     compileOnly("org.projectlombok:lombok")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+//    developmentOnly("org.springframework.boot:spring-boot-devtools")
 //    runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
     annotationProcessor("org.projectlombok:lombok")

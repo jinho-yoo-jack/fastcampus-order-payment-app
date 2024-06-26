@@ -8,7 +8,6 @@ import java.util.*;
 
 @Entity
 @Table(name = "purchase_order")
-@SecondaryTable(name = "order_items", pkJoinColumns = @PrimaryKeyJoinColumn(name = "order_id"))
 @AllArgsConstructor
 @Getter
 @Builder
@@ -16,7 +15,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_id", columnDefinition = "BINARY(16)")
-    private UUID orderId;
+    private UUID id;
 
     private String name;
 
@@ -33,18 +32,10 @@ public class Order {
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus status;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "order_items",
-            joinColumns = @JoinColumn(name = "order_id"))
-    @AttributeOverrides({
-            @AttributeOverride(name = "orderId", column = @Column(name = "order_id")),
-            @AttributeOverride(name = "itemIdx", column = @Column(name = "item_idx")),
-            @AttributeOverride(name = "productId", column = @Column(name = "product_id")),
-            @AttributeOverride(name = "productName", column = @Column(name = "product_name")),
-            @AttributeOverride(name = "price", column = @Column(name = "product_price")),
-            @AttributeOverride(name = "size", column = @Column(name = "product_size")),
-            @AttributeOverride(name = "state", column = @Column(name = "order_state")),
-    })
+//    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id")
     private List<OrderItem> items = new ArrayList<>();
 
     protected Order() {
@@ -67,7 +58,15 @@ public class Order {
         orderRepository.save(this);
     }
 
-    public Order update(OrderStatus status) {
+    public Order orderPaymentFullFill(){
+        return update(OrderStatus.PAYMENT_FULLFILL);
+    }
+
+    public Order orderAllCancel(){
+        return update(OrderStatus.ORDER_CANCELLED);
+    }
+
+    private Order update(OrderStatus status) {
         this.status = status;
         this.getItems().forEach(item -> item.update(status));
         return this;

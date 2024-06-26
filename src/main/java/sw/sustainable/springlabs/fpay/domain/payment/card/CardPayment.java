@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import sw.sustainable.springlabs.fpay.domain.payment.Payment;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.ResponsePaymentApproved;
 
 @Entity
@@ -11,7 +12,7 @@ import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.ResponsePay
 @Builder
 @Getter
 @AllArgsConstructor
-public class CardPayment {
+public class CardPayment extends PaymentMethod {
     @Id
     @Column(name = "payment_key")
     private String paymentKey; // example) tgen_20240605132741Jtkz1
@@ -47,7 +48,7 @@ public class CardPayment {
     protected CardPayment() {
     }
 
-    public CardPayment toEntity(ResponsePaymentApproved response) {
+    public static CardPayment toEntity(ResponsePaymentApproved response) {
         return CardPayment.builder()
                 .paymentKey(response.getPaymentKey())
                 .cardNumber(response.getCard().getNumber())

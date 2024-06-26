@@ -23,7 +23,8 @@ CREATE TABLE `purchase_order`
 
 CREATE TABLE `order_items`
 (
-    `order_id`      BINARY(16)             NOT NULL COMMENT '전체 주문번호',
+    `id`            INT                    NOT NULL COMMENT '주문 상세 ID' AUTO_INCREMENT,
+    `order_id`      BINARY(16)             NOT NULL COMMENT '전체 주문번호 - FK',
     `item_idx`      INTEGER(10)            NOT NULL COMMENT '주문 상세번호',
     `product_id`    BINARY(16)             NOT NULL COMMENT '상품번호',
     `product_name`  VARCHAR(255)           NOT NULL COMMENT '상품명',
@@ -34,7 +35,7 @@ CREATE TABLE `order_items`
     `order_state`   VARCHAR(255)           NOT NULL COMMENT '개별 주문상태',
     `created_at`    DATETIME DEFAULT NOW() NOT NULL,
     `updated_at`    DATETIME DEFAULT NOW() NOT NUll,
-    PRIMARY KEY (order_id, item_idx),
+    PRIMARY KEY (id, item_idx),
     UNIQUE KEY (order_id, item_idx, product_id)
 );
 
@@ -54,7 +55,7 @@ CREATE TABLE `card_payment`
     `acquire_status`  VARCHAR(255) NOT NULL COMMENT '카드결제 매입 상태',
     `cancel_amount`   INT          NOT NULL COMMENT '취소 가능한 금액',
     `canceled_amount` INT          NOT NULL COMMENT '취소된 총 금액',
-    `issuer_code`     VARCHAR(255) NOT NULL COMMENT '카드 발급사 코드',
+    `issuer_code`     VARCHAR(255) NULL COMMENT '카드 발급사 코드',
     `acquirer_code`   VARCHAR(255) NOT NULL COMMENT '카드 매입사 코드',
     `acquirer_status` VARCHAR(255) NOT NULL COMMENT '카드 결제의 상태',
     PRIMARY KEY (payment_key),

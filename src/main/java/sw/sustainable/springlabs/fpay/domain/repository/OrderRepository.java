@@ -9,5 +9,4 @@ public interface OrderRepository {
     Order findById(UUID id);
     Order save(Order newOrder);
     boolean removeAll(UUID id);
-    Order updateOrderStatus(Order order, OrderStatus orderStatus);
 }

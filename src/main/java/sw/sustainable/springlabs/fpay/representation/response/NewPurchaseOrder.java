@@ -32,7 +32,7 @@ public class NewPurchaseOrder {
     }
 
     public static NewPurchaseOrder from(Order order) {
-        return new NewPurchaseOrder(order.getOrderId(), order.getName(), order.getPhoneNumber(), order.getPaymentId(), order.getTotalPrice(),
+        return new NewPurchaseOrder(order.getId(), order.getName(), order.getPhoneNumber(), order.getPaymentId(), order.getTotalPrice(),
                 order.getStatus(), order.getItems());
     }
 }

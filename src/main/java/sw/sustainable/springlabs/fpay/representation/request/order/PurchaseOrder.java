@@ -11,6 +11,7 @@ import sw.sustainable.springlabs.fpay.domain.order.Order;
 import sw.sustainable.springlabs.fpay.domain.order.OrderItem;
 import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,12 +47,21 @@ public class PurchaseOrder {
     }
 
     public Order toEntity() {
-        return Order.builder()
-                .items(convert2OrderItems())
+        Order o = Order.builder()
+                .items(new ArrayList<>())
                 .name(orderer.getName())
                 .phoneNumber(orderer.getPhoneNumber())
                 .status(OrderStatus.ORDER_COMPLETED)
                 .paymentId(UUID.randomUUID())
                 .build();
+        o.getItems().addAll(convert2OrderItems());
+        return o;
+//        return Order.builder()
+//                .items(convert2OrderItems())
+//                .name(orderer.getName())
+//                .phoneNumber(orderer.getPhoneNumber())
+//                .status(OrderStatus.ORDER_COMPLETED)
+//                .paymentId(UUID.randomUUID())
+//                .build();
     }
 }
