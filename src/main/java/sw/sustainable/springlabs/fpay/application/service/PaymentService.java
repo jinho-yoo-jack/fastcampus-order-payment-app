@@ -1,29 +1,20 @@
 package sw.sustainable.springlabs.fpay.application.service;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.core.ApplicationContext;
-import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import retrofit2.Response;
 import sw.sustainable.springlabs.fpay.application.port.in.PaymentFullfillUseCase;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
-import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
 import sw.sustainable.springlabs.fpay.domain.payment.Payment;
 import sw.sustainable.springlabs.fpay.domain.payment.card.CardPayment;
-import sw.sustainable.springlabs.fpay.domain.payment.card.PaymentMethod;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 import sw.sustainable.springlabs.fpay.domain.repository.PaymentMethodRepository;
 import sw.sustainable.springlabs.fpay.domain.repository.PaymentRepository;
-import sw.sustainable.springlabs.fpay.infrastructure.config.BeanUtils;
-import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.CardPaymentRepository;
-import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.JpaCardPaymentRepository;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.PaymentAPIs;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.ResponsePaymentApproved;
-import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.payment.method.Card;
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentApproved;
 
 import java.io.IOException;

@@ -24,7 +24,7 @@ CREATE TABLE `purchase_order`
 CREATE TABLE `order_items`
 (
     `id`            INT                    NOT NULL COMMENT '주문 상세 ID' AUTO_INCREMENT,
-    `order_id`      BINARY(16)             NOT NULL COMMENT '전체 주문번호 - FK',
+    `order_id`      BINARY(16)                 NULL COMMENT '전체 주문번호 - FK',
     `item_idx`      INTEGER(10)            NOT NULL COMMENT '주문 상세번호',
     `product_id`    BINARY(16)             NOT NULL COMMENT '상품번호',
     `product_name`  VARCHAR(255)           NOT NULL COMMENT '상품명',

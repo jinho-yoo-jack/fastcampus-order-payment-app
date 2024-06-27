@@ -1,5 +1,7 @@
 package sw.sustainable.springlabs.fpay.domain.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
@@ -28,14 +30,12 @@ public class Order {
     @Column(name = "total_price")
     private int totalPrice;
 
-    @Column(name = "Order_state")
+    @Column(name = "order_state")
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus status;
 
-//    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"order"})
     private List<OrderItem> items = new ArrayList<>();
 
     protected Order() {

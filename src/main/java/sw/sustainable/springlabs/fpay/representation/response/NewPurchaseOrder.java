@@ -1,6 +1,7 @@
 package sw.sustainable.springlabs.fpay.representation.response;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
 import sw.sustainable.springlabs.fpay.domain.order.OrderItem;
 import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
@@ -9,6 +10,7 @@ import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
 import java.util.*;
 
 @Getter
+@Slf4j
 public class NewPurchaseOrder {
     private final UUID orderId;
 
@@ -20,7 +22,7 @@ public class NewPurchaseOrder {
 
     private final OrderStatus status;
 
-    private final List<OrderItem> items;
+    private final List<OrderItem> items = new ArrayList<>();
 
     private NewPurchaseOrder(UUID id, String name, String phoneNumber, UUID paymentId, int totalPrice, OrderStatus status, List<OrderItem> items) {
         this.orderId = id;
@@ -28,10 +30,11 @@ public class NewPurchaseOrder {
         this.paymentId = paymentId;
         this.totalPrice = totalPrice;
         this.status = status;
-        this.items = items;
+        this.items.addAll(items);
     }
 
     public static NewPurchaseOrder from(Order order) {
+        log.info("orderItems -> {}", order.getItems());
         return new NewPurchaseOrder(order.getId(), order.getName(), order.getPhoneNumber(), order.getPaymentId(), order.getTotalPrice(),
                 order.getStatus(), order.getItems());
     }

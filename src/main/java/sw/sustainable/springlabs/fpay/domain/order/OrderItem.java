@@ -7,18 +7,17 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "order_items")
-@Getter
 @Builder
+@Getter
 @AllArgsConstructor
 public class OrderItem {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Order order;
-
-    @Column(name = "order_id")
-    private UUID orderId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @Column(name = "item_idx")
     private int itemIdx;
