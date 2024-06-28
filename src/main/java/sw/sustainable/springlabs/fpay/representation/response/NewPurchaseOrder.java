@@ -22,7 +22,8 @@ public class NewPurchaseOrder {
 
     private final OrderStatus status;
 
-    private final List<OrderItem> items = new ArrayList<>();
+    @Getter
+    private List<NewPurchaseOrderItem> items = new ArrayList<>();
 
     private NewPurchaseOrder(UUID id, String name, String phoneNumber, UUID paymentId, int totalPrice, OrderStatus status, List<OrderItem> items) {
         this.orderId = id;
@@ -30,12 +31,12 @@ public class NewPurchaseOrder {
         this.paymentId = paymentId;
         this.totalPrice = totalPrice;
         this.status = status;
-        this.items.addAll(items);
+        this.items = NewPurchaseOrderItem.from(items);
     }
 
     public static NewPurchaseOrder from(Order order) {
         log.info("orderItems -> {}", order.getItems());
-        return new NewPurchaseOrder(order.getId(), order.getName(), order.getPhoneNumber(), order.getPaymentId(), order.getTotalPrice(),
+        return new NewPurchaseOrder(order.getOrderId(), order.getName(), order.getPhoneNumber(), order.getPaymentId(), order.getTotalPrice(),
                 order.getStatus(), order.getItems());
     }
 }

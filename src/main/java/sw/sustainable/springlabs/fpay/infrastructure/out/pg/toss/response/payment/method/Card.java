@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.payment.method;
+package sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.method;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

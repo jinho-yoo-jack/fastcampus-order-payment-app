@@ -26,15 +26,14 @@ public class OrderServiceTests implements CreateNewOrderUseCase {
     private OrderRepository orderRepository;
 
     @Test
-    public void createNewOrder() {
+    public void createOrderNewOrder() {
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
-        Order orderCompleted = create(newOrder);
+        Order orderCompleted = createOrder(newOrder);
 //        log.info("Complete Order -> {}, {}", orderCompleted.getOrderId(), orderCompleted.getOrderedItems());
     }
 
-    @Override
-    public Order create(PurchaseOrder newOrder) {
+    public Order createOrder(PurchaseOrder newOrder) {
         Order receivedOrder = newOrder.toEntity();
         orderRepository.save(receivedOrder);
         return receivedOrder;

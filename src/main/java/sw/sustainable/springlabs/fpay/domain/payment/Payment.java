@@ -1,12 +1,8 @@
 package sw.sustainable.springlabs.fpay.domain.payment;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import sw.sustainable.springlabs.fpay.domain.repository.PaymentRepository;
-import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.CardPaymentRepository;
-import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.JpaCardPaymentRepository;
-import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.ResponsePaymentApproved;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentApproved;
 
 @Entity
 @Table(name = "payment")

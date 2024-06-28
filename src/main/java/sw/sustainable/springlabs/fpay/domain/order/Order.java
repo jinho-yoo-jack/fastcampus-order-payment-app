@@ -1,23 +1,21 @@
 package sw.sustainable.springlabs.fpay.domain.order;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 
 import java.util.*;
 
 @Entity
 @Table(name = "purchase_order")
 @AllArgsConstructor
+@Setter
 @Getter
 @Builder
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "order_id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    private UUID orderId;
 
     private String name;
 
@@ -34,8 +32,7 @@ public class Order {
     @Convert(converter = OrderStatusConverter.class)
     private OrderStatus status;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties({"order"})
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
     protected Order() {
@@ -54,15 +51,11 @@ public class Order {
         return UUID.randomUUID();
     }
 
-    public void save(OrderRepository orderRepository) throws Exception {
-        orderRepository.save(this);
+    public void orderPaymentFullFill() {
+        update(OrderStatus.PAYMENT_FULLFILL);
     }
 
-    public Order orderPaymentFullFill(){
-        return update(OrderStatus.PAYMENT_FULLFILL);
-    }
-
-    public Order orderAllCancel(){
+    public Order orderAllCancel() {
         return update(OrderStatus.ORDER_CANCELLED);
     }
 
@@ -87,7 +80,7 @@ public class Order {
     }
 
     public boolean isPossibleToCancel() {
-        return this.status.equals(OrderStatus.PURCHASE_DECISION);
+        return !this.status.equals(OrderStatus.PURCHASE_DECISION);
     }
 
 }

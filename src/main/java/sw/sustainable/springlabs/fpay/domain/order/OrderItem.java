@@ -8,6 +8,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "order_items")
 @Builder
+@Setter
 @Getter
 @AllArgsConstructor
 public class OrderItem {
@@ -15,7 +16,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 

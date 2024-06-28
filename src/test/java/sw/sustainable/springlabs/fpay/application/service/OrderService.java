@@ -14,8 +14,7 @@ public class OrderService implements CreateNewOrderUseCase {
     private final OrderRepository orderRepository;
 
     @Transactional
-    @Override
-    public Order create(PurchaseOrder newOrder) {
+    public Order createOrder(PurchaseOrder newOrder) {
         Order receivedOrder = newOrder.toEntity();
         orderRepository.save(receivedOrder);
         return receivedOrder;

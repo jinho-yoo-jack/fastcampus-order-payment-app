@@ -21,7 +21,7 @@ public class OrderController {
 
     @PostMapping("/new")
     public NewPurchaseOrder newOrder(@RequestBody @Valid PurchaseOrder newOrder) {
-        return NewPurchaseOrder.from(createNewOrderUseCase.create(newOrder));
+        return NewPurchaseOrder.from(createNewOrderUseCase.createOrder(newOrder));
     }
 
     @GetMapping

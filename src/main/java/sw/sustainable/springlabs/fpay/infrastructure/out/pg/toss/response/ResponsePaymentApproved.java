@@ -1,9 +1,9 @@
-package sw.sustainable.springlabs.fpay.infrastructure.out.pg.response;
+package sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.payment.method.Card;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.method.Card;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

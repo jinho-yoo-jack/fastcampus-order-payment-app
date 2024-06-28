@@ -4,14 +4,15 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import sw.sustainable.springlabs.fpay.domain.payment.Payment;
-import sw.sustainable.springlabs.fpay.infrastructure.out.pg.response.ResponsePaymentApproved;
+import lombok.experimental.SuperBuilder;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentApproved;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.method.Card;
 
 @Entity
 @Table(name = "card_payment")
-@Builder
-@Getter
+@SuperBuilder
 @AllArgsConstructor
+@Getter
 public class CardPayment extends PaymentMethod {
     @Id
     @Column(name = "payment_key")
@@ -30,9 +31,6 @@ public class CardPayment extends PaymentMethod {
     @Convert(converter = AcquireStatusConverter.class)
     private AcquireStatus acquireStatus;
 
-    @Column(name = "cancel_amount")
-    private int availableCancelAmount;
-
     @Column(name = "canceled_amount")
     private int canceledAmount;
 
@@ -48,7 +46,7 @@ public class CardPayment extends PaymentMethod {
     protected CardPayment() {
     }
 
-    public static CardPayment toEntity(ResponsePaymentApproved response) {
+    public static CardPayment from(ResponsePaymentApproved response) {
         return CardPayment.builder()
                 .paymentKey(response.getPaymentKey())
                 .cardNumber(response.getCard().getNumber())

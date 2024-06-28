@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.infrastructure.out.pg;
+package sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @Slf4j
-public class ApiClientConfig {
+public class TossApiClientConfig {
     private static final String BASE_URL =  "https://api.tosspayments.com/v1/";
     private static final String SECRET_KEY = "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6:";
 
@@ -56,7 +56,7 @@ public class ApiClientConfig {
     }
 
     @Bean
-    public PaymentAPIs createApiClient(Retrofit retrofit) {
-        return retrofit.create(PaymentAPIs.class);
+    public TossPaymentAPIs createApiClient(Retrofit retrofit) {
+        return retrofit.create(TossPaymentAPIs.class);
     }
 }
