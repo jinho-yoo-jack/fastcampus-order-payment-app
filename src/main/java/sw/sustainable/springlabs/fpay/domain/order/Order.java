@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "purchase_order")
@@ -23,7 +24,7 @@ public class Order {
     private String phoneNumber;
 
     @Column(name = "payment_id")
-    private UUID paymentId;
+    private String paymentId;
 
     @Column(name = "total_price")
     private int totalPrice;
@@ -51,12 +52,31 @@ public class Order {
         return UUID.randomUUID();
     }
 
-    public void orderPaymentFullFill() {
+    public void orderPaymentFullFill(String paymentKey) {
         update(OrderStatus.PAYMENT_FULLFILL);
+        this.paymentId = paymentKey;
     }
 
-    public Order orderAllCancel() {
-        return update(OrderStatus.ORDER_CANCELLED);
+    public void orderCancel() {
+        orderAllCancel();
+    }
+
+    public void orderCancel(int itemIdx) {
+        orderCancelBy(itemIdx);
+    }
+
+    public void orderCancel(int[] itemIdxs) {
+        Stream.<int[]>of(itemIdxs).forEach(this::orderCancel);
+    }
+
+    private void orderCancelBy(int itemIdx) {
+        this.items.stream().filter(orderItem -> orderItem.getItemIdx() == itemIdx)
+            .forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
+    }
+
+    private void orderAllCancel() {
+        items.forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
+        update(OrderStatus.ORDER_CANCELLED);
     }
 
     private Order update(OrderStatus status) {
@@ -67,8 +87,8 @@ public class Order {
 
     private void calculateTotalAmount(List<OrderItem> items) {
         this.totalPrice = items.stream()
-                .map(OrderItem::calculateAmount)
-                .reduce(0, Integer::sum);
+            .map(OrderItem::calculateAmount)
+            .reduce(0, Integer::sum);
     }
 
     public boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {

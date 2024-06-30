@@ -16,7 +16,7 @@ public class NewPurchaseOrder {
 
     private final Orderer orderer;
 
-    private final UUID paymentId;
+    private final String paymentId;
 
     private final int totalPrice;
 
@@ -25,7 +25,7 @@ public class NewPurchaseOrder {
     @Getter
     private List<NewPurchaseOrderItem> items = new ArrayList<>();
 
-    private NewPurchaseOrder(UUID id, String name, String phoneNumber, UUID paymentId, int totalPrice, OrderStatus status, List<OrderItem> items) {
+    private NewPurchaseOrder(UUID id, String name, String phoneNumber, String paymentId, int totalPrice, OrderStatus status, List<OrderItem> items) {
         this.orderId = id;
         this.orderer = new Orderer(name, phoneNumber);
         this.paymentId = paymentId;

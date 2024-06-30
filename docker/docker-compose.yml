@@ -4,7 +4,8 @@ services:
     ports:
       - 13306:3306
     volumes:
-      - /Users/jinho/IdeaProjects/spring-labs/src/main/resources/initdb:/docker-entrypoint-initdb.d
+      - ${DB_INIT_FILE}:${DB_INIT_PATH}
+#      - /Users/jinho/IdeaProjects/spring-labs/src/main/resources/initdb:/docker-entrypoint-initdb.d
 #      - /Users/black/IdeaProjects/jedi-spring-labs/src/main/resources/initdb:/docker-entrypoint-initdb.d
     command:
       - '--character-set-server=utf8mb4'

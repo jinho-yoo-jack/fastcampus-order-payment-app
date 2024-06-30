@@ -1,4 +1,3 @@
--- create-user
 CREATE DATABASE IF NOT EXISTS `fastcamp_labs`;
 USE fastcamp_labs;
 CREATE USER IF NOT EXISTS `fastcamp`@`localhost` IDENTIFIED BY 'testlabs';
@@ -6,15 +5,13 @@ CREATE USER `fastcamp`@`%` IDENTIFIED BY 'testlabs';
 GRANT all privileges ON `fastcamp_labs`.* TO `fastcamp`@`localhost`;
 GRANT all privileges ON `fastcamp_labs`.* TO `fastcamp`@`%`;
 
--- schema.sql
--- Order
 CREATE TABLE `purchase_order`
 (
     `order_id`     BINARY(16) default (uuid_to_bin(uuid())) NOT NULL COMMENT '주문번호',
     `name`         VARCHAR(255)                             NOT NULL COMMENT '주문자명',
     `phone_number` VARCHAR(255)                             NOT NULL COMMENT '주문자 휴대전화번호',
     `order_state`  VARCHAR(255)                             NOT NULL COMMENT '주문상태',
-    `payment_id`   BINARY(16)                               NULL COMMENT '결제정보',
+    `payment_id`   VARCHAR(255)                             NULL COMMENT '결제정보',
     `total_price`  INT                                      NOT NULL COMMENT '상품 가격 * 주문 수량',
     `created_at`   DATETIME   DEFAULT NOW()                 NOT NULL,
     `updated_at`   DATETIME   DEFAULT NOW()                 NOT NUll,
@@ -39,11 +36,19 @@ CREATE TABLE `order_items`
     UNIQUE KEY (order_id, item_idx, product_id)
 );
 
-CREATE TABLE `payment`
+CREATE TABLE `payment_transaction`
 (
-    `payment_id` VARCHAR(255) NOT NULL COMMENT '결제번호(ID)',
-    `method`     VARCHAR(255) NOT NULL COMMENT '결제수단',
-    PRIMARY KEY (payment_id)
+    `id`              INT                    NOT NULL COMMENT '거래 ID' AUTO_INCREMENT,
+    `payment_id`      VARCHAR(255)           NOT NULL COMMENT '거래 번호(ID)',
+    `method`          VARCHAR(255)           NOT NULL COMMENT '거래 수단',
+    `payment_status`  VARCHAR(255)           NOT NULL COMMENT '거래 상태',
+    `total_amount`    INT                    NOT NULL COMMENT '최종 결제 금액(즉시 할인 금액 포함)',
+    `balance_amount`  INT                    NOT NULL COMMENT '취소 가능한 금액(잔고)',
+    `canceled_amount` INT                    NOT NULL COMMENT '취소된 총 금액',
+    `created_at`      DATETIME DEFAULT NOW() NOT NULL,
+    `updated_at`      DATETIME DEFAULT NOW() NOT NUll,
+    PRIMARY KEY (id),
+    UNIQUE KEY (payment_id, method, payment_status)
 );
 
 CREATE TABLE `card_payment`
@@ -51,10 +56,7 @@ CREATE TABLE `card_payment`
     `payment_key`     VARCHAR(255) NOT NULL COMMENT '결제번호(paymentKey)',
     `card_number`     VARCHAR(255) NOT NULL COMMENT '카드번호',
     `approve_no`      VARCHAR(10)  NOT NULL COMMENT '카드 승인 번호',
-    `amount`          INT          NOT NULL COMMENT '최종 결제 금액(즉시 할인 금액 포함)',
     `acquire_status`  VARCHAR(255) NOT NULL COMMENT '카드결제 매입 상태',
-    `cancel_amount`   INT          NOT NULL COMMENT '취소 가능한 금액',
-    `canceled_amount` INT          NOT NULL COMMENT '취소된 총 금액',
     `issuer_code`     VARCHAR(255) NULL COMMENT '카드 발급사 코드',
     `acquirer_code`   VARCHAR(255) NOT NULL COMMENT '카드 매입사 코드',
     `acquirer_status` VARCHAR(255) NOT NULL COMMENT '카드 결제의 상태',

@@ -64,12 +64,13 @@ public class Order {
     public void save(OrderRepository orderRepository) throws Exception {
         if (verifyHaveAtLeastOneItem(items))
             throw new Exception("Noting Items");
-        orderRepository.save(this);
+//        orderRepository.save(this);
+        orderRepository.save(null);
     }
 
     public sw.sustainable.springlabs.fpay.domain.order.Order update(sw.sustainable.springlabs.fpay.domain.order.OrderStatus status) {
         this.status = status;
-        return this;
+        return null;
     }
 
     private void calculateTotalAmount(List<sw.sustainable.springlabs.fpay.domain.order.OrderItem> items) {

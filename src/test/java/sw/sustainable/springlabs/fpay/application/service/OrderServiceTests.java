@@ -38,4 +38,9 @@ public class OrderServiceTests implements CreateNewOrderUseCase {
         orderRepository.save(receivedOrder);
         return receivedOrder;
     }
+
+    @Override
+    public Order create(PurchaseOrder newOrder) {
+        return null;
+    }
 }

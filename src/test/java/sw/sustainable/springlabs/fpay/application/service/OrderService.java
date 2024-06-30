@@ -19,4 +19,9 @@ public class OrderService implements CreateNewOrderUseCase {
         orderRepository.save(receivedOrder);
         return receivedOrder;
     }
+
+    @Override
+    public Order create(PurchaseOrder newOrder) {
+        return null;
+    }
 }

@@ -32,7 +32,8 @@ public class OrderTests {
                     .state(OrderStatus.ORDER_COMPLETED)
                     .build();
 
-            Order order = new Order(newOrderId, "유진호", "010-1234-1234", List.of(orderItem));
+//            Order order = new Order(newOrderId, "유진호", "010-1234-1234", List.of(orderItem));
+            Order order =null;
             orderRepository.save(order);
             Order newOrder = orderRepository.findById(newOrderId);
             OrderItem item = newOrder.getItems().get(0);

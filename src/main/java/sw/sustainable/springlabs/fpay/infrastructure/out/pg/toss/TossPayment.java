@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 import retrofit2.Response;
 import sw.sustainable.springlabs.fpay.domain.api.PaymentAPIs;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentApproved;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentCancel;
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentApproved;
+import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentCancel;
 
 import java.io.IOException;
 
@@ -16,8 +18,7 @@ public class TossPayment implements PaymentAPIs {
 
     @Override
     public ResponsePaymentApproved requestPaymentApprove(PaymentApproved paymentInfo) throws IOException {
-        Response<ResponsePaymentApproved> response = tossClient.paymentFullfill(paymentInfo)
-                .execute();
+        Response<ResponsePaymentApproved> response = tossClient.paymentFullfill(paymentInfo).execute();
         if (response.isSuccessful()) {
             return response.body();
         }
@@ -31,8 +32,13 @@ public class TossPayment implements PaymentAPIs {
     }
 
     @Override
-    public void paymentCancel(PaymentApproved byOrderItemId) {
+    public ResponsePaymentCancel paymentCancel(String paymentKey, PaymentCancel cancelMessage) throws IOException {
+        Response<ResponsePaymentCancel> response = tossClient.paymentCancel(paymentKey, cancelMessage).execute();
+        if (response.isSuccessful()) {
+            return response.body();
+        }
 
+        throw new IOException(response.message());
     }
 
     @Override

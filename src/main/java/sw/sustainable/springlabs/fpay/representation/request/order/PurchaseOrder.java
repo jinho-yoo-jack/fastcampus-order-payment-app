@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.thymeleaf.util.StringUtils;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
 import sw.sustainable.springlabs.fpay.domain.order.OrderItem;
 import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
@@ -53,7 +54,7 @@ public class PurchaseOrder {
                 .name(this.getOrderer().getName())
                 .phoneNumber(this.getOrderer().getPhoneNumber())
                 .status(OrderStatus.ORDER_COMPLETED)
-                .paymentId(UUID.randomUUID())
+                .paymentId("")
                 .build();
         o.getItems().addAll(this.convert2OrderItems(o));
         return o;
