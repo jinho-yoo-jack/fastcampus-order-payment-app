@@ -38,8 +38,8 @@ CREATE TABLE `order_items`
 
 CREATE TABLE `payment_transaction`
 (
-    `id`              INT                    NOT NULL COMMENT '거래 ID' AUTO_INCREMENT,
-    `payment_id`      VARCHAR(255)           NOT NULL COMMENT '거래 번호(ID)',
+    `id`              INT                    NOT NULL COMMENT '거래 번호' AUTO_INCREMENT,
+    `payment_id`      VARCHAR(255)           NOT NULL COMMENT '거래 ID',
     `method`          VARCHAR(255)           NOT NULL COMMENT '거래 수단',
     `payment_status`  VARCHAR(255)           NOT NULL COMMENT '거래 상태',
     `total_amount`    INT                    NOT NULL COMMENT '최종 결제 금액(즉시 할인 금액 포함)',

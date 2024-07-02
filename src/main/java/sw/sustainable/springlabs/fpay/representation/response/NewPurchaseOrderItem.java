@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Builder
 public class NewPurchaseOrderItem {
-    private final int id;
+//    private final int id;
 
     private final UUID orderId;
 
@@ -37,7 +37,6 @@ public class NewPurchaseOrderItem {
         return orderItems.stream()
                 .map(orderItem ->
                         NewPurchaseOrderItem.builder()
-                                .id(orderItem.getId())
                                 .orderId(orderItem.getOrder().getOrderId())
                                 .itemIdx(orderItem.getItemIdx())
                                 .productName(orderItem.getProductName())

@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.domain.model;
+package sw.sustainable.springlabs.fpay.domain.model.order;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

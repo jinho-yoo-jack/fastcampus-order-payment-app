@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.domain.model;
+package sw.sustainable.springlabs.fpay.domain.model.order;
 
 import lombok.Getter;
 

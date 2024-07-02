@@ -10,11 +10,9 @@ import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentAppr
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentCancel;
 
 public interface TossPaymentAPIs {
-
     @POST("payments/confirm")
     Call<ResponsePaymentApproved> paymentFullfill(@Body PaymentApproved requestMessage);
 
     @POST("payments/{paymentKey}/cancel")
     Call<ResponsePaymentCancel> paymentCancel(@Path("paymentKey") String paymentKey, @Body PaymentCancel requestMessage);
-
 }
