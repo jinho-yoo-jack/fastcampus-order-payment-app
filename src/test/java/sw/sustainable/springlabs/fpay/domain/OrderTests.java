@@ -1,57 +1,50 @@
 package sw.sustainable.springlabs.fpay.domain;
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
-import sw.sustainable.springlabs.fpay.domain.order.OrderItem;
-import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
-import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
+import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
+import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder;
+import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem;
 
 import java.util.*;
 
-@Slf4j
-@ActiveProfiles("test")
-@SpringBootTest
+/**
+ * PurchaseOrder 객체
+ * define: 주문 도메인의 Aggregate
+ * description: 주문 업무의 모든 업무 규칙 기능(비즈니스 로직) 제공하는 클래스
+ */
 public class OrderTests {
-    @Autowired
-    private OrderRepository orderRepository;
 
+    /**
+     * 신규 상품 주문(Purchase Order) 관련 단위 테스트
+     * - 상품 주문은 최소 1개 이상 주문해야 한다.
+     * [TEST CASE#1] 1개 일 때, return true;
+     * [TEST CASE#2] n개 일 때, return true;
+     * [Exception] 0개 일 때, 오류 처리
+     */
     @Test
-    public void newOrderTest() {
-        try {
-            UUID newOrderId = Order.generateOrderId();
-            OrderItem orderItem = OrderItem.builder()
-                    .productId(UUID.randomUUID())
-                    .productName("속이 편한 우유 300ml")
-                    .price(3230)
-                    .amount(10)
-                    .size("FREE")
-                    .state(OrderStatus.ORDER_COMPLETED)
-                    .build();
+    public void verifyOrderItemsAtLeastOne() {
+        PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
+                List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
+        Order order = newOrder.toEntity();
 
-//            Order order = new Order(newOrderId, "유진호", "010-1234-1234", List.of(orderItem));
-            Order order =null;
-            orderRepository.save(order);
-            Order newOrder = orderRepository.findById(newOrderId);
-            OrderItem item = newOrder.getItems().get(0);
-            log.info("Result -> {}", item);
-            UUID actualOrderId = newOrder.getOrderId();
-            log.info("actualOrderId -> {}", actualOrderId);
-            log.info("newOrderId -> {}", newOrderId);
-            Assertions.assertEquals(newOrderId, actualOrderId);
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+        Assertions.assertEquals(true, order.verifyHaveAtLeastOneItem(order.getItems()));
     }
 
+    /**
+     * 신규 상품 주문(Purchase Order) 관련 단위 테스트
+     * - 상품 주문 시, product_id는 중복될 수 없다.
+     * [TEST CASE#1] 주문하는 상품의 모든 product_id가 유니크한 경우, return true;
+     * [TEST CASE#2] 주문하는 상품의 모든 product_id가 유니크 하지 않을 경우, return false;
+     * [Exception] NULL 경우, 오류 처리
+     */
     @Test
-    public void orderCancelTest(){
-        UUID canceledOrderId = UUID.fromString("0b5abb17-caeb-4983-8e6d-8c4dad490bd2");
-        Optional<Order> order = Optional.ofNullable(orderRepository.findById(canceledOrderId));
-//        order.ifPresent(value -> orderRepository.delete(value));
+    public void verifyDuplicateOrderItemId() {
+        PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
+                List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
+        Order order = newOrder.toEntity();
+
+        Assertions.assertEquals(true, order.verifyHaveAtLeastOneItem(order.getItems()));
     }
 }
