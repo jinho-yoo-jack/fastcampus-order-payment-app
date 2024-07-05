@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.infrastructure.config;
+package sw.sustainable.springlabs.core.config;
 
 import org.springframework.context.ApplicationContext;
 

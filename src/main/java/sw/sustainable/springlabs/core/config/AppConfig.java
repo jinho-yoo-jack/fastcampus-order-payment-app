@@ -1,10 +1,10 @@
-package sw.sustainable.springlabs.fpay.infrastructure.config;
+package sw.sustainable.springlabs.core.config;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import sw.sustainable.springlabs.fpay.infrastructure.common.BaseUtils;
+import sw.sustainable.springlabs.core.common.BaseUtils;
 
 @Configuration
 @ConfigurationProperties(prefix = "my")

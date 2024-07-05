@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.infrastructure.config;
+package sw.sustainable.springlabs.core.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -6,10 +6,9 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.*;
 import org.springframework.http.converter.*;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
-import sw.sustainable.springlabs.fpay.infrastructure.common.ApiResponse;
+import sw.sustainable.springlabs.core.common.ApiResponse;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

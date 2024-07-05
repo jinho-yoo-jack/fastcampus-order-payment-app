@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.infrastructure.common;
+package sw.sustainable.springlabs.core.common;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

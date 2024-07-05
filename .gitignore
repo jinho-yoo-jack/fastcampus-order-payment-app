@@ -38,3 +38,6 @@ out/
 
 ### Docker ###
 /docker/.env
+
+### Rest Docs ###
+/src/main/resources/static/swagger-ui/openapi3.yaml

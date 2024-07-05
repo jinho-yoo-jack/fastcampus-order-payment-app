@@ -12,7 +12,7 @@ import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentMethod;
 import sw.sustainable.springlabs.fpay.domain.payment.TransactionType;
 import sw.sustainable.springlabs.fpay.domain.repository.*;
-import sw.sustainable.springlabs.fpay.infrastructure.config.BeanUtils;
+import sw.sustainable.springlabs.core.config.BeanUtils;
 import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.JpaCardPaymentRepository;
 import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.CardTransactionTypeRepository;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentApproved;

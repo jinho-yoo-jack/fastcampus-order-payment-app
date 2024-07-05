@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.infrastructure.config;
+package sw.sustainable.springlabs.core.config;
 
 import lombok.Getter;
 import org.springframework.beans.BeansException;

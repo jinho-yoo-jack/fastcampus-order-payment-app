@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.infrastructure.common;
+package sw.sustainable.springlabs.core.common;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpHeaders;
