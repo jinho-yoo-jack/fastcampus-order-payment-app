@@ -3,6 +3,7 @@ package sw.sustainable.springlabs.fpay.domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
+import sw.sustainable.springlabs.fpay.domain.order.OrderItem;
 import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem;
@@ -24,12 +25,21 @@ public class OrderTests {
      * [Exception] 0개 일 때, 오류 처리
      */
     @Test
-    public void verifyOrderItemsAtLeastOne() {
+    public void verifyHaveAtLeastOneItem_False_ListSizeBiggerThanOne() {
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
         Order order = newOrder.toEntity();
 
-        Assertions.assertEquals(true, order.verifyHaveAtLeastOneItem(order.getItems()));
+        Assertions.assertFalse(Order.verifyHaveAtLeastOneItem(order.getItems()));
+    }
+
+    @Test
+    public void verifyHaveAtLeastOneItem_True_ListSizeZeroOrLess() {
+        PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
+                Collections.emptyList());
+        Order order = newOrder.toEntity();
+
+        Assertions.assertTrue(Order.verifyHaveAtLeastOneItem(order.getItems()));
     }
 
     /**
@@ -40,11 +50,22 @@ public class OrderTests {
      * [Exception] NULL 경우, 오류 처리
      */
     @Test
-    public void verifyDuplicateOrderItemId() {
+    public void verifyDuplicateOrderItemId_True_NotDuplicateProductId() {
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
         Order order = newOrder.toEntity();
 
-        Assertions.assertEquals(true, order.verifyHaveAtLeastOneItem(order.getItems()));
+        Assertions.assertTrue(order.verifyDuplicateOrderItemId());
+    }
+
+    public void verifyDuplicateOrderItemId_ThrowException_DuplicateProductId() {
+        UUID productId = UUID.randomUUID();
+        PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
+                List.of(new PurchaseOrderItem(1, productId, "농심 짜파게티 4봉", 4500, 1, 4500),
+                        new PurchaseOrderItem(1, productId, "농심 짜파게티 4봉", 4500, 1, 4500)
+                ));
+
+        Order order = newOrder.toEntity();
+        Assertions.assertThrows(IllegalArgumentException.class, order::verifyDuplicateOrderItemId);
     }
 }

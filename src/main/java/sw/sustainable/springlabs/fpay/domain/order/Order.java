@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Entity
@@ -70,8 +71,7 @@ public class Order {
     }
 
     private void orderCancelBy(int itemIdx) {
-        this.items.stream().filter(orderItem -> orderItem.getItemIdx() == itemIdx)
-            .forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
+        this.items.stream().filter(orderItem -> orderItem.getItemIdx() == itemIdx).forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
     }
 
     private void orderAllCancel() {
@@ -86,13 +86,21 @@ public class Order {
     }
 
     private void calculateTotalAmount(List<OrderItem> items) {
-        this.totalPrice = items.stream()
-            .map(OrderItem::calculateAmount)
-            .reduce(0, Integer::sum);
+        this.totalPrice = items.stream().map(OrderItem::calculateAmount).reduce(0, Integer::sum);
     }
 
-    public boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
+    public static boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
         return items == null || items.isEmpty();
+    }
+
+    public boolean verifyDuplicateOrderItemId() {
+        // [TEST CASE #1]
+        // return true;
+        // [TEST CASE #2]
+        // throw;
+        List<UUID> productIds = this.getItems().stream().map(OrderItem::getProductId).distinct().toList();
+        if (!productIds.isEmpty()) return true;
+        else throw new IllegalArgumentException();
     }
 
     public boolean isChangeableShippingAddress() {

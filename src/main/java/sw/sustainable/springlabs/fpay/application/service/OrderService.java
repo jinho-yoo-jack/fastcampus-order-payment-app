@@ -19,7 +19,6 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class OrderService implements CreateNewOrderUseCase, GetOrderInfoUseCase {
-    private final PaymentAPIs paymentAPIs;
     private final OrderRepository orderRepository;
 
     @Transactional
