@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,8 +29,18 @@ public class GlobalException extends ResponseEntityExceptionHandler {
                 .body(new ErrorResponse(null, ex.getBindingResult().getAllErrors().get(0).getDefaultMessage(), HttpStatus.BAD_REQUEST));
     }
 
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public final ErrorResponse handleIOExceptions(Exception ex, WebRequest request) {
+        List<StackTraceElement> stackTraces = null;
+        if (stackTrace) {
+            stackTraces = Arrays.asList(ex.getStackTrace());
+        }
+        return new ErrorResponse(stackTraces, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public final ErrorResponse handleAllExceptions(Exception ex, WebRequest request) {
         List<StackTraceElement> stackTraces = null;
         if (stackTrace) {

@@ -70,6 +70,25 @@ public class Order {
         Stream.<int[]>of(itemIdxs).forEach(this::orderCancel);
     }
 
+
+    public static boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
+        return items == null || items.isEmpty();
+    }
+
+    public boolean verifyDuplicateOrderItemId() {
+        List<UUID> productIds = this.getItems().stream().map(OrderItem::getProductId).distinct().toList();
+        if (!productIds.isEmpty()) return true;
+        else throw new IllegalArgumentException();
+    }
+
+    public boolean isChangeableShippingAddress() {
+        return !(status.equals(OrderStatus.SHIPPING));
+    }
+
+    public boolean isPossibleToCancel() {
+        return !this.status.equals(OrderStatus.PURCHASE_DECISION);
+    }
+
     private void orderCancelBy(int itemIdx) {
         this.items.stream().filter(orderItem -> orderItem.getItemIdx() == itemIdx).forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
     }
@@ -87,28 +106,6 @@ public class Order {
 
     private void calculateTotalAmount(List<OrderItem> items) {
         this.totalPrice = items.stream().map(OrderItem::calculateAmount).reduce(0, Integer::sum);
-    }
-
-    public static boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
-        return items == null || items.isEmpty();
-    }
-
-    public boolean verifyDuplicateOrderItemId() {
-        // [TEST CASE #1]
-        // return true;
-        // [TEST CASE #2]
-        // throw;
-        List<UUID> productIds = this.getItems().stream().map(OrderItem::getProductId).distinct().toList();
-        if (!productIds.isEmpty()) return true;
-        else throw new IllegalArgumentException();
-    }
-
-    public boolean isChangeableShippingAddress() {
-        return !(status.equals(OrderStatus.SHIPPING));
-    }
-
-    public boolean isPossibleToCancel() {
-        return !this.status.equals(OrderStatus.PURCHASE_DECISION);
     }
 
 }

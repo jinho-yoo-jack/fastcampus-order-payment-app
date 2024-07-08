@@ -41,7 +41,7 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0")
     implementation("com.google.code.gson:gson")
 //    developmentOnly("org.springframework.boot:spring-boot-devtools")
-//    runtimeOnly("com.h2database:h2")
+    runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("com.google.code.gson:gson")

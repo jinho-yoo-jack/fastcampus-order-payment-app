@@ -3,7 +3,6 @@ package sw.sustainable.springlabs.fpay.domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
-import sw.sustainable.springlabs.fpay.domain.order.OrderItem;
 import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem;

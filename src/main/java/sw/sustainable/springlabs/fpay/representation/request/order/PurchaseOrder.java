@@ -1,21 +1,11 @@
 package sw.sustainable.springlabs.fpay.representation.request.order;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.thymeleaf.util.StringUtils;
-import sw.sustainable.springlabs.fpay.domain.order.Order;
-import sw.sustainable.springlabs.fpay.domain.order.OrderId;
-import sw.sustainable.springlabs.fpay.domain.order.OrderItem;
-import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
+import jakarta.validation.constraints.*;
+import lombok.*;
+import sw.sustainable.springlabs.fpay.domain.order.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter

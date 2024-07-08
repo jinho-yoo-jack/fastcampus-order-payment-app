@@ -8,6 +8,7 @@ import sw.sustainable.springlabs.fpay.application.port.in.GetPaymentInfoUseCase;
 import sw.sustainable.springlabs.fpay.application.port.in.PaymentFullfillUseCase;
 import sw.sustainable.springlabs.fpay.domain.api.PaymentAPIs;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
+import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentMethod;
 import sw.sustainable.springlabs.fpay.domain.payment.TransactionType;
@@ -33,6 +34,7 @@ public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUse
     @Transactional
     @Override
     public String paymentApproved(PaymentApproved paymentInfo) throws IOException {
+        verifyOrderIsCompleted(UUID.fromString(paymentInfo.getOrderId()));
         ResponsePaymentApproved response = paymentAPIs.requestPaymentApprove(paymentInfo);
 
         if (paymentAPIs.isPaymentApproved(response.getStatus())) {
@@ -41,6 +43,8 @@ public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUse
             paymentLedgerRepository.save(response.toPaymentTransactionEntity());
             initPaymentRepository(PaymentMethod.fromMethodName(response.getMethod()));
             transactionTypeRepository.save(TransactionType.convertToTransactionType(response));
+
+            return "success";
         }
 
         return "fail";
@@ -58,6 +62,12 @@ public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUse
     @Override
     public PaymentLedger getLatestPaymentInfoOnlyOne(String paymentKey) {
         return paymentLedgerRepository.findOneByPaymentKeyDesc(paymentKey);
+    }
+
+    public void verifyOrderIsCompleted(UUID orderId) throws IllegalArgumentException {
+        OrderStatus status = orderRepository.findById(orderId).getStatus();
+        if (!status.equals(OrderStatus.ORDER_COMPLETED))
+            throw new IllegalArgumentException("Order is not completed || Order is already paymented");
     }
 
     private boolean isNotPaymentRepository() {
