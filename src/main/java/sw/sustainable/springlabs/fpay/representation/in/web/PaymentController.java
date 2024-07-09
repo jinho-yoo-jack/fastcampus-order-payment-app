@@ -14,10 +14,7 @@ public class PaymentController {
     private final PaymentFullfillUseCase paymentFullFillService;
 
     @GetMapping("/success")
-    public String paymentFullfill(@RequestParam(value = "paymentType") String paymentType,
-                                  @RequestParam(value = "orderId") String orderId,
-                                  @RequestParam(value = "paymentKey") String paymentKey,
-                                  @RequestParam(value = "amount") String amount
+    public String paymentFullfill(@RequestParam(value = "paymentType") String paymentType, @RequestParam(value = "orderId") String orderId, @RequestParam(value = "paymentKey") String paymentKey, @RequestParam(value = "amount") String amount
     ) {
         return "success";
     }
@@ -31,6 +28,5 @@ public class PaymentController {
     public String paymentConfirm(@RequestBody PaymentApproved paymentApproved) throws Exception {
         return paymentFullFillService.paymentApproved(paymentApproved);
     }
-
 
 }

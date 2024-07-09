@@ -20,7 +20,7 @@ public class OrderController {
     private final GetOrderInfoUseCase getOrderInfoUseCase;
 
     @PostMapping("/new")
-    public NewPurchaseOrder newOrder(@RequestBody @Valid PurchaseOrder newOrder) {
+    public NewPurchaseOrder newOrder(@RequestBody @Valid PurchaseOrder newOrder) throws Exception {
         return NewPurchaseOrder.from(createNewOrderUseCase.createOrder(newOrder));
     }
 

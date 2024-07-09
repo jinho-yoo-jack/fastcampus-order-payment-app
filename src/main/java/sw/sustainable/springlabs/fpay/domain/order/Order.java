@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 @Setter
 @Getter
-@Builder
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -40,12 +39,12 @@ public class Order {
     protected Order() {
     }
 
+    @Builder
     public Order(String name, String phoneNumber, List<OrderItem> items) throws Exception {
-        if (verifyHaveAtLeastOneItem(items)) throw new Exception("Noting Items");
-        calculateTotalAmount(items);
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.status = OrderStatus.ORDER_COMPLETED;
+        calculateTotalAmount(items);
         this.items = items;
     }
 

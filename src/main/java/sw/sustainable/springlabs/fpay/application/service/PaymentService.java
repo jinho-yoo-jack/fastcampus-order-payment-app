@@ -24,7 +24,6 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUseCase {
     private final PaymentAPIs paymentAPIs;
     private final OrderRepository orderRepository;

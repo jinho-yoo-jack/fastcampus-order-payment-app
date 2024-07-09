@@ -57,6 +57,7 @@ public class OrderTests {
         Assertions.assertTrue(order.verifyDuplicateOrderItemId());
     }
 
+    @Test
     public void verifyDuplicateOrderItemId_ThrowException_DuplicateProductId() {
         UUID productId = UUID.randomUUID();
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),

@@ -76,12 +76,12 @@ public class PaymentServiceTests {
     public void paymentApproved_success_isSuccessfulAndDone() throws IOException {
         // Given
         Mockito.when(paymentAPIs.requestPaymentApprove(any()))
-                .thenReturn(ResponsePaymentApproved.builder().build());  // TODO:// Response Message Build Modify
+                .thenReturn(ResponsePaymentApproved.builder().build());
 
         Mockito.when(orderRepository.findById(any()))
                 .thenReturn(order);
 
-//        PaymentLedger paymentLedger = new PaymentLedger() // TODO: //
+//        PaymentLedger paymentLedger = new PaymentLedger();
         Mockito.when(paymentLedgerRepository.save(any()))
                 .thenReturn(any());
 

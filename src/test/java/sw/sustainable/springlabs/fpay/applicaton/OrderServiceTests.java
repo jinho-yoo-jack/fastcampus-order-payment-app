@@ -29,7 +29,7 @@ public class OrderServiceTests {
     private OrderService orderService;
 
     @Test
-    public void createOrder_NewOrder_ANormalOrderForm() {
+    public void createOrder_NewOrder_ANormalOrderForm() throws Exception {
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
         Order order = newOrder.toEntity();

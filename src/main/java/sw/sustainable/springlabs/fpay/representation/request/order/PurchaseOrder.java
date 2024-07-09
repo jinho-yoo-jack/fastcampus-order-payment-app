@@ -39,15 +39,14 @@ public class PurchaseOrder {
                 .build();
     }
 
-    public Order toEntity() {
+    public Order toEntity() throws Exception {
         Order o = Order.builder()
                 .items(new ArrayList<>())
                 .name(this.getOrderer().getName())
                 .phoneNumber(this.getOrderer().getPhoneNumber())
-                .status(OrderStatus.ORDER_COMPLETED)
-                .paymentId("")
                 .build();
         o.getItems().addAll(this.convert2OrderItems(o));
+        if (Order.verifyHaveAtLeastOneItem(o.getItems())) throw new Exception("Noting Items");
         return o;
     }
 

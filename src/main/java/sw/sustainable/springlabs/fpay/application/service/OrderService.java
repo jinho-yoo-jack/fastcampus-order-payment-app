@@ -23,7 +23,7 @@ public class OrderService implements CreateNewOrderUseCase, GetOrderInfoUseCase 
 
     @Transactional
     @Override
-    public Order createOrder(PurchaseOrder newOrder) {
+    public Order createOrder(PurchaseOrder newOrder) throws Exception {
         return orderRepository.save(newOrder.toEntity());
     }
 
