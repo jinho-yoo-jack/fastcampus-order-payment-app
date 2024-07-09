@@ -24,7 +24,7 @@ public class OrderRepositoryTests {
     private JpaOrderRepository jpaOrderRepository;
 
     @Test
-    public void save_true_NewOrder() {
+    public void save_true_NewOrder() throws Exception {
         // Given
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));

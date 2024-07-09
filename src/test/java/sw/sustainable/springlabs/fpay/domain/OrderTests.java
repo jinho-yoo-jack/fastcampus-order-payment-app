@@ -24,7 +24,7 @@ public class OrderTests {
      * [Exception] 0개 일 때, 오류 처리
      */
     @Test
-    public void verifyHaveAtLeastOneItem_False_ListSizeBiggerThanOne() {
+    public void verifyHaveAtLeastOneItem_False_ListSizeBiggerThanOne() throws Exception {
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
         Order order = newOrder.toEntity();
@@ -33,7 +33,7 @@ public class OrderTests {
     }
 
     @Test
-    public void verifyHaveAtLeastOneItem_True_ListSizeZeroOrLess() {
+    public void verifyHaveAtLeastOneItem_True_ListSizeZeroOrLess() throws Exception {
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 Collections.emptyList());
         Order order = newOrder.toEntity();
@@ -49,7 +49,7 @@ public class OrderTests {
      * [Exception] NULL 경우, 오류 처리
      */
     @Test
-    public void verifyDuplicateOrderItemId_True_NotDuplicateProductId() {
+    public void verifyDuplicateOrderItemId_True_NotDuplicateProductId() throws Exception {
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
         Order order = newOrder.toEntity();
@@ -58,7 +58,7 @@ public class OrderTests {
     }
 
     @Test
-    public void verifyDuplicateOrderItemId_ThrowException_DuplicateProductId() {
+    public void verifyDuplicateOrderItemId_ThrowException_DuplicateProductId() throws Exception {
         UUID productId = UUID.randomUUID();
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, productId, "농심 짜파게티 4봉", 4500, 1, 4500),

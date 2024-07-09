@@ -44,7 +44,6 @@ public class Order {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.status = OrderStatus.ORDER_COMPLETED;
-        calculateTotalAmount(items);
         this.items = items;
     }
 
@@ -103,8 +102,8 @@ public class Order {
         return this;
     }
 
-    private void calculateTotalAmount(List<OrderItem> items) {
-        this.totalPrice = items.stream().map(OrderItem::calculateAmount).reduce(0, Integer::sum);
+    public void calculateTotalAmount() {
+        this.totalPrice = this.items.stream().map(OrderItem::calculateAmount).reduce(0, Integer::sum);
     }
 
 }

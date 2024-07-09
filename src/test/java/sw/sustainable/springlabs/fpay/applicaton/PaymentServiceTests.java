@@ -58,7 +58,7 @@ public class PaymentServiceTests {
     private UUID orderId;
 
     @BeforeEach
-    public void init() {
+    public void init() throws Exception {
         orderId = UUID.randomUUID();
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, orderId, "농심 짜파게티 4봉", 4500, 1, 4500)));
