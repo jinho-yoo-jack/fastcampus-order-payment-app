@@ -6,34 +6,42 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import sw.sustainable.springlabs.fpay.application.service.PaymentService;
 import sw.sustainable.springlabs.fpay.domain.api.PaymentAPIs;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
 import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
-import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
+import sw.sustainable.springlabs.fpay.domain.payment.PaymentMethod;
+import sw.sustainable.springlabs.fpay.domain.payment.TransactionType;
+import sw.sustainable.springlabs.fpay.domain.payment.card.AcquireStatus;
 import sw.sustainable.springlabs.fpay.domain.payment.card.CardPayment;
 import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
 import sw.sustainable.springlabs.fpay.domain.repository.PaymentLedgerRepository;
 import sw.sustainable.springlabs.fpay.domain.repository.TransactionTypeRepository;
 import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.CardTransactionTypeRepository;
+import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.JpaCardPaymentRepository;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentApproved;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.method.Card;
 import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem;
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentApproved;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.*;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
@@ -48,9 +56,9 @@ public class PaymentServiceTests {
     @Mock
     private PaymentLedgerRepository paymentLedgerRepository;
 
-    private TransactionTypeRepository transactionTypeRepository;
+    @Mock
+    private CardTransactionTypeRepository cardTransactionTypeRepository;
 
-    @InjectMocks
     private PaymentService paymentService;
 
     private Order order;
@@ -62,7 +70,7 @@ public class PaymentServiceTests {
         orderId = UUID.randomUUID();
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, orderId, "농심 짜파게티 4봉", 4500, 1, 4500)));
-        order = newOrder.toEntity();
+        order = PowerMockito.spy(newOrder.toEntity());
     }
 
     /**
@@ -73,28 +81,52 @@ public class PaymentServiceTests {
      * [Exception] IOException 발생 했을 때, return fail;
      */
     @Test
-    public void paymentApproved_success_isSuccessfulAndDone() throws IOException {
+    public void paymentApproved_success_isSuccessfulAndDone() throws Exception {
         // Given
-        Mockito.when(paymentAPIs.requestPaymentApprove(any()))
-                .thenReturn(ResponsePaymentApproved.builder().build());
+        Order completedOrder = order;
+        PaymentApproved paymentInfo = new PaymentApproved("NORMAL",
+                "tgen_20240605132741Jtkz1", orderId.toString(), "3400");
 
-        Mockito.when(orderRepository.findById(any()))
-                .thenReturn(order);
+        ResponsePaymentApproved response = ResponsePaymentApproved.builder()
+                .orderId(orderId.toString())
+                .paymentKey("tgen_20240605132741Jtkz1")
+                .method("카드")
+                .orderName("속이 편한 우유")
+                .card(Card.builder()
+                        .issuerCode(null)
+                        .acquirerCode("41")
+                        .number("54287966****112")
+                        .approveNo("00000000")
+                        .acquireStatus("READY")
+                        .build()
+                )
+                .method("카드")
+                .status("DONE")
+                .orderId(orderId.toString())
+                .build();
 
-//        PaymentLedger paymentLedger = new PaymentLedger();
-        Mockito.when(paymentLedgerRepository.save(any()))
-                .thenReturn(any());
+        when(paymentAPIs.requestPaymentApprove(paymentInfo))
+                .thenReturn(response);
 
-        TransactionTypeRepository transactionTypeRepository = Mockito.mock(CardTransactionTypeRepository.class);
-        doNothing().when(transactionTypeRepository).save(any());
+        when(paymentAPIs.isPaymentApproved(any()))
+                .thenReturn(true);
+
+        when(orderRepository.findById(any()))
+                .thenReturn(completedOrder);
+
+        doNothing().when(paymentLedgerRepository).save(any());
 
         // When
-        PaymentApproved requestMessage = new PaymentApproved("", "",
-                orderId.toString(), "3400");
-        String result = paymentService.paymentApproved(requestMessage);
+        Set<TransactionTypeRepository> transactionTypeRepositorySet = Set.of(cardTransactionTypeRepository);
+        paymentService = new PaymentService(paymentAPIs, orderRepository, paymentLedgerRepository, transactionTypeRepositorySet);
+        paymentService.init();
+        String result = paymentService.paymentApproved(paymentInfo);
 
         // Then
         Mockito.verify(paymentAPIs, Mockito.times(1)).requestPaymentApprove(any());
+        Mockito.verify(orderRepository, Mockito.times(2)).findById(any());
+        Mockito.verify(paymentLedgerRepository, Mockito.times(1)).save(any());
+        Mockito.verify(cardTransactionTypeRepository, Mockito.times(1)).save(any());
         assertEquals("success", result);
 
     }
@@ -109,7 +141,7 @@ public class PaymentServiceTests {
     @DisplayName("주문 상태가 \"주문 완료\"인 경우")
     @Test
     public void verifyOrderIsCompleted_true_ORDER_COMPLETED() {
-        Mockito.when(orderRepository.findById(orderId))
+        when(orderRepository.findById(orderId))
                 .thenReturn(order);
 
         Assertions.assertDoesNotThrow(() -> paymentService.verifyOrderIsCompleted(orderId));
@@ -120,7 +152,7 @@ public class PaymentServiceTests {
     public void verifyOrderIsCompleted_false_ORDER_COMPLETED() {
         order.setStatus(OrderStatus.PAYMENT_FULLFILL);
 
-        Mockito.when(orderRepository.findById(orderId))
+        when(orderRepository.findById(orderId))
                 .thenReturn(order);
 
         assertThrows(IllegalArgumentException.class, () -> paymentService.verifyOrderIsCompleted(orderId));

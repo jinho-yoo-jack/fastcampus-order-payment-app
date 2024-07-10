@@ -25,7 +25,7 @@ public class PaymentTransactionLedgerRepository implements PaymentLedgerReposito
     }
 
     @Override
-    public PaymentLedger save(PaymentLedger paymentLedgerInfo) {
-        return jpaPaymentLedgerRepository.save(paymentLedgerInfo);
+    public void save(PaymentLedger paymentLedgerInfo) {
+        jpaPaymentLedgerRepository.save(paymentLedgerInfo);
     }
 }

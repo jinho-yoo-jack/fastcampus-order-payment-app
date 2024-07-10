@@ -7,5 +7,5 @@ import java.util.List;
 public interface PaymentLedgerRepository {
     List<PaymentLedger> findAllByPaymentKey(String paymentKey);
     PaymentLedger findOneByPaymentKeyDesc(String paymentKey);
-    PaymentLedger save(PaymentLedger paymentLedgerInfo);
+    void save(PaymentLedger paymentLedgerInfo);
 }

@@ -51,6 +51,8 @@ public class OrderItem {
     }
 
     public int calculateAmount() {
-        return price * amount;
+        int totalPrice = price * quantity;
+        this.amount = totalPrice;
+        return totalPrice;
     }
 }

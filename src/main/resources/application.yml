@@ -57,11 +57,6 @@ spring:
   config:
     activate:
       on-profile: test
-  datasource:
-    url: jdbc:mysql://localhost:13306/fastcamp_labs?serverTimezone=UTC&characterEncoding=UTF-8
-    username: fastcamp
-    password: testlabs
-    driver-class-name: com.mysql.cj.jdbc.Driver
   # JPA 설정
   jpa:
     hibernate:

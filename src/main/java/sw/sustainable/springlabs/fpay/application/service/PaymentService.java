@@ -1,5 +1,6 @@
 package sw.sustainable.springlabs.fpay.application.service;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,23 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUseCase {
     private final PaymentAPIs paymentAPIs;
     private final OrderRepository orderRepository;
     private final PaymentLedgerRepository paymentLedgerRepository;
+    private final Set<TransactionTypeRepository> transactionTypeRepositorySet;
+
+    private final Map<String, TransactionTypeRepository> transactionTypeRepositories = new HashMap<>();
     private TransactionTypeRepository transactionTypeRepository;
+
+    @PostConstruct
+    public void init() {
+        for (TransactionTypeRepository transactionTypeRepository : transactionTypeRepositorySet) {
+            String paymentMethodType = transactionTypeRepository.getClass().getSimpleName().split("TransactionTypeRepository")[0].toLowerCase();
+            transactionTypeRepositories.put(paymentMethodType, transactionTypeRepository);
+        }
+    }
 
     @Transactional
     @Override
@@ -40,7 +53,8 @@ public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUse
             Order completedOrder = orderRepository.findById(UUID.fromString(response.getOrderId()));
             completedOrder.orderPaymentFullFill(response.getPaymentKey());
             paymentLedgerRepository.save(response.toPaymentTransactionEntity());
-            initPaymentRepository(PaymentMethod.fromMethodName(response.getMethod()));
+            PaymentMethod method = PaymentMethod.fromMethodName(response.getMethod());
+            initTransactionTypeRepository(method);
             transactionTypeRepository.save(TransactionType.convertToTransactionType(response));
 
             return "success";
@@ -71,6 +85,15 @@ public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUse
 
     private boolean isNotPaymentRepository() {
         return transactionTypeRepository != null;
+    }
+
+    private void initTransactionTypeRepository(PaymentMethod paymentMethod) {
+        switch (paymentMethod.toString().toLowerCase()) {
+            case "card" -> {
+                transactionTypeRepository = transactionTypeRepositories.get("card");
+            }
+            default -> throw new RuntimeException("Unsupported payment method: " + paymentMethod);
+        }
     }
 
     private void initPaymentRepository(PaymentMethod paymentMethod) {
