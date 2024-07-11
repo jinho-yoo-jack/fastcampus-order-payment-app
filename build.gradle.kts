@@ -56,9 +56,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-actuator")
     testImplementation("org.mockito:mockito-core:3.3.0")
-    // Mocking For only Private Method
-    testImplementation("org.powermock:powermock-api-mockito2:2.0.9")
-    testImplementation("org.powermock:powermock-module-junit4:2.0.9")
+    testImplementation("com.squareup.retrofit2:retrofit-mock:2.10.0")
+
 }
 
 tasks.withType<Test> {

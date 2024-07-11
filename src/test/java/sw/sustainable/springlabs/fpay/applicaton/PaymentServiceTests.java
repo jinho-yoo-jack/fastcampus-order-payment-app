@@ -1,40 +1,20 @@
 package sw.sustainable.springlabs.fpay.applicaton;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import sw.sustainable.springlabs.fpay.application.service.PaymentService;
 import sw.sustainable.springlabs.fpay.domain.api.PaymentAPIs;
+import sw.sustainable.springlabs.fpay.domain.order.*;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
-import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
-import sw.sustainable.springlabs.fpay.domain.payment.PaymentMethod;
-import sw.sustainable.springlabs.fpay.domain.payment.TransactionType;
-import sw.sustainable.springlabs.fpay.domain.payment.card.AcquireStatus;
-import sw.sustainable.springlabs.fpay.domain.payment.card.CardPayment;
-import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
-import sw.sustainable.springlabs.fpay.domain.repository.PaymentLedgerRepository;
-import sw.sustainable.springlabs.fpay.domain.repository.TransactionTypeRepository;
+import sw.sustainable.springlabs.fpay.domain.repository.*;
 import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.CardTransactionTypeRepository;
-import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.JpaCardPaymentRepository;
-import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentApproved;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.*;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.method.Card;
-import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
-import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder;
-import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem;
+import sw.sustainable.springlabs.fpay.representation.request.order.*;
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentApproved;
 
 import java.util.*;
@@ -70,7 +50,7 @@ public class PaymentServiceTests {
         orderId = UUID.randomUUID();
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, orderId, "농심 짜파게티 4봉", 4500, 1, 4500)));
-        order = PowerMockito.spy(newOrder.toEntity());
+        order = newOrder.toEntity();
     }
 
     /**
@@ -128,7 +108,6 @@ public class PaymentServiceTests {
         Mockito.verify(paymentLedgerRepository, Mockito.times(1)).save(any());
         Mockito.verify(cardTransactionTypeRepository, Mockito.times(1)).save(any());
         assertEquals("success", result);
-
     }
 
     /**

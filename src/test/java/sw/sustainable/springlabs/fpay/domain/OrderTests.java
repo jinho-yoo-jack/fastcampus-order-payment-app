@@ -68,4 +68,22 @@ public class OrderTests {
         Order order = newOrder.toEntity();
         Assertions.assertThrows(IllegalArgumentException.class, order::verifyDuplicateOrderItemId);
     }
+
+    /**
+     * 결제 완료된 주문(Purchase Order)건에 대한 단위 테스트
+     * - "구매 완료" 상태가 아닌 주문 건에 대해서만 취소가 가능하다.
+     * [TEST CASE#1] "구매 완료" 상태가 아닌 경우, return true;
+     * [TEST CASE#2] "구매 완료" 상태인 경우, return false;
+     */
+    @Test
+    public void isNotOrderStatusPurchaseDecision_true_Normal() throws Exception {
+        // TODO: TEST CODE Exception 처리는 어떻게 하는게 좋은가?
+        PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
+                List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
+        Order order = newOrder.toEntity();
+
+        boolean result = order.isNotOrderStatusPurchaseDecision();
+
+        Assertions.assertTrue(result);
+    }
 }
