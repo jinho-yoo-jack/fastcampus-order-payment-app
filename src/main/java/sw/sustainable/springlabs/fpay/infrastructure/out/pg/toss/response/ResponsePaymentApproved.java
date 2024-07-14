@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentMethod;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
+import sw.sustainable.springlabs.fpay.domain.payment.PaymentStatus;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.ResponsePaymentCommon;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.method.Card;
 
@@ -27,7 +28,7 @@ public class ResponsePaymentApproved extends ResponsePaymentCommon {
         return PaymentLedger.builder()
             .paymentKey(this.getPaymentKey())
             .method(PaymentMethod.fromMethodName(this.getMethod()))
-            .paymentStatus(this.getStatus())
+            .paymentStatus(PaymentStatus.valueOf(this.getStatus()))
             .totalAmount(this.getTotalAmount())
             .balanceAmount(this.getBalanceAmount())
             .canceledAmount(0)

@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.domain.repository;
+package sw.sustainable.springlabs.fpay.application.port.out.repository;
 
 import sw.sustainable.springlabs.fpay.domain.order.Order;
 import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;

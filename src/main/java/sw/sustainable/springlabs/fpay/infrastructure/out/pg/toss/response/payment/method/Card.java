@@ -1,8 +1,10 @@
 package sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.method;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /*
   "card": {
@@ -23,6 +25,8 @@ import lombok.Data;
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Card {
     private String issuerCode;

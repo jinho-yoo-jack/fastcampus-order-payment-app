@@ -5,11 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sw.sustainable.springlabs.fpay.application.port.in.PaymentCancelUseCase;
-import sw.sustainable.springlabs.fpay.domain.api.PaymentAPIs;
+import sw.sustainable.springlabs.fpay.application.port.out.api.PaymentAPIs;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
-import sw.sustainable.springlabs.fpay.domain.payment.PaymentMethod;
-import sw.sustainable.springlabs.fpay.domain.repository.PaymentLedgerRepository;
+import sw.sustainable.springlabs.fpay.application.port.out.repository.PaymentLedgerRepository;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentCancel;
 import sw.sustainable.springlabs.fpay.representation.request.order.CancelOrder;
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentCancel;
@@ -30,14 +29,15 @@ public class CancelService implements PaymentCancelUseCase {
         int cancellationAmount = cancelOrder.getCancellationAmount();
         Order wantedCancelOrder = orderService.getOrderInfo(cancelOrder.getOrderId());
         PaymentLedger paymentInfo = paymentService.getLatestPaymentInfoOnlyOne(paymentKey);
-        if (wantedCancelOrder.isPossibleToCancel() && paymentInfo.isCancellableAmountGreaterThan(cancellationAmount)) {
-            ResponsePaymentCancel response = paymentAPIs.paymentCancel(paymentKey, new PaymentCancel(cancelOrder.getCancelReason(), cancellationAmount));
+        if (wantedCancelOrder.isNotOrderStatusPurchaseDecision() &&
+            paymentInfo.isCancellableAmountGreaterThan(cancellationAmount)) {
+            ResponsePaymentCancel response = paymentAPIs.requestPaymentCancel(paymentKey, new PaymentCancel(cancelOrder.getCancelReason(), cancellationAmount));
             paymentLedgerRepository.save(response.toEntity());
 
-            if (cancelOrder.getItemIdxs().length == 0)
-                wantedCancelOrder.orderCancel();
-            else
+            if (cancelOrder.hasItemIdx())
                 wantedCancelOrder.orderCancel(cancelOrder.getItemIdxs());
+            else
+                wantedCancelOrder.orderAllCancel();
             return true;
         }
 

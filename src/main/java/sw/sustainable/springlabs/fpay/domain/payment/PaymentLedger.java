@@ -22,7 +22,8 @@ public class PaymentLedger {
     private PaymentMethod method; // CARD:카드
 
     @Column(name = "payment_status")
-    private String paymentStatus; // approve, cancel, settle
+    @Convert(converter = PaymentStatusConverter.class)
+    private PaymentStatus paymentStatus; // DONE, CANCELED, PARTIAL_CANCELED, SETTLEMENTS_REQUESTED, SETTLEMENTS_COMPLETED
 
     @Column(name = "total_amount")
     private int totalAmount;
@@ -32,6 +33,9 @@ public class PaymentLedger {
 
     @Column(name = "canceled_amount")
     private int canceledAmount;
+
+    @Column(name = "pay_out_amount")
+    private int payOutAmount;
 
     protected PaymentLedger() {
     }

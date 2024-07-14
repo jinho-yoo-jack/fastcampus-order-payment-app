@@ -56,18 +56,21 @@ public class Order {
         this.paymentId = paymentKey;
     }
 
-    public void orderCancel() {
-        orderAllCancel();
-    }
-
-    public void orderCancel(int itemIdx) {
-        orderCancelBy(itemIdx);
+    public void orderAllCancel() {
+        items.forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
+        update(OrderStatus.ORDER_CANCELLED);
     }
 
     public void orderCancel(int[] itemIdxs) {
-        Stream.<int[]>of(itemIdxs).forEach(this::orderCancel);
+        for(int itemIdx : itemIdxs){
+            orderCancelBy(itemIdx);
+        }
     }
 
+    private void orderCancelBy(int itemIdx) {
+        this.items.stream().filter(orderItem -> orderItem.getItemIdx() == itemIdx)
+            .forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
+    }
 
     public static boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
         return items == null || items.isEmpty();
@@ -79,22 +82,10 @@ public class Order {
         else throw new IllegalArgumentException();
     }
 
-    public boolean isChangeableShippingAddress() {
-        return !(status.equals(OrderStatus.SHIPPING));
+    public boolean isNotOrderStatusPurchaseDecision() {
+        return !(this.status.equals(OrderStatus.PURCHASE_DECISION));
     }
 
-    public boolean isPossibleToCancel() {
-        return !this.status.equals(OrderStatus.PURCHASE_DECISION);
-    }
-
-    private void orderCancelBy(int itemIdx) {
-        this.items.stream().filter(orderItem -> orderItem.getItemIdx() == itemIdx).forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
-    }
-
-    private void orderAllCancel() {
-        items.forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
-        update(OrderStatus.ORDER_CANCELLED);
-    }
 
     private Order update(OrderStatus status) {
         this.status = status;

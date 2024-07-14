@@ -3,13 +3,16 @@ package sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import retrofit2.Response;
-import sw.sustainable.springlabs.fpay.domain.api.PaymentAPIs;
+import sw.sustainable.springlabs.fpay.application.port.out.api.PaymentAPIs;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentApproved;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentCancel;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentSettlements;
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentApproved;
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentCancel;
+import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentSettlement;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -32,7 +35,7 @@ public class TossPayment implements PaymentAPIs {
     }
 
     @Override
-    public ResponsePaymentCancel paymentCancel(String paymentKey, PaymentCancel cancelMessage) throws IOException {
+    public ResponsePaymentCancel requestPaymentCancel(String paymentKey, PaymentCancel cancelMessage) throws IOException {
         Response<ResponsePaymentCancel> response = tossClient.paymentCancel(paymentKey, cancelMessage).execute();
         if (response.isSuccessful()) {
             return response.body();
@@ -42,12 +45,17 @@ public class TossPayment implements PaymentAPIs {
     }
 
     @Override
-    public void paymentCancelAll(String paymentKey) {
+    public List<ResponsePaymentSettlements> requestPaymentSettlement(PaymentSettlement paymentSettlement) throws IOException {
+        String startDate = paymentSettlement.getStartDate();
+        String endDate = paymentSettlement.getEndDate();
+        int page = paymentSettlement.getPage();
+        int size = paymentSettlement.getSize();
 
-    }
+        Response<List<ResponsePaymentSettlements>> response = tossClient.paymentSettlements(startDate, endDate, page, size).execute();
+        if(response.isSuccessful() && response.body() != null && !response.body().isEmpty())  {
+            return response.body();
+        }
 
-    @Override
-    public void settlement(PaymentApproved paymentApproved) {
-
+        throw new IOException(response.message());
     }
 }

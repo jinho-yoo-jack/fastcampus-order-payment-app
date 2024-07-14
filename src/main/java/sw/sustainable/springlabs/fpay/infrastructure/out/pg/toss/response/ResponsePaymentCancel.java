@@ -2,9 +2,12 @@ package sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentMethod;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
+import sw.sustainable.springlabs.fpay.domain.payment.PaymentStatus;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.Cancel;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.payment.ResponsePaymentCommon;
 
 import java.util.List;
 import java.util.UUID;
@@ -90,19 +93,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ResponsePaymentCancel {
-    private String paymentKey;
-    private String method;
-    private String status;
-    private UUID orderId;
-    private int totalAmount;
-    private int balanceAmount;
+public class ResponsePaymentCancel extends ResponsePaymentCommon {
     private List<Cancel> cancels;
-
-    public ResponsePaymentCancel(){
-
-    }
 
     private int calculateCanceledTotalAmount(){
         return cancels.stream().map(Cancel::getCancelAmount)
@@ -113,11 +108,11 @@ public class ResponsePaymentCancel {
         int canceledTotalAmount = calculateCanceledTotalAmount();
 
         return PaymentLedger.builder()
-            .paymentKey(paymentKey)
-            .method(PaymentMethod.fromMethodName(method))
-            .paymentStatus(status)
-            .totalAmount(totalAmount)
-            .balanceAmount(balanceAmount - canceledTotalAmount)
+            .paymentKey(super.getPaymentKey())
+            .method(PaymentMethod.fromMethodName(super.getMethod()))
+            .paymentStatus(PaymentStatus.valueOf(super.getStatus()))
+            .totalAmount(super.getTotalAmount())
+            .balanceAmount(super.getBalanceAmount())
             .canceledAmount(canceledTotalAmount)
             .build();
     }

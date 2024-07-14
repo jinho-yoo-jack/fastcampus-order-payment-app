@@ -1,5 +1,6 @@
 package sw.sustainable.springlabs.core.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @ConfigurationProperties("error-trace")
 @RestControllerAdvice
+@Slf4j
 public class GlobalException extends ResponseEntityExceptionHandler {
 
     private boolean stackTrace;
@@ -36,6 +38,7 @@ public class GlobalException extends ResponseEntityExceptionHandler {
         if (stackTrace) {
             stackTraces = Arrays.asList(ex.getStackTrace());
         }
+        logger.error("ERROR ::: [IOException] ", ex);
         return new ErrorResponse(stackTraces, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -46,6 +49,7 @@ public class GlobalException extends ResponseEntityExceptionHandler {
         if (stackTrace) {
             stackTraces = Arrays.asList(ex.getStackTrace());
         }
+        logger.error("ERROR ::: [AllException] ", ex);
         return new ErrorResponse(stackTraces, ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

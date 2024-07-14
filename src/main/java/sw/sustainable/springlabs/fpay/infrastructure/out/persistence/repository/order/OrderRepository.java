@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
-public class OrderRepository implements sw.sustainable.springlabs.fpay.domain.repository.OrderRepository {
+public class OrderRepository implements sw.sustainable.springlabs.fpay.application.port.out.repository.OrderRepository {
 
     private final JpaOrderRepository jpaOrderRepository;
 

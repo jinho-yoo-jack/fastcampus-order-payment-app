@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface JpaPaymentLedgerRepository extends JpaBaseRepository<PaymentLedger, String> {
     Optional<List<PaymentLedger>> findByPaymentKey(String paymentKey);
 
-    Optional<PaymentLedger> findOneByPaymentKeyOrderByIdDesc(String paymentKey);
+    Optional<PaymentLedger> findTopByPaymentKeyOrderByIdDesc(String paymentKey);
 }

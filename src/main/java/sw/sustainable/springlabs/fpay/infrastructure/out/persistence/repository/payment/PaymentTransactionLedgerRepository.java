@@ -3,7 +3,7 @@ package sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
-import sw.sustainable.springlabs.fpay.domain.repository.PaymentLedgerRepository;
+import sw.sustainable.springlabs.fpay.application.port.out.repository.PaymentLedgerRepository;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class PaymentTransactionLedgerRepository implements PaymentLedgerReposito
 
     @Override
     public PaymentLedger findOneByPaymentKeyDesc(String paymentKey) {
-        return jpaPaymentLedgerRepository.findOneByPaymentKeyOrderByIdDesc(paymentKey)
+        return jpaPaymentLedgerRepository.findTopByPaymentKeyOrderByIdDesc(paymentKey)
             .orElseThrow(() -> new NullPointerException("findOneByPaymentKeyDesc ::: Not found Payment Transaction"));
     }
 

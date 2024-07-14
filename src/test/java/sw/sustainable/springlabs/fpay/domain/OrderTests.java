@@ -1,8 +1,11 @@
 package sw.sustainable.springlabs.fpay.domain;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
+import sw.sustainable.springlabs.fpay.domain.order.OrderStatus;
+import sw.sustainable.springlabs.fpay.representation.request.order.CancelOrder;
 import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem;
@@ -75,15 +78,42 @@ public class OrderTests {
      * [TEST CASE#1] "구매 완료" 상태가 아닌 경우, return true;
      * [TEST CASE#2] "구매 완료" 상태인 경우, return false;
      */
+    @DisplayName("[TEST CASE#1] \"구매 완료\" 상태가 아닌 경우, return true;")
     @Test
-    public void isNotOrderStatusPurchaseDecision_true_Normal() throws Exception {
-        // TODO: TEST CODE Exception 처리는 어떻게 하는게 좋은가?
+    public void isNotOrderStatusPurchaseDecision_true_OrderStatusIsNotPurchaseDecision() throws Exception {
         PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
                 List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
         Order order = newOrder.toEntity();
 
         boolean result = order.isNotOrderStatusPurchaseDecision();
-
         Assertions.assertTrue(result);
+    }
+
+    /**
+     * 주문 취소 단위 테스트
+     * - 상품 정보(itemIdx)가 있는 경우, 부분 취소; 그렇지 않은 전체 취소;
+     * [TEST CASE#1] "상품 상세 정보"가 Not Empty 경우, return true;
+     * [TEST CASE#2] "상품 상세 정보"가 Empty 경우, return false;
+     */
+    @DisplayName("[TEST CASE#1] \"상품 상세 정보\"가 Not Empty 경우, return true;")
+    @Test
+    public void hasItemIdx_true_ItemIdIsNotEmpty() throws Exception {
+        UUID orderId = UUID.randomUUID();
+        CancelOrder cancelMessage = new CancelOrder(orderId, new int[]{1}, "Reason",
+            "tgen_20240605132741Jtkz1", 3400);
+
+        boolean result = cancelMessage.hasItemIdx();
+        Assertions.assertTrue(result);
+    }
+
+    @DisplayName("[TEST CASE#2] \"상품 상세 정보\"가 Empty 경우, return false;")
+    @Test
+    public void hasItemIdx_false_ItemIdIsNotEmpty() throws Exception {
+        UUID orderId = UUID.randomUUID();
+        CancelOrder cancelMessage = new CancelOrder(orderId, new int[]{1}, "Reason",
+            "tgen_20240605132741Jtkz1", 3400);
+
+        boolean result = cancelMessage.hasItemIdx();
+        Assertions.assertFalse(result);
     }
 }

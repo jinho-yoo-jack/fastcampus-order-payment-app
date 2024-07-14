@@ -15,12 +15,12 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/cancel")
+@RequestMapping("/payment")
 @RequiredArgsConstructor
 public class CancelController {
     private final PaymentCancelUseCase paymentCancelUseCase;
 
-    @PostMapping("/payment")
+    @PostMapping("/cancel")
     public boolean cancelPayment(@RequestBody @Valid CancelOrder cancelOrder) throws Exception {
         return paymentCancelUseCase.paymentCancel(cancelOrder);
     }

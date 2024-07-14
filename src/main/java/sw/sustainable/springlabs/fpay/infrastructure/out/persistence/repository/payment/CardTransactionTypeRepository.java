@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import sw.sustainable.springlabs.fpay.domain.payment.TransactionType;
 import sw.sustainable.springlabs.fpay.domain.payment.card.CardPayment;
-import sw.sustainable.springlabs.fpay.domain.repository.TransactionTypeRepository;
+import sw.sustainable.springlabs.fpay.application.port.out.repository.TransactionTypeRepository;
 
 import java.util.NoSuchElementException;
 

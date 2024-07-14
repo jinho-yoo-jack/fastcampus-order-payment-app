@@ -8,7 +8,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sw.sustainable.springlabs.fpay.application.service.OrderService;
 import sw.sustainable.springlabs.fpay.domain.order.Order;
-import sw.sustainable.springlabs.fpay.domain.repository.OrderRepository;
+import sw.sustainable.springlabs.fpay.application.port.out.repository.OrderRepository;
 import sw.sustainable.springlabs.fpay.representation.request.order.Orderer;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder;
 import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrderItem;

@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.domain.repository;
+package sw.sustainable.springlabs.fpay.application.port.out.repository;
 
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
 
