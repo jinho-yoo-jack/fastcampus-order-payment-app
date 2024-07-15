@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sw.sustainable.springlabs.fpay.application.port.in.GetPaymentInfoUseCase;
 import sw.sustainable.springlabs.fpay.application.port.in.PaymentFullfillUseCase;
-import sw.sustainable.springlabs.fpay.application.port.in.PaymentSettlements;
 import sw.sustainable.springlabs.fpay.application.port.out.repository.OrderRepository;
 import sw.sustainable.springlabs.fpay.application.port.out.repository.PaymentLedgerRepository;
 import sw.sustainable.springlabs.fpay.application.port.out.repository.TransactionTypeRepository;
@@ -18,9 +17,7 @@ import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentMethod;
 import sw.sustainable.springlabs.fpay.domain.payment.TransactionType;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentApproved;
-import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentSettlements;
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentApproved;
-import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentSettlement;
 
 import java.io.IOException;
 import java.util.*;
@@ -28,7 +25,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUseCase, PaymentSettlements {
+public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUseCase  {
     private final PaymentAPIs paymentAPIs;
     private final OrderRepository orderRepository;
     private final PaymentLedgerRepository paymentLedgerRepository;
@@ -75,11 +72,7 @@ public class PaymentService implements PaymentFullfillUseCase, GetPaymentInfoUse
         return paymentLedgerRepository.findOneByPaymentKeyDesc(paymentKey);
     }
 
-    @Override
-    public void getPaymentSettlements(PaymentSettlement settlementsMessage) throws IOException {
-        List<ResponsePaymentSettlements> response = paymentAPIs.requestPaymentSettlement(settlementsMessage);
 
-    }
 
     public void verifyOrderIsCompleted(UUID orderId) throws IllegalArgumentException {
         OrderStatus status = orderRepository.findById(orderId).getStatus();

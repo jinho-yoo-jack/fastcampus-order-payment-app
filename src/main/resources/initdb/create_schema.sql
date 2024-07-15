@@ -79,5 +79,5 @@ CREATE TABLE `payment_settlements`
     `created_at`         DATETIME DEFAULT NOW() NOT NULL,
     `updated_at`         DATETIME DEFAULT NOW() NOT NUll,
     PRIMARY KEY (id),
-    UNIQUE KEY (id, payment_id, method, settlement_status)
+    UNIQUE KEY (id, payment_id, method, settlements_status)
 );

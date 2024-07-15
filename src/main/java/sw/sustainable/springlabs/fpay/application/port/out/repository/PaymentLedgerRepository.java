@@ -8,4 +8,5 @@ public interface PaymentLedgerRepository {
     List<PaymentLedger> findAllByPaymentKey(String paymentKey);
     PaymentLedger findOneByPaymentKeyDesc(String paymentKey);
     void save(PaymentLedger paymentLedgerInfo);
+    void bulkInsert(List<PaymentLedger> paymentLedgerHistories);
 }

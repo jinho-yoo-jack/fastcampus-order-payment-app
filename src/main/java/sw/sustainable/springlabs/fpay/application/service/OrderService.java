@@ -12,9 +12,9 @@ import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder
 
 import java.util.UUID;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService implements CreateNewOrderUseCase, GetOrderInfoUseCase {
     private final OrderRepository orderRepository;
 

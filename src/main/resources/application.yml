@@ -35,10 +35,14 @@ spring:
         globally_quoted_identifiers: false
         format_sql: true     # 쿼리 로그 포맷 (정렬)
         show_sql: true       # 쿼리 로그 출력
+  jdbc:
+    template:
+      batch-size: 100
 
 retrofit:
   baseUrl: "https://api.tosspayments.com/"
   privateKey: "test_sk_0RnYX2w532257LzwRYBK3NeyqApQ"
+
 my:
   name: jinho_dev
   age: 34
