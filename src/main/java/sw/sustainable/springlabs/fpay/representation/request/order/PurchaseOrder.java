@@ -47,8 +47,6 @@ public class PurchaseOrder {
                 .phoneNumber(this.getOrderer().getPhoneNumber())
                 .build();
         o.getItems().addAll(this.convert2OrderItems(o));
-        if (Order.verifyHaveAtLeastOneItem(o.getItems())) throw new Exception("Noting Items");
-        o.calculateTotalAmount();
         return o;
     }
 

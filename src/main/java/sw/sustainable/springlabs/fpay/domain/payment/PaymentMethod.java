@@ -10,7 +10,9 @@ import java.util.stream.Stream;
 
 @Getter
 public enum PaymentMethod {
-    CARD("카드");
+    CARD("카드"),
+    ACCOUNT("계좌이체"),
+    VACCOUNT("가상계좌");
 
     private final String methodName;
 

@@ -31,6 +31,7 @@ public class ResponsePaymentApproved extends ResponsePaymentCommon {
             .paymentStatus(PaymentStatus.valueOf(this.getStatus()))
             .totalAmount(this.getTotalAmount())
             .balanceAmount(this.getBalanceAmount())
+            .payOutAmount(0)
             .canceledAmount(0)
             .build();
     }

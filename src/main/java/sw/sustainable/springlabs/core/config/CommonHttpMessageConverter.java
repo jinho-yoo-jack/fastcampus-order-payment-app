@@ -31,7 +31,7 @@ public class CommonHttpMessageConverter extends AbstractHttpMessageConverter<Api
 
     @Override
     protected boolean supports(Class<?> clazz) {
-        return clazz.equals(ApiResponse.class) || clazz.isPrimitive() || clazz.equals(String.class);
+        return clazz.equals(ApiResponse.class) || clazz.isPrimitive();
     }
 
     @Override

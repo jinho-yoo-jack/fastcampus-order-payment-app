@@ -51,6 +51,17 @@ public class Order {
         return UUID.randomUUID();
     }
 
+    public boolean verifyHaveAtLeastOneItem() throws Exception {
+        if (items != null || !items.isEmpty()) return true;
+        else throw new Exception("");
+    }
+
+    public boolean verifyDuplicateOrderItemId() {
+        List<UUID> productIds = this.getItems().stream().map(OrderItem::getProductId).distinct().toList();
+        if (!productIds.isEmpty()) return true;
+        else throw new IllegalArgumentException();
+    }
+
     public void orderPaymentFullFill(String paymentKey) {
         update(OrderStatus.PAYMENT_FULLFILL);
         this.paymentId = paymentKey;
@@ -62,7 +73,7 @@ public class Order {
     }
 
     public void orderCancel(int[] itemIdxs) {
-        for(int itemIdx : itemIdxs){
+        for (int itemIdx : itemIdxs) {
             orderCancelBy(itemIdx);
         }
     }
@@ -70,16 +81,6 @@ public class Order {
     private void orderCancelBy(int itemIdx) {
         this.items.stream().filter(orderItem -> orderItem.getItemIdx() == itemIdx)
             .forEach(item -> item.update(OrderStatus.ORDER_CANCELLED));
-    }
-
-    public static boolean verifyHaveAtLeastOneItem(List<OrderItem> items) {
-        return items == null || items.isEmpty();
-    }
-
-    public boolean verifyDuplicateOrderItemId() {
-        List<UUID> productIds = this.getItems().stream().map(OrderItem::getProductId).distinct().toList();
-        if (!productIds.isEmpty()) return true;
-        else throw new IllegalArgumentException();
     }
 
     public boolean isNotOrderStatusPurchaseDecision() {
