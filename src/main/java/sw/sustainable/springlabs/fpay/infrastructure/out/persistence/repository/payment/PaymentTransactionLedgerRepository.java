@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class PaymentTransactionLedgerRepository implements PaymentLedgerRepository {
-    private final JpaPaymentLedgerRepository jpaPaymentLedgerRepository;
     private final JdbcTemplate jdbcTemplate;
+    private final JpaPaymentLedgerRepository jpaPaymentLedgerRepository;
 
     @Override
     public List<PaymentLedger> findAllByPaymentKey(String paymentKey) {

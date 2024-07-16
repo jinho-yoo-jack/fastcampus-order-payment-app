@@ -1,29 +1,40 @@
 package sw.sustainable.springlabs.fpay.applicaton;
 
-import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 import sw.sustainable.springlabs.fpay.application.port.out.repository.PaymentLedgerRepository;
-import sw.sustainable.springlabs.fpay.application.port.out.repository.PaymentSettlementsRepository;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentLedger;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentMethod;
 import sw.sustainable.springlabs.fpay.domain.payment.PaymentStatus;
 import sw.sustainable.springlabs.fpay.domain.settlements.PaymentSettlements;
+import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.JpaPaymentLedgerRepository;
+import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.payment.PaymentTransactionLedgerRepository;
+import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.settlements.JpaPaymentSettlementsRepository;
+import sw.sustainable.springlabs.fpay.infrastructure.out.persistence.repository.settlements.PaymentSettlementsRepository;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @ActiveProfiles("dev")
 @SpringBootTest
+@Transactional
 public class PaymentSettlementsServiceTests {
+    @Autowired
+    private PaymentLedgerRepository paymentLedgerRepository;
+
     @Autowired
     private PaymentSettlementsRepository paymentSettlementsRepository;
 
-    @Autowired
-    private PaymentLedgerRepository paymentLedgerRepository;
 
     @Test
     public void getPaymentSettlements() {
@@ -53,7 +64,7 @@ public class PaymentSettlementsServiceTests {
         settlementsHistories.add(PaymentSettlements.builder()
                 .paymentKey("xLpgeoO7410238740297423RBKEzMjPJyG")
                 .paymentStatus(PaymentStatus.valueOf("SETTLEMENTS_REQUESTED"))
-                .method(PaymentMethod.fromMethodName("카드"))
+                .method(PaymentMethod.CARD)
                 .totalAmount(-99800)
                 .canceledAmount(99800) // TODO: 취소 금액 합계 구하는 로직 구현 필요
                 .payOutAmount(-97550)
@@ -64,7 +75,7 @@ public class PaymentSettlementsServiceTests {
         settlementsHistories.add(PaymentSettlements.builder()
                 .paymentKey("oYwn6qbDZOAQ1239472398vdk4El1Bp0J5")
                 .paymentStatus(PaymentStatus.valueOf("SETTLEMENTS_REQUESTED"))
-                .method(PaymentMethod.fromMethodName("카드"))
+                .method(PaymentMethod.CARD)
                 .totalAmount(41500)
                 .canceledAmount(0) // TODO: 취소 금액 합계 구하는 로직 구현 필요
                 .payOutAmount(40565)
@@ -74,5 +85,7 @@ public class PaymentSettlementsServiceTests {
 
 
         paymentSettlementsRepository.bulkInsert(settlementsHistories);
+        PaymentSettlements result = paymentSettlementsRepository.findById("xLpgeoO7410238740297423RBKEzMjPJyG");
+        Assertions.assertEquals("xLpgeoO7410238740297423RBKEzMjPJyG", result.getPaymentKey());
     }
 }
