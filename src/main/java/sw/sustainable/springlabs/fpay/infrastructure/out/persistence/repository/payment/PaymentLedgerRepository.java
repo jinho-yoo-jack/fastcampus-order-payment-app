@@ -12,6 +12,12 @@ public class PaymentLedgerRepository implements sw.sustainable.springlabs.fpay.a
     private final JpaPaymentLedgerRepository jpaPaymentLedgerRepository;
 
     @Override
+    public PaymentLedger findOneByPaymentKeyDesc(String paymentKey) {
+        return jpaPaymentLedgerRepository.findTopByPaymentKeyOrderByIdDesc(paymentKey)
+            .orElseThrow(() -> new NullPointerException("paymentKey " + paymentKey + " not found"));
+    }
+
+    @Override
     public void save(PaymentLedger paymentLedger) {
         jpaPaymentLedgerRepository.save(paymentLedger);
     }

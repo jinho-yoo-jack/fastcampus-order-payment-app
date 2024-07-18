@@ -84,7 +84,7 @@ public class Order {
     }
 
     public boolean isNotOrderStatusPurchaseDecision() {
-        return !(this.status.equals(OrderStatus.PURCHASE_DECISION));
+        return !(OrderStatus.PURCHASE_DECISION.equals(this.status));
     }
 
 

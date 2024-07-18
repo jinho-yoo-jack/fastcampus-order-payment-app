@@ -12,6 +12,9 @@ import sw.sustainable.springlabs.fpay.representation.request.order.PurchaseOrder
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * PurchaseOrder 객체
  * define: 주문 도메인의 Aggregate
@@ -36,7 +39,7 @@ public class OrderTests {
         );
 
         Order order = newOrder.toEntity();
-        Assertions.assertFalse(order.verifyHaveAtLeastOneItem());
+        assertFalse(order.verifyHaveAtLeastOneItem());
     }
 
     @Test
@@ -47,7 +50,7 @@ public class OrderTests {
         );
 
         Order order = newOrder.toEntity();
-        Assertions.assertTrue(order.verifyHaveAtLeastOneItem());
+        assertTrue(order.verifyHaveAtLeastOneItem());
     }
 
 
@@ -64,7 +67,7 @@ public class OrderTests {
             List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
         Order order = newOrder.toEntity();
 
-        Assertions.assertTrue(order.verifyDuplicateOrderItemId());
+        assertTrue(order.verifyDuplicateOrderItemId());
     }
 
     @Test
@@ -89,6 +92,22 @@ public class OrderTests {
     @DisplayName("[TEST CASE#1] \"구매 완료\" 상태가 아닌 경우, return true;")
     @Test
     public void isNotOrderStatusPurchaseDecision_true_OrderStatusIsNotPurchaseDecision() throws Exception {
+        PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
+            List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
+
+        Order order = newOrder.toEntity();
+        assertTrue(order.isNotOrderStatusPurchaseDecision());
+    }
+
+    @DisplayName("[TEST CASE#1] \"구매 완료\" 상태가 아닌 경우, return true;")
+    @Test
+    public void isNotOrderStatusPurchaseDecision_true_OrderStatusIsPurchaseDecision() throws Exception {
+        PurchaseOrder newOrder = new PurchaseOrder(new Orderer("유진호", "010-1234-1234"),
+            List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500)));
+
+        Order order = newOrder.toEntity();
+        order.setStatus(OrderStatus.PURCHASE_DECISION);
+        assertFalse(order.isNotOrderStatusPurchaseDecision());
     }
 
     /**
@@ -100,10 +119,16 @@ public class OrderTests {
     @DisplayName("[TEST CASE#1] \"상품 상세 정보\"가 Not Empty 경우, return true;")
     @Test
     public void hasItemIdx_true_ItemIdIsNotEmpty() throws Exception {
+        UUID orderId = UUID.randomUUID();
+        CancelOrder cancelOrder = new CancelOrder(orderId, new int[]{1}, "Cancel Reason", "tgen_20240605132741Jtkz1", 3400);
+        assertTrue(cancelOrder.hasItemIdx());
     }
 
     @DisplayName("[TEST CASE#2] \"상품 상세 정보\"가 Empty 경우, return false;")
     @Test
     public void hasItemIdx_false_ItemIdIsNotEmpty() throws Exception {
+        UUID orderId = UUID.randomUUID();
+        CancelOrder cancelOrder = new CancelOrder(orderId, new int[]{}, "Cancel Reason", "tgen_20240605132741Jtkz1", 3400);
+        assertFalse(cancelOrder.hasItemIdx());
     }
 }

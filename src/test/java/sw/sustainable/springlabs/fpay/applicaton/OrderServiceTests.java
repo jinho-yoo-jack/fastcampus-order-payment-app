@@ -37,7 +37,7 @@ public class OrderServiceTests {
         Mockito.when(orderRepository.save(any()))
             .thenReturn(order);
 
-        Order completedOrder = orderService.createOrder(newOrder);
+        Order completedOrder = orderService.createNewOrder(newOrder);
 
         Mockito.verify(orderRepository, Mockito.times(1)).save(any());
         Assertions.assertEquals(order, completedOrder);
