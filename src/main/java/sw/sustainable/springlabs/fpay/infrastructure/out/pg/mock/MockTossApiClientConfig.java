@@ -1,4 +1,4 @@
-package sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss;
+package sw.sustainable.springlabs.fpay.infrastructure.out.pg.mock;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -17,18 +17,18 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @Slf4j
-public class TossApiClientConfig {
-    private static final String BASE_URL =  "https://api.tosspayments.com/v1/";
+public class MockTossApiClientConfig {
+    private static final String BASE_URL =  "https://58d05ef3-499f-497c-a08c-33e520c88989.mock.pstmn.io/";
     private static final String SECRET_KEY = "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6:";
 
     @PostConstruct
     public void init(){
-        log.info("ApiClient Base URL: {}", BASE_URL);
-        log.info("ApiClient Private Key: {}", SECRET_KEY);
+        log.info("MockApiClient Base URL: {}", BASE_URL);
+        log.info("MockApiClient Private Key: {}", SECRET_KEY);
     }
 
     @Bean
-    public OkHttpClient okHttpClient() {
+    public OkHttpClient mockOkHttpClient() {
         Base64.Encoder encoder = Base64.getEncoder();
         byte[] encodedBytes = encoder.encode((SECRET_KEY + ":").getBytes(StandardCharsets.UTF_8));
         String authorizations = "Basic " + new String(encodedBytes);
@@ -46,17 +46,17 @@ public class TossApiClientConfig {
     }
 
     @Bean
-    public Retrofit retrofit(OkHttpClient okHttpClient) {
+    public Retrofit mockRetrofit(OkHttpClient mockOkHttpClient) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         return new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(JacksonConverterFactory.create(objectMapper))
-                .client(okHttpClient)
+                .client(mockOkHttpClient)
                 .build();
     }
 
     @Bean
-    public TossPaymentAPIs createApiClient(Retrofit retrofit) {
-        return retrofit.create(TossPaymentAPIs.class);
+    public MockTossPaymentAPIs createMockApiClient(Retrofit mockRetrofit) {
+        return mockRetrofit.create(MockTossPaymentAPIs.class);
     }
 }

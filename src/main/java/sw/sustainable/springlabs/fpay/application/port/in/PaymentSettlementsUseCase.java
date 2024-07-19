@@ -5,5 +5,5 @@ import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentSett
 import java.io.IOException;
 
 public interface PaymentSettlementsUseCase {
-    void getPaymentSettlements(PaymentSettlement settlementsMessage) throws Exception;
+    void getPaymentSettlements() throws Exception;
 }

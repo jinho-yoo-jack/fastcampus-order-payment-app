@@ -13,26 +13,42 @@ import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.Respon
 import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentSettlement;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class SettlementsService implements PaymentSettlementsUseCase {
-    private final PaymentAPIs paymentAPIs;
+    private final PaymentAPIs mockTossPayment;
     private final PaymentSettlementsRepository paymentSettlementsRepository;
     private final PaymentLedgerRepository paymentLedgerRepository;
 
-
     @SneakyThrows
     @Override
-    public void getPaymentSettlements(PaymentSettlement settlementsMessage) throws IOException {
-        List<ResponsePaymentSettlements> response = paymentAPIs.requestPaymentSettlement(settlementsMessage);
-        List<PaymentSettlements> settlementsHistories = response.stream().map(ResponsePaymentSettlements::toEntity).toList();
+    public void getPaymentSettlements() throws IOException {
+        List<ResponsePaymentSettlements> response = mockTossPayment.requestPaymentSettlement(createPaymentSettlement());
+        List<PaymentSettlements> settlementsHistories = response.stream()
+                .map(ResponsePaymentSettlements::toEntity)
+                .toList();
         paymentSettlementsRepository.bulkInsert(settlementsHistories);
         paymentLedgerRepository.bulkInsert(
                 settlementsHistories.stream().map(PaymentSettlements::toPaymentLedger)
                         .toList()
         );
+    }
+
+    private PaymentSettlement createPaymentSettlement() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String startDate = LocalDateTime.now(ZoneId.of("Asia/Seoul")).minusDays(3).format(formatter);
+        String endDate = LocalDateTime.now(ZoneId.of("Asia/Seoul")).minusDays(1).format(formatter);
+        return PaymentSettlement.builder()
+                .startDate(startDate)
+                .endDate(endDate)
+                .page(1)
+                .size(5000)
+                .build();
     }
 }

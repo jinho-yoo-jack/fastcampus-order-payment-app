@@ -39,9 +39,10 @@ spring:
     template:
       batch-size: 100
 
-retrofit:
-  baseUrl: "https://api.tosspayments.com/"
-  privateKey: "test_sk_0RnYX2w532257LzwRYBK3NeyqApQ"
+pg:
+  tosspayments:
+    baseUrl: "https://api.tosspayments.com/"
+    privateKey: "test_sk_0RnYX2w532257LzwRYBK3NeyqApQ"
 
 my:
   name: jinho_dev

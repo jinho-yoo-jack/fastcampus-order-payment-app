@@ -1,5 +1,6 @@
 package sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Slf4j
 public class ResponsePaymentSettlements {
     private String orderId;
@@ -51,7 +53,7 @@ public class ResponsePaymentSettlements {
                 .paymentStatus(this.converterToEntityAttribute())
                 .method(PaymentMethod.fromMethodName(method))
                 .totalAmount(totalAmount)
-                .canceledAmount(cancel.getCancelAmount())
+                .canceledAmount(cancel == null ? 0 : cancel.getCancelAmount())
                 .payOutAmount(payOutAmount)
                 .soldDate(Date.valueOf(soldDate))
                 .paidOutDate(Date.valueOf(paidOutDate))

@@ -17,7 +17,7 @@ import sw.sustainable.springlabs.fpay.representation.request.payment.PaymentCanc
 @RequiredArgsConstructor
 @Slf4j
 public class CancelService implements PaymentCancelUseCase {
-    private final PaymentAPIs paymentAPIs;
+    private final PaymentAPIs tossPayment;
     private final OrderService orderService;
     private final PaymentService paymentService;
     private final PaymentLedgerRepository paymentLedgerRepository;
@@ -31,7 +31,7 @@ public class CancelService implements PaymentCancelUseCase {
         PaymentLedger paymentInfo = paymentService.getLatestPaymentInfoOnlyOne(paymentKey);
         if (wantedCancelOrder.isNotOrderStatusPurchaseDecision() &&
             paymentInfo.isCancellableAmountGreaterThan(cancellationAmount)) {
-            ResponsePaymentCancel response = paymentAPIs.requestPaymentCancel(paymentKey, new PaymentCancel(cancelOrder.getCancelReason(), cancellationAmount));
+            ResponsePaymentCancel response = tossPayment.requestPaymentCancel(paymentKey, new PaymentCancel(cancelOrder.getCancelReason(), cancellationAmount));
             paymentLedgerRepository.save(response.toEntity());
 
             if (cancelOrder.hasItemIdx())
