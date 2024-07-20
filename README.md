@@ -37,13 +37,13 @@ PG사 TEST API 연동(+결제위젯)
 
 ### 결제 기능 개발 - TDD 기반 카드 결제 취소 기능
 ![스크린샷 2024-06-07 오후 4 20 26](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/90796985-832b-4afc-a948-266161a92b79)
-- 실습 브랜치 :
+- 실습 브랜치 : https://github.com/jinho-yoo-jack/fastcampus-order-payment-app/tree/feature/paymentCancel
 - 실습 완료 브랜치 : https://github.com/jinho-yoo-jack/fastcampus-order-payment-app/tree/feature/paymentCancel-completed
 
 ### 결제 기능 개발 - TDD 기반 카드 결제 정산 기능
 ![스크린샷 2024-06-07 오후 4 30 57](https://github.com/jinho-yoo-jack/jedi-spring-labs/assets/58014147/263c998c-9cdd-42c5-a825-8c01ad5ea69a)
-- 실습 브랜치 :
-- 실습 완료 브랜치
+- 실습 브랜치 : https://github.com/jinho-yoo-jack/fastcampus-order-payment-app/tree/feature/paymentSettlements
+- 실습 완료 브랜치 : https://github.com/jinho-yoo-jack/fastcampus-order-payment-app/tree/feature/paymentSettlements-completed
 
 ## 정산 기능 고도화 with Kafka
 ![kafka-excample-arch](https://github.com/user-attachments/assets/fc1a3db7-750b-4ed1-b2f4-5a7f6eaca064)
