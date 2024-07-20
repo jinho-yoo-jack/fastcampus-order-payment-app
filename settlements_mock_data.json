@@ -1,0 +1,202 @@
+[
+  {
+    "mId": "fast-ecommerce",
+    "paymentKey": "xLpgeoO7410238740297423RBKEzMjPJyG",
+    "transactionKey": "497BF239847238947B0491D84B4",
+    "orderId": "EjBNtZK7j8q2TlGFLJ-9T",
+    "currency": "KRW",
+    "method": "카드",
+    "fees": [
+      {
+        "type": "BASE",
+        "fee": -2250
+      },
+      {
+        "type": "ETC",
+        "fee": 0
+      }
+    ],
+    "approvedAt": "2023-11-25T13:03:39+09:00",
+    "soldDate": "2023-11-25",
+    "paidOutDate": "2023-11-30",
+    "card": {
+      "issuerCode": "11",
+      "acquirerCode": "11",
+      "number": "55704251****800*",
+      "installmentPlanMonths": 3,
+      "isInterestFree": true,
+      "interestPayer": "CARD_COMPANY",
+      "approveNo": "30024234",
+      "useCardPoint": false,
+      "cardType": "신용",
+      "ownerType": "개인",
+      "acquireStatus": "READY",
+      "amount": 99800
+    },
+    "virtualAccount": null,
+    "transfer": null,
+    "mobilePhone": null,
+    "giftCertificate": null,
+    "easyPay": null,
+    "cancel": {
+      "transactionKey": "497BF239847238947B0491D84B4",
+      "cancelReason": "주문취소",
+      "taxExemptionAmount": 0,
+      "canceledAt": "2023-11-25T13:40:03+09:00",
+      "easyPayDiscountAmount": 0,
+      "receiptKey": null,
+      "cancelAmount": 99800,
+      "taxFreeAmount": 0,
+      "refundableAmount": 0,
+      "cancelStatus": "DONE",
+      "cancelRequestId": null
+    },
+    "amount": -99800,
+    "interestFee": 0,
+    "fee": -2250,
+    "supplyAmount": -2045,
+    "vat": -205,
+    "payOutAmount": -97550
+  },
+  {
+    "mId": "fast-ecommerce",
+    "paymentKey": "jvX2KBP9Q21349087239084706yLYlaEJ7",
+    "transactionKey": "70CEDA72394802394F24AD80C6",
+    "orderId": "EoSLagnG8KmcmetaUrEna",
+    "currency": "KRW",
+    "method": "카드",
+    "fees": [
+      {
+        "type": "BASE",
+        "fee": 1195
+      },
+      {
+        "type": "ETC",
+        "fee": 116
+      }
+    ],
+    "approvedAt": "2023-11-25T23:58:41+09:00",
+    "soldDate": "2023-11-25",
+    "paidOutDate": "2023-11-30",
+    "card": {
+      "issuerCode": "41",
+      "acquirerCode": "41",
+      "number": "51073761****913*",
+      "installmentPlanMonths": 0,
+      "isInterestFree": false,
+      "interestPayer": null,
+      "approveNo": "47042234",
+      "useCardPoint": false,
+      "cardType": "체크",
+      "ownerType": "개인",
+      "acquireStatus": "READY",
+      "amount": 53030
+    },
+    "virtualAccount": null,
+    "transfer": null,
+    "mobilePhone": null,
+    "giftCertificate": null,
+    "easyPay": {
+      "provider": "네이버페이",
+      "amount": 0,
+      "discountAmount": 0
+    },
+    "cancel": null,
+    "amount": 53030,
+    "interestFee": 0,
+    "fee": 1311,
+    "supplyAmount": 1192,
+    "vat": 119,
+    "payOutAmount": 51719
+  },
+  {
+    "mId": "fast-ecommerce",
+    "paymentKey": "oYwn6qbDZOAQ1239472398vdk4El1Bp0J5",
+    "transactionKey": "4E202B23498729847322CA68371CB3",
+    "orderId": "LNnUye-w3A44V2iLmHLFK",
+    "currency": "KRW",
+    "method": "카드",
+    "fees": [
+      {
+        "type": "BASE",
+        "fee": 935
+      },
+      {
+        "type": "ETC",
+        "fee": 0
+      }
+    ],
+    "approvedAt": "2023-11-25T09:34:34+09:00",
+    "soldDate": "2023-11-25",
+    "paidOutDate": "2023-11-30",
+    "card": {
+      "issuerCode": "41",
+      "acquirerCode": "41",
+      "number": "54287966****537*",
+      "installmentPlanMonths": 0,
+      "isInterestFree": false,
+      "interestPayer": null,
+      "approveNo": "36284234",
+      "useCardPoint": false,
+      "cardType": "신용",
+      "ownerType": "개인",
+      "acquireStatus": "READY",
+      "amount": 41500
+    },
+    "virtualAccount": null,
+    "transfer": null,
+    "mobilePhone": null,
+    "giftCertificate": null,
+    "easyPay": null,
+    "cancel": null,
+    "amount": 41500,
+    "interestFee": 0,
+    "fee": 935,
+    "supplyAmount": 850,
+    "vat": 85,
+    "payOutAmount": 40565
+  },
+  {
+    "mId": "fast-ecommerce",
+    "paymentKey": "evl2J94098172430982374mA1QXRyZ4gLw",
+    "transactionKey": "EDAD0A8F2349048230948460F533B",
+    "orderId": "Dri1BWRA8Le-ezwDseJYJ",
+    "currency": "KRW",
+    "method": "카드",
+    "fees": [
+      {
+        "type": "ETC",
+        "fee": 26
+      }
+    ],
+    "approvedAt": "2023-11-25T13:54:05+09:00",
+    "soldDate": "2023-11-25",
+    "paidOutDate": "2023-11-30",
+    "card":  {
+      "issuerCode": "11",
+      "acquirerCode": "11",
+      "number": "55704251****800*",
+      "installmentPlanMonths": 3,
+      "isInterestFree": true,
+      "interestPayer": "CARD_COMPANY",
+      "approveNo": "30024234",
+      "useCardPoint": false,
+      "cardType": "신용",
+      "ownerType": "개인",
+      "acquireStatus": "READY",
+      "amount": 2000
+    },
+    "virtualAccount": null,
+    "transfer": null,
+    "mobilePhone": null,
+    "giftCertificate": null,
+    "easyPay": null,
+    "cancel": null,
+    "amount": 2000,
+    "interestFee": 0,
+    "fee": 26,
+    "supplyAmount": 24,
+    "vat": 2,
+    "payOutAmount": 1974
+  }
+]

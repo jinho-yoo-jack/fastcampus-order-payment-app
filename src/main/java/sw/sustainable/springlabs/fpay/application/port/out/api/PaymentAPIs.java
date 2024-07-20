@@ -14,5 +14,5 @@ public interface PaymentAPIs {
     ResponsePaymentApproved requestPaymentApprove(PaymentApproved requestMessage) throws IOException;
     boolean isPaymentApproved(String status);
     ResponsePaymentCancel requestPaymentCancel(String paymentKey, PaymentCancel cancelMessage) throws IOException;
-    List<ResponsePaymentSettlements> requestPaymentSettlement(PaymentSettlement paymentSettlement) throws IOException;
+    List<ResponsePaymentSettlements> requestPaymentSettlement() throws IOException;
 }

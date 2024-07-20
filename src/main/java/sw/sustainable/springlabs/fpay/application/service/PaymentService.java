@@ -28,7 +28,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class PaymentService implements PaymentFullFillUseCase {
-    private final PaymentAPIs paymentAPIs;
+    private final PaymentAPIs tossPayment;
     private final OrderRepository orderRepository;
     private final PaymentLedgerRepository paymentLedgerRepository;
     private final Set<TransactionTypeRepository> transactionTypeRepositorySet;
@@ -50,9 +50,9 @@ public class PaymentService implements PaymentFullFillUseCase {
     @Override
     public String paymentApproved(PaymentApproved paymentApproved) throws IOException {
         verifyOrderIsCompleted(UUID.fromString(paymentApproved.getOrderId()));
-        ResponsePaymentApproved response = paymentAPIs.requestPaymentApprove(paymentApproved);
+        ResponsePaymentApproved response = tossPayment.requestPaymentApprove(paymentApproved);
 
-        if (paymentAPIs.isPaymentApproved(response.getStatus())) {
+        if (tossPayment.isPaymentApproved(response.getStatus())) {
             Order completedOrder = orderRepository.findById(UUID.fromString(response.getOrderId()));
             completedOrder.orderPaymentFullFill(response.getPaymentKey());
             paymentLedgerRepository.save(response.toPaymentTransactionEntity());

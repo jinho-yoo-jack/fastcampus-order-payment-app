@@ -21,7 +21,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 public class CancelService implements PaymentCancelUseCase {
-    private final PaymentAPIs paymentAPIs;
+    private final PaymentAPIs tossPayment;
     private final OrderRepository orderRepository;
     private final PaymentLedgerRepository paymentLedgerRepository;
 
@@ -35,7 +35,7 @@ public class CancelService implements PaymentCancelUseCase {
         if (wantedCancelOrder.isNotOrderStatusPurchaseDecision()
             && paymentLatestHistory.isCancellableAmountGreaterThan(cancellationAmount)) {
 
-            ResponsePaymentCancel response = paymentAPIs.requestPaymentCancel(paymentKey, new PaymentCancel(cancelRequestMessage.getCancelReason(), cancellationAmount));
+            ResponsePaymentCancel response = tossPayment.requestPaymentCancel(paymentKey, new PaymentCancel(cancelRequestMessage.getCancelReason(), cancellationAmount));
             paymentLedgerRepository.save(response.toEntity());
 
             if (cancelRequestMessage.hasItemIdx())

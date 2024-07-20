@@ -1,9 +1,10 @@
-package sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss;
+package sw.sustainable.springlabs.fpay.infrastructure.out.pg.mock;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import retrofit2.Response;
 import sw.sustainable.springlabs.fpay.application.port.out.api.PaymentAPIs;
+import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.TossPaymentAPIs;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentApproved;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentCancel;
 import sw.sustainable.springlabs.fpay.infrastructure.out.pg.toss.response.ResponsePaymentSettlements;
@@ -18,48 +19,32 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class TossPayment implements PaymentAPIs {
-    private final TossPaymentAPIs tossClient;
+public class MockPayment implements PaymentAPIs {
+    private final MockPaymentAPIs mockClient;
 
     @Override
-    public ResponsePaymentApproved requestPaymentApprove(PaymentApproved paymentInfo) throws IOException {
-        Response<ResponsePaymentApproved> response = tossClient.paymentFullfill(paymentInfo).execute();
-        if (response.isSuccessful()) {
-            return response.body();
-        }
-
-        throw new IOException(response.message());
+    public ResponsePaymentApproved requestPaymentApprove(PaymentApproved requestMessage) throws IOException {
+        return null;
     }
 
     @Override
     public boolean isPaymentApproved(String status) {
-        return "DONE".equalsIgnoreCase(status);
+        return false;
     }
 
     @Override
     public ResponsePaymentCancel requestPaymentCancel(String paymentKey, PaymentCancel cancelMessage) throws IOException {
-        Response<ResponsePaymentCancel> response = tossClient.paymentCancel(paymentKey, cancelMessage).execute();
-        if (response.isSuccessful()) {
-            return response.body();
-        }
-
-        throw new IOException(response.message());
+        return null;
     }
 
     @Override
     public List<ResponsePaymentSettlements> requestPaymentSettlement() throws IOException {
-        String startDate = LocalDate.now(ZoneId.of("Asia/Seoul")).minusDays(3).toString();
-        String endDate = LocalDate.now(ZoneId.of("Asia/Seoul")).toString();
-        int page = 1;
-        int currentPage = 1;
-        int lastPage = 1;
-        int size = 5000;
-        Response<List<ResponsePaymentSettlements>> response = tossClient.paymentSettlements(startDate, endDate, page, size).execute();
-        if(response.isSuccessful() && response.body() != null && !response.body().isEmpty())  {
+
+        Response<List<ResponsePaymentSettlements>> response = mockClient.paymentSettlements().execute();
+        if(response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
             return response.body();
         }
-
-
         throw new IOException(response.message());
+
     }
 }
