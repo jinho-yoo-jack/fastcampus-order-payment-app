@@ -38,6 +38,11 @@ spring:
   jdbc:
     template:
       batch-size: 100
+  kafka:
+    bootstrap-servers: [
+      "localhost:9092"
+    ]
+    group-id: "settlements_1"
 
 pg:
   tosspayments:
