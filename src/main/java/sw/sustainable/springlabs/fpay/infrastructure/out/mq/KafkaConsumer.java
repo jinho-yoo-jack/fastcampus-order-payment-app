@@ -6,6 +6,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import sw.sustainable.springlabs.fpay.domain.settlements.PaymentSettlements;
+import sw.sustainable.springlabs.fpay.infrastructure.out.mq.record.RPaymentSettlements;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class KafkaConsumer {
 
     // record 를 수신하기 위한 consumer 설정
     @KafkaListener(topics = SETTLEMENTS_TOPIC)
-    public void receive(ConsumerRecord<String, List<PaymentSettlements>> consumerRecord) {
-        List<PaymentSettlements> payload = consumerRecord.value();
-        log.info("received payload = {}", payload.toString());
+    public void receive(ConsumerRecord<String, RPaymentSettlements> consumerRecord) {
+        RPaymentSettlements payload = consumerRecord.value();
+        log.info("received payload = {}", payload.getSettlements().get(0).getPaymentKey());
     }
 }
