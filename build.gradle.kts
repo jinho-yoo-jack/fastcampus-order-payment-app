@@ -1,3 +1,5 @@
+import com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask
+
 group = "sw.sustainable"
 version = "0.0.1-SNAPSHOT"
 
@@ -9,6 +11,8 @@ plugins {
     id("com.epages.restdocs-api-spec") version "0.17.1"
     // OpenAPI 3 Spec을 기반으로 SwaggerUI 생성(HTML, CSS, JS)
     id("org.hidetake.swagger.generator") version "2.18.2"
+    // AVRO
+    id("com.github.davidmc24.gradle.plugin.avro") version "1.9.1"
 }
 
 
@@ -29,6 +33,7 @@ repositories {
     }
 }
 
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -42,6 +47,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-jackson:2.10.0")
     implementation("com.squareup.retrofit2:converter-gson:2.10.0")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0")
+//    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.1")
+//    implementation("com.fasterxml.jackson.core:jackson-annotations:2.11.3")
+//    implementation("com.fasterxml.jackson.core:jackson-core:2.11.3")
     implementation("com.google.code.gson:gson")
     // developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
@@ -61,10 +69,17 @@ dependencies {
     testImplementation("com.squareup.retrofit2:retrofit-mock:2.10.0")
     // Kafka Client
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.apache.avro:avro:1.11.3")
     implementation("io.confluent:kafka-avro-serializer:7.0.1")
-
-
 }
+
+tasks.withType<com.github.davidmc24.gradle.plugin.avro.GenerateAvroJavaTask> {
+    fieldVisibility = "PRIVATE"
+    setCreateSetters("false")
+    setSource("src/main/avro")
+    setOutputDir(file("build/generated-sources"))
+}
+
 
 tasks.withType<Test> {
     useJUnitPlatform()

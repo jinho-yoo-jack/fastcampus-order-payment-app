@@ -5,7 +5,9 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sw.sustainable.springlabs.fpay.application.port.in.PaymentSettlementsUseCase;
+import sw.sustainable.springlabs.fpay.application.port.in.SendSettlementsInfoUseCase;
 import sw.sustainable.springlabs.fpay.application.port.out.api.PaymentAPIs;
+import sw.sustainable.springlabs.fpay.application.port.out.mq.Producer;
 import sw.sustainable.springlabs.fpay.application.port.out.repository.PaymentLedgerRepository;
 import sw.sustainable.springlabs.fpay.application.port.out.repository.PaymentSettlementsRepository;
 import sw.sustainable.springlabs.fpay.domain.settlements.PaymentSettlements;
@@ -21,10 +23,12 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class SettlementsService implements PaymentSettlementsUseCase {
+public class SettlementsService implements PaymentSettlementsUseCase, SendSettlementsInfoUseCase {
+    private final static String SETTLEMENTS_TOPIC = "settlements";
     private final PaymentAPIs mockTossPayment;
     private final PaymentSettlementsRepository paymentSettlementsRepository;
     private final PaymentLedgerRepository paymentLedgerRepository;
+    private final Producer<List<PaymentSettlements>> producer;
 
     @SneakyThrows
     @Override
@@ -50,5 +54,16 @@ public class SettlementsService implements PaymentSettlementsUseCase {
                 .page(1)
                 .size(5000)
                 .build();
+    }
+
+    @SneakyThrows
+    @Override
+    public boolean send() {
+        List<ResponsePaymentSettlements> response = mockTossPayment.requestPaymentSettlement(createPaymentSettlement());
+        List<PaymentSettlements> records = response.stream()
+                .map(ResponsePaymentSettlements::toEntity)
+                .toList();
+        producer.send(SETTLEMENTS_TOPIC, records);
+        return true;
     }
 }

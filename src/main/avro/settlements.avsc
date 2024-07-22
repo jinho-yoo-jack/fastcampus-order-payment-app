@@ -1,11 +1,11 @@
 {
-  "namespace": "com.fastecommerce.settlements.schema",
+  "namespace": "sw.sustainable.springlabs.fpay.infrastructure.out.mq.record",
   "type": "record",
-  "name": "PaymentSettlements",
+  "name": "RPaymentSettlements",
   "fields": [
     {
-      "name": "orderId",
-      "type": "string"
+      "name": "id",
+      "type": "int"
     },
     {
       "name": "paymentKey",
@@ -20,26 +20,8 @@
       "type": "int"
     },
     {
-      "name": "card",
-      "type": {
-        "type": "record",
-        "name": "card",
-        "fields": [
-          {"name": "issuerCode", "type":  "string"},
-          {"name": "acquirerCode", "type":  "string"},
-          {"name": "number", "type":  "string"},
-          {"name": "cardType", "type":  "string"},
-          {"name": "acquireStatus", "type":  "string"},
-          {"name": "approveNo", "type":  "string"},
-          {"name": "amount", "type":  "int"},
-          {"name": "isInterestFee", "type":  "boolean"},
-          {"name": "receiptUrl", "type":  "string"}
-        ]
-      }
-    },
-    {
-      "name": "cancel",
-      "type": "string"
+      "name": "canceledAmount",
+      "type": "int"
     },
     {
       "name": "payOutAmount",
