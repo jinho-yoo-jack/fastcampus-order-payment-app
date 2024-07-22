@@ -1,0 +1,57 @@
+{
+  "namespace": "com.fastecommerce.settlements.schema",
+  "type": "record",
+  "name": "PaymentSettlements",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": "string"
+    },
+    {
+      "name": "paymentKey",
+      "type": "string"
+    },
+    {
+      "name": "method",
+      "type": "string"
+    },
+    {
+      "name": "totalAmount",
+      "type": "int"
+    },
+    {
+      "name": "card",
+      "type": {
+        "type": "record",
+        "name": "card",
+        "fields": [
+          {"name": "issuerCode", "type":  "string"},
+          {"name": "acquirerCode", "type":  "string"},
+          {"name": "number", "type":  "string"},
+          {"name": "cardType", "type":  "string"},
+          {"name": "acquireStatus", "type":  "string"},
+          {"name": "approveNo", "type":  "string"},
+          {"name": "amount", "type":  "int"},
+          {"name": "isInterestFee", "type":  "boolean"},
+          {"name": "receiptUrl", "type":  "string"}
+        ]
+      }
+    },
+    {
+      "name": "cancel",
+      "type": "string"
+    },
+    {
+      "name": "payOutAmount",
+      "type": "int"
+    },
+    {
+      "name": "soldDate",
+      "type": "string"
+    },
+    {
+      "name": "paidOutDate",
+      "type": "string"
+    }
+  ]
+}
