@@ -66,6 +66,53 @@ logging:
 spring:
   config:
     activate:
+      on-profile: dev-docker
+  datasource:
+    url: jdbc:mysql://mysql:3306/fastcamp_labs?serverTimezone=UTC&characterEncoding=UTF-8
+    username: fastcamp
+    password: testlabs
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: none # DB 초기화 전략 (none, create, create-drop, update, validate)
+    properties:
+      hibernate:
+        auto_quote_keyword: false
+        globally_quoted_identifiers: false
+        format_sql: true     # 쿼리 로그 포맷 (정렬)
+        show_sql: true       # 쿼리 로그 출력
+  jdbc:
+    template:
+      batch-size: 100
+  kafka:
+    bootstrap-servers: [
+      "kafka-1:19092"
+    ]
+    group-id: "settlements_1"
+
+pg:
+  tosspayments:
+    baseUrl: "https://api.tosspayments.com/"
+    privateKey: "test_sk_0RnYX2w532257LzwRYBK3NeyqApQ"
+
+my:
+  name: jinho_dev
+  age: 34
+
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: TRACE
+
+
+---
+spring:
+  config:
+    activate:
       on-profile: test
   # JPA 설정
   jpa:

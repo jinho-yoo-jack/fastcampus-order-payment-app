@@ -1,4 +1,13 @@
 services:
+  app:
+    image: fastcamp-ecommerce/spring-boot-app:latest
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_PROFILES_ACTIVE: dev-docker
+    depends_on:
+      - mysql
+
   mysql:
     image: mysql:8.0.33
     ports:
