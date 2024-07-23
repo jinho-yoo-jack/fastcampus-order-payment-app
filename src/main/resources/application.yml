@@ -40,7 +40,7 @@ spring:
       batch-size: 100
   kafka:
     bootstrap-servers: [
-      "localhost:9092"
+      "localhost:19094"
     ]
     group-id: "settlements_1"
 

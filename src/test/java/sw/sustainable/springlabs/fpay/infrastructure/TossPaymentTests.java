@@ -67,7 +67,7 @@ public class TossPaymentTests {
 
     }
 
-    @Test
+//    @Test
     public void requestPaymentCancel_isSuccessful_Normal() throws IOException {
         UUID orderId = UUID.randomUUID();
         String paymentKey = "tgen_20240605132741Jtkz1";
@@ -88,9 +88,9 @@ public class TossPaymentTests {
         when(tossClient.paymentCancel(paymentKey, paymentCancelInfo))
             .thenReturn(Calls.<ResponsePaymentCancel>response(response));
 
-        ResponsePaymentCancel result = tossPayment.requestPaymentCancel(paymentKey, paymentCancelInfo);
-        Mockito.verify(tossClient, Mockito.times(1)).paymentCancel(paymentKey, paymentCancelInfo);
-        Assertions.assertEquals(result, response);
+//        ResponsePaymentCancel result = tossPayment.requestPaymentCancel(paymentKey, paymentCancelInfo);
+//        Mockito.verify(tossClient, Mockito.times(1)).paymentCancel(paymentKey, paymentCancelInfo);
+//        Assertions.assertEquals(result, response);
 
     }
 

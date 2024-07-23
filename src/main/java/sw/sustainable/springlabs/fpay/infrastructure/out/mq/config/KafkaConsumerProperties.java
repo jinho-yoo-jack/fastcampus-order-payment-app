@@ -36,7 +36,6 @@ public class KafkaConsumerProperties {
         config.put(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8085");
         config.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);
 
-
         return new DefaultKafkaConsumerFactory<>(config);
     }
 

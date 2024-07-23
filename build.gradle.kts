@@ -47,9 +47,6 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-jackson:2.10.0")
     implementation("com.squareup.retrofit2:converter-gson:2.10.0")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0")
-//    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.1")
-//    implementation("com.fasterxml.jackson.core:jackson-annotations:2.11.3")
-//    implementation("com.fasterxml.jackson.core:jackson-core:2.11.3")
     implementation("com.google.code.gson:gson")
     // developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
@@ -98,4 +95,8 @@ tasks.register<Copy>("copyOasToSwagger") {
     from("$buildDir/api-spec/openapi3.yaml") // 복제할 yaml 파일 타겟팅
     into("src/main/resources/static/swagger-ui/.") // 타겟 디렉토리로 파일 복제
     dependsOn("openapi3") // openapi3 task가 먼저 실행되도록 설정
+}
+
+tasks.compileJava {
+    dependsOn(tasks.generateTestAvroJava)
 }
