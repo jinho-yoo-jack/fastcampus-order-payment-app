@@ -57,9 +57,10 @@ public class Order {
     }
 
     public boolean verifyDuplicateOrderItemId() {
-        List<UUID> productIds = this.getItems().stream().map(OrderItem::getProductId).distinct().toList();
-        if (!productIds.isEmpty()) return true;
-        else throw new IllegalArgumentException();
+        List<UUID> productIds = this.getItems().stream().map(OrderItem::getProductId).toList();
+        Set<UUID> productIdSet = new HashSet<>(productIds);
+        if (productIdSet.size() != productIds.size())  throw new IllegalArgumentException();
+        return true;
     }
 
     public void orderPaymentFullFill(String paymentKey) {

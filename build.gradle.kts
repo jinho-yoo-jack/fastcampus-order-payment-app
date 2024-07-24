@@ -9,6 +9,7 @@ plugins {
     id("com.epages.restdocs-api-spec") version "0.17.1"
     // OpenAPI 3 Spec을 기반으로 SwaggerUI 생성(HTML, CSS, JS)
     id("org.hidetake.swagger.generator") version "2.18.2"
+
 }
 
 
@@ -59,6 +60,7 @@ dependencies {
     testImplementation("com.squareup.retrofit2:retrofit-mock:2.10.0")
 
 }
+
 
 tasks.withType<Test> {
     useJUnitPlatform()

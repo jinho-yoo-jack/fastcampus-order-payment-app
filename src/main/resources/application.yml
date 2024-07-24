@@ -38,6 +38,9 @@ spring:
   jdbc:
     template:
       batch-size: 100
+  kafka:
+    bootstrap-servers: ["localhost:19094"]
+    group-id: "settlements_1"
 
 retrofit:
   baseUrl: "https://api.tosspayments.com/"

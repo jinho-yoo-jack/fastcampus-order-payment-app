@@ -30,7 +30,7 @@ public class OrderTests {
      * [Exception] 0개 일 때, return true;
      */
     @Test
-    public void verifyHaveAtLeastOneItem_False_ListSizeBiggerThanOne() throws Exception {
+    public void verifyHaveAtLeastOneItem_True_ListSizeBiggerThanOne() throws Exception {
         PurchaseOrder newOrder = new PurchaseOrder(
             new Orderer("유진호", "010-1234-1234"),
             List.of(new PurchaseOrderItem(1, UUID.randomUUID(), "농심 짜파게티 4봉", 4500, 1, 4500),
@@ -39,7 +39,7 @@ public class OrderTests {
         );
 
         Order order = newOrder.toEntity();
-        assertFalse(order.verifyHaveAtLeastOneItem());
+        assertTrue(order.verifyHaveAtLeastOneItem());
     }
 
     @Test
