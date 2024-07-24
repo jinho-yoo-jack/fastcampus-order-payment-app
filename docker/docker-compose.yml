@@ -1,12 +1,15 @@
 services:
   app:
-    image: fastcamp-ecommerce/spring-boot-app:latest
+    image: fastcampus/fast-ecommerce:latest
     ports:
       - 8080:8080
     environment:
       SPRING_PROFILES_ACTIVE: dev-docker
     depends_on:
       - mysql
+    networks:
+      default_bridge:
+        ipv4_address: 172.26.0.10
 
   mysql:
     image: mysql:8.0.33
@@ -23,6 +26,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: testbed
       MYSQL_DATABASE: service-labs
+    networks:
+      default_bridge:
+        ipv4_address: 172.26.0.14
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -34,6 +40,9 @@ services:
       ZOOKEEPER_SYNC_LIMIT: 2
     ports:
       - "22181:2181"
+    networks:
+      default_bridge:
+        ipv4_address: 172.26.0.11
 
   kafka-1:
     image: confluentinc/cp-kafka:latest
@@ -51,6 +60,9 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_LISTENERS: INTERNAL://kafka-1:19092,EXTERNAL://kafka-1:19094
       KAFKA_AUTO_CREATE_TOPIC_ENABLE: false
+    networks:
+      default_bridge:
+        ipv4_address: 172.26.0.12
 
   schema-registry:
     image: confluentinc/cp-schema-registry:latest
@@ -63,6 +75,9 @@ services:
       - 8085:8085
     depends_on:
       - kafka-1
+    networks:
+      default_bridge:
+        ipv4_address: 172.26.0.13
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -75,3 +90,11 @@ services:
       - DYNAMIC_CONFIG_ENABLED=true
       - KAFKA_CLUSTERS_0_NAME=Fast-Ecommerce-Kafka
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:19092
+
+networks:
+  default_bridge:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.26.0.0/16
+

@@ -23,6 +23,7 @@ import java.util.Map;
 @Getter
 public class KafkaProducerProperties {
     private String[] bootstrapServers;
+    private String schemaRegistryUrl;
 
     @Bean
     public ProducerFactory<String, Object> producerFactory() {
@@ -30,7 +31,9 @@ public class KafkaProducerProperties {
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, String.join(",", bootstrapServers));
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
-        config.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8085");
+        config.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl);
+        config.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, 31_457_280);
+
 
         return new DefaultKafkaProducerFactory<>(config);
     }

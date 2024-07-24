@@ -7,8 +7,6 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
-
-
 error-trace:
   stacktrace: true
 my:
@@ -43,6 +41,8 @@ spring:
       "localhost:19094"
     ]
     group-id: "settlements_1"
+    schema-registry-url: "http://localhost:8085"
+
 
 pg:
   tosspayments:
@@ -90,6 +90,7 @@ spring:
       "kafka-1:19092"
     ]
     group-id: "settlements_1"
+    schema-registry-url: "http://172.26.0.13:8085"
 
 pg:
   tosspayments:
