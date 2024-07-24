@@ -1,0 +1,52 @@
+{
+  "namespace": "sw.sustainable.springlabs.fpay.infrastructure.out.mq.record",
+  "type": "record",
+  "name": "RPaymentSettlements",
+  "fields": [
+    {
+      "name": "settlements",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "Settlements",
+          "type": "record",
+          "fields": [
+            {
+              "name": "id",
+              "type": "int"
+            },
+            {
+              "name": "paymentKey",
+              "type": "string"
+            },
+            {
+              "name": "method",
+              "type": "string"
+            },
+            {
+              "name": "totalAmount",
+              "type": "int"
+            },
+            {
+              "name": "canceledAmount",
+              "type": "int"
+            },
+            {
+              "name": "payOutAmount",
+              "type": "int"
+            },
+            {
+              "name": "soldDate",
+              "type": "string"
+            },
+            {
+              "name": "paidOutDate",
+              "type": "string"
+            }
+          ]
+        }
+      }
+
+    }
+  ]
+}
